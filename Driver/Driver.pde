@@ -1,14 +1,16 @@
 //Main file that's going to run everything
 
+Bubble bMain = new Bubble(150, color(117, 240, 255, 63));
+
 void setup() {
   size(600, 600);
   noStroke();
-  background(0);
+  background(255);
   
-  Bubble b = new Bubble(50, color(250, 0, 0));
-  b.display();
+  bMain.display();
 }
 
+
 void draw() {
- 
+
 }
