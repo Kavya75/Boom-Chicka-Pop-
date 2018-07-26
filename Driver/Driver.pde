@@ -17,6 +17,7 @@ void draw() {
     myFont = createFont("Georgia", 32, true);
     textFont(myFont);
     textAlign(CENTER, CENTER);
+    fill(255);
     text("S O N D E R", 300, 300);
   }
 }
