@@ -1,6 +1,8 @@
 class Bubble extends PVector {
   float radius;
   color col;
+  int xPos;
+  int yPos;
   
   Bubble() {
     radius = 10;
@@ -13,7 +15,9 @@ class Bubble extends PVector {
   }
   
   void display() {
-    ellipse(300, 300, radius, radius);
     fill(col);
+    ellipse(300, 300, radius, radius);
+    
   }
+
 }
