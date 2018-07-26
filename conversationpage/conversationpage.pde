@@ -1,10 +1,11 @@
 BufferedReader reader;
 String line; 
-
+String[] listOfFileNames = {"convo1.txt"};
 void setup() {
   
   size(800, 600);
-  openFile("practice.txt");
+  int num = int(random(0,1));
+  openFile(listOfFileNames[num]);
 }
 
 void draw() {
@@ -13,11 +14,11 @@ void draw() {
   ellipse(width/4*3, height/4, 50, 50);
   stroke(255);
   textSize(32); 
-  textAlign(LEFT);
+  textAlign(CENTER);
   
   
   if(line != null) { 
-     text(line, width/3, 50);
+     text(line, width/4, height/2);
      delay(800);
    }
    
