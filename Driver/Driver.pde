@@ -1,47 +1,70 @@
 //Main file that's going to run everything
 
-boolean start;
-boolean instruction;
 PFont myFont;
 int clickCounter = 0;
 
 void setup() {
-  size(600, 600);
-  noStroke();
+  fullScreen();
   background(0);
   smooth(8);
-  start = true;
-  
-  //Bubble b = new Bubble(50, color(250, 0, 0));
-  //b.display();
+
+  noStroke();
 }
 
 void draw() {
-  //START PAGE 
-  if (start == true) {
-    myFont = createFont("Georgia", 60, true);
-    textFont(myFont);
-    textAlign(CENTER, CENTER);
-    fill(255);
-    
-    text("S  O  N  D  E  R", 300, 200);
-    
-    textSize(18);
-    text("the realization that everyone has a story", 300, 250);
-    
-    textSize(15);
-    text("click anywhere to begin", 300, 440);
-  }
-  
-  else if (instruction == true) {
-    text("INSTRUCTIONSSS", 300, 300);
+  if (clickCounter == 0) {
+    startScreen();
+  } else if (clickCounter == 1) {
+    surveyScreen();
+  } else if (clickCounter == 2) {
+    instrucScreen(); 
   }
 }
 
 void mouseClicked() {
-  clickCounter++;
-  if (clickCounter == 1) {
-    start = false;
-    instruction = true;
-  }
+  clickCounter++; //Counts the total number of clicks
+}
+
+//Runs the initial screen 
+void startScreen() {
+  myFont = createFont("Georgia", 60, true);
+  textFont(myFont);
+  textAlign(CENTER);
+  fill(255);
+
+  text("S  O  N  D  E  R", displayWidth / 2, 200);
+
+  textSize(18);
+  text("the realization that everyone has a story", displayWidth / 2, 260);
+
+  textSize(15);
+  text("click anywhere to begin", displayWidth / 2, 440);
+}
+
+//Runs the screen with the survey questions that determines
+// if the user's bubble shrinks or expands initially
+void surveyScreen() {
+  background(0);
+  textAlign(CENTER);
+  
+  textSize(50);
+  text("QUESTIONS", displayWidth / 2, 90);
+  
+  textSize(20);
+  text("QUESTION 1", displayWidth / 2, 160);
+  text("QUESTION 2", displayWidth / 2, 190);
+  text("QUESTION 3", displayWidth / 2, 220);
+  text("QUESTION 4", displayWidth / 2, 250);
+  text("click anywhere to continue", displayWidth / 2, 300);
+}
+
+//Runs the instructions screen
+void instrucScreen() {
+  background(0);
+  textAlign(CENTER);
+  textSize(50);
+  text("INSTRUCTIONS", displayWidth / 2, 90);
+  
+  textSize(30);
+  text("INSTRUCTION #1 blah blah blah", displayWidth / 2, 160);
 }
