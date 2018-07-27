@@ -16,7 +16,7 @@ class Bubble extends PVector {
   
   void display() {
     fill(col);
-    ellipse(300, 300, radius, radius);
+    ellipse(displayWidth / 2, displayHeight / 2, radius, radius);
     
   }
 

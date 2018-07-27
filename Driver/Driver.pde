@@ -18,6 +18,8 @@ void draw() {
     surveyScreen();
   } else if (clickCounter == 2) {
     instrucScreen(); 
+  } else if (clickCounter == 3) {
+    gamePlayScreen();
   }
 }
 
@@ -35,7 +37,7 @@ void startScreen() {
   text("S  O  N  D  E  R", displayWidth / 2, 200);
 
   textSize(18);
-  text("the realization that everyone has a story", displayWidth / 2, 260);
+  text("the realization that everyone has a story", displayWidth / 2, 255);
 
   textSize(15);
   text("click anywhere to begin", displayWidth / 2, 440);
@@ -67,4 +69,12 @@ void instrucScreen() {
   
   textSize(30);
   text("INSTRUCTION #1 blah blah blah", displayWidth / 2, 160);
+}
+
+//Runs the gameplay screen
+void gamePlayScreen() {
+  background(0);
+  fill(255);
+  Bubble b = new Bubble(50, color(181, 235, 255, 200));
+  b.display();
 }
