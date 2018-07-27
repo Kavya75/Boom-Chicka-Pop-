@@ -32,18 +32,18 @@ void mouseClicked() {
 //Runs the initial screen 
 void startScreen() {
   background(0);
-  myFont = createFont("Georgia", 60, true);
+  myFont = createFont("Georgia", 100, true);
   textFont(myFont);
   textAlign(CENTER);
   fill(255);
 
-  text("S  O  N  D  E  R", displayWidth / 2, 200);
+  text("S  O  N  D  E  R", displayWidth / 2, displayHeight / 2);
 
   textSize(18);
-  text("the realization that everyone has a story", displayWidth / 2, 255);
+  text("the realization that everyone has a story", displayWidth / 2, 445);
 
   textSize(15);
-  text("click anywhere to begin", displayWidth / 2, 440);
+  text("click anywhere to begin", displayWidth / 2, 520);
 }
 
 //Runs the screen with the survey questions that determines
