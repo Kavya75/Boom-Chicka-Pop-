@@ -73,12 +73,10 @@ void instrucScreen() {
   text("2. When you bump in a bubble, a conversation will take place between you", displayWidth / 7, 210);
   text("and the person in their bubble.", displayWidth / 7, 260);
   text("3. After you talk to the person in the bubble, your own bubble will get larger.", displayWidth / 7, 310);
-  text("4. Avoid all red bubbles.", displayWidth / 7, 360);
-  text("5. If you bump into a red bubble your bubble will decrease in size.", displayWidth / 7, 410);
-  text("5. The goal is to collect as many bubbles as you can and make your own bubble pop.", displayWidth / 7, 460);
+  text("4. The goal is to get as many bubbles as possible and pop your bubble.", displayWidth / 7, 360);
   textSize(25);
   textAlign(CENTER);
-  text("Click anywhere to start", displayWidth / 2, 550);
+  text("Click anywhere to start", displayWidth / 2, 450);
 }
 
 //Runs the gameplay screen
