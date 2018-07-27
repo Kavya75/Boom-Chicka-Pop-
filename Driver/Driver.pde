@@ -41,7 +41,6 @@ void startScreen() {
 
   textSize(18);
   text("the realization that everyone has a story", displayWidth / 2, (displayHeight / 2) + 45);
-  println(displayHeight);
   textSize(15);
   text("click anywhere to begin", displayWidth / 2, (displayHeight / 2) + 120);
 }
