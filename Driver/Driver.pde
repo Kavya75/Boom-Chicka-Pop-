@@ -2,6 +2,8 @@
 
 PFont myFont;
 int clickCounter = 0;
+  Bubble other = new Bubble(200, color(60, 180, 20), displayWidth/2, displayHeight/2); 
+
 
 void setup() {
   fullScreen();
@@ -18,7 +20,7 @@ void draw() {
     surveyScreen();
   } else if (clickCounter == 2) {
     instrucScreen(); 
-  } else if (clickCounter == 3) {
+  } else if (clickCounter >= 3) {
     gamePlayScreen();
   }
 }
@@ -29,6 +31,7 @@ void mouseClicked() {
 
 //Runs the initial screen 
 void startScreen() {
+  background(0);
   myFont = createFont("Georgia", 60, true);
   textFont(myFont);
   textAlign(CENTER);
@@ -84,5 +87,15 @@ void gamePlayScreen() {
   background(255);
   fill(255);
   Bubble b = new Bubble(200, color(181, 235, 255, 180), displayWidth / 2, displayHeight / 2);
+  b.set(mouseX, mouseY);
   b.display();
+  
+  other.checkXEdges(displayWidth);
+  other.checkYEdges(displayHeight);
+  other.setX(other.getX() + other.getXDir()); 
+  other.setY(other.getY() + other.getYDir());
+  other.set(other.getX(), other.getY());
+  other.display();
+ 
+  
 }

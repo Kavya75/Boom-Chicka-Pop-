@@ -3,6 +3,8 @@ class Bubble extends PVector {
   color col;
   int xPos;
   int yPos;
+  int yDirection; 
+  int xDirection;
   
   Bubble() {
     radius = 10;
@@ -12,16 +14,61 @@ class Bubble extends PVector {
   }
   
   Bubble(float r, color c, int x, int y) {
+    super(x, y);
     radius = r;
     col = c;
-    xPos = x;
-    yPos = y;
+    yDirection = 5; 
+    xDirection = 5;
+   
+   
   }
   
   void display() {
     fill(col);
-    ellipse(xPos, yPos, radius, radius);
+    ellipse(super.x, super.y, radius, radius);
     
   }
-
+  
+  void set(int xPos, int yPos) { 
+    super.x = xPos;
+    super.y = yPos;
+  }
+  
+  void checkXEdges(int xBoundary) { 
+  
+    if(super.x + radius/2 > xBoundary)
+      xDirection = -5;
+    else if(super.x - radius/2 <= 0) 
+      xDirection = 5;
+  }
+  void checkYEdges(int yBoundary) { 
+    
+    if(super.y + radius/2 > yBoundary)
+      yDirection = -5;
+    else if(super.y - radius/2 <= 0)
+      yDirection = 5;
+  
+  }
+  
+  void setX(int xP) { super.x = xP; } 
+  
+  void setY(int yP) { super.y = yP; } 
+  
+  
+  int getX() { 
+    return int(super.x); 
+  }
+  
+  int getY() {
+    return int(super.y); 
+  }
+  
+  int getXDir() { 
+    return xDirection;
+  }
+  
+  int getYDir() { 
+    return yDirection;
+  }
+  
 }
