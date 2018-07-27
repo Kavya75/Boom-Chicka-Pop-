@@ -75,6 +75,6 @@ void instrucScreen() {
 void gamePlayScreen() {
   background(0);
   fill(255);
-  Bubble b = new Bubble(200, color(181, 235, 255, 200));
+  Bubble b = new Bubble(200, color(181, 235, 255, 180), displayWidth / 2, displayHeight / 2);
   b.display();
 }
