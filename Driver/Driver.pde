@@ -67,14 +67,18 @@ void instrucScreen() {
   textSize(50);
   text("INSTRUCTIONS", displayWidth / 2, 90);
   
+  textAlign(LEFT);
   textSize(30);
-  text("1. Move your bubble around using the mouse.", displayWidth / 2, 160);
-  text("2. ", displayWidth / 2, 190);
-  text("3. ", displayWidth / 2, 220);
-  text("4. ", displayWidth / 2, 250);
-  text("5. ", displayWidth / 2, 280);
+  text("1. Move your bubble around using the mouse.", displayWidth / 7, 160);
+  text("2. When you bump in a bubble, a conversation will take place between you", displayWidth / 7, 210);
+  text("and the person in their bubble.", displayWidth / 7, 260);
+  text("3. After you talk to the person in the bubble, your own bubble will get larger.", displayWidth / 7, 310);
+  text("4. Avoid all red bubbles.", displayWidth / 7, 360);
+  text("5. If you bump into a red bubble your bubble will decrease in size.", displayWidth / 7, 410);
+  text("5. The goal is to collect as many bubbles as you can and make your own bubble pop.", displayWidth / 7, 460);
   textSize(25);
-  text("Click anywhere to start", displayWidth / 2, 440);
+  textAlign(CENTER);
+  text("Click anywhere to start", displayWidth / 2, 550);
 }
 
 //Runs the gameplay screen
