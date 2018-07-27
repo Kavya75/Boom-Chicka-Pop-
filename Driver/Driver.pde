@@ -68,12 +68,18 @@ void instrucScreen() {
   text("INSTRUCTIONS", displayWidth / 2, 90);
   
   textSize(30);
-  text("INSTRUCTION #1 blah blah blah", displayWidth / 2, 160);
+  text("1. Move your bubble around using the mouse.", displayWidth / 2, 160);
+  text("2. ", displayWidth / 2, 190);
+  text("3. ", displayWidth / 2, 220);
+  text("4. ", displayWidth / 2, 250);
+  text("5. ", displayWidth / 2, 280);
+  textSize(25);
+  text("Click anywhere to start", displayWidth / 2, 440);
 }
 
 //Runs the gameplay screen
 void gamePlayScreen() {
-  background(0);
+  background(255);
   fill(255);
   Bubble b = new Bubble(200, color(181, 235, 255, 180), displayWidth / 2, displayHeight / 2);
   b.display();
