@@ -1,8 +1,9 @@
 //Main file that's going to run everything
+//Use '150' for transparency so that the bubble isn't completely solid (ex: color(60, 180, 20, 150));
 
 PFont myFont;
 int clickCounter = 0;
-  Bubble other = new Bubble(200, color(60, 180, 20), displayWidth/2, displayHeight/2); 
+Bubble other = new Bubble(200, color(60, 180, 20, 150), displayWidth/2, displayHeight/2); 
 
 
 void setup() {
@@ -85,7 +86,7 @@ void instrucScreen() {
 void gamePlayScreen() {
   background(255);
   fill(255);
-  Bubble b = new Bubble(200, color(181, 235, 255, 180), displayWidth / 2, displayHeight / 2);
+  Bubble b = new Bubble(200, color(181, 235, 255, 150), displayWidth / 2, displayHeight / 2);
   b.set(mouseX, mouseY);
   b.display();
   
@@ -96,5 +97,4 @@ void gamePlayScreen() {
   other.set(other.getX(), other.getY());
   other.display();
  
-  
 }
