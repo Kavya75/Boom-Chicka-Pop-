@@ -40,10 +40,10 @@ void startScreen() {
   text("S  O  N  D  E  R", displayWidth / 2, displayHeight / 2);
 
   textSize(18);
-  text("the realization that everyone has a story", displayWidth / 2, 445);
-
+  text("the realization that everyone has a story", displayWidth / 2, (displayHeight / 2) + 45);
+  println(displayHeight);
   textSize(15);
-  text("click anywhere to begin", displayWidth / 2, 520);
+  text("click anywhere to begin", displayWidth / 2, (displayHeight / 2) + 120);
 }
 
 //Runs the screen with the survey questions that determines
