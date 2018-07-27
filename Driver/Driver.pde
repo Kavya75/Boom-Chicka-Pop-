@@ -72,11 +72,11 @@ void instrucScreen() {
   
   textAlign(LEFT);
   textSize(30);
-  text("1. Move your bubble around using the mouse.", displayWidth / 7, 160);
-  text("2. When you bump in a bubble, a conversation will take place between you", displayWidth / 7, 210);
-  text("and the person in their bubble.", displayWidth / 7, 260);
-  text("3. After you talk to the person in the bubble, your bubble will either shrink or expand.", displayWidth / 7, 310);
-  text("4. The goal is to get as many bubbles as possible and pop your bubble.", displayWidth / 7, 360);
+  text("1. Move your bubble around using the mouse.", displayWidth / 9, 160);
+  text("2. When you bump in a bubble, a conversation will take place between you", displayWidth / 9, 210);
+  text("and the person in their bubble.", displayWidth / 9, 260);
+  text("3. After you talk to the person, your bubble will either shrink or expand.", displayWidth / 9, 310);
+  text("4. The goal is to get as many bubbles as possible and pop your bubble.", displayWidth / 9, 360);
   textSize(25);
   textAlign(CENTER);
   text("Click anywhere to start", displayWidth / 2, 450);
