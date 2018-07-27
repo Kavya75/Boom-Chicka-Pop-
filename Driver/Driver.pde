@@ -53,10 +53,10 @@ void surveyScreen() {
   text("QUESTIONS", displayWidth / 2, 90);
   
   textSize(20);
-  text("QUESTION 1", displayWidth / 2, 160);
-  text("QUESTION 2", displayWidth / 2, 190);
-  text("QUESTION 3", displayWidth / 2, 220);
-  text("QUESTION 4", displayWidth / 2, 250);
+  text("QUESTION 1:", displayWidth / 2, 160);
+  text("QUESTION 2:", displayWidth / 2, 190);
+  text("QUESTION 3:", displayWidth / 2, 220);
+  text("QUESTION 4:", displayWidth / 2, 250);
   text("click anywhere to continue", displayWidth / 2, 300);
 }
 
@@ -75,6 +75,6 @@ void instrucScreen() {
 void gamePlayScreen() {
   background(0);
   fill(255);
-  Bubble b = new Bubble(50, color(181, 235, 255, 200));
+  Bubble b = new Bubble(200, color(181, 235, 255, 200));
   b.display();
 }
