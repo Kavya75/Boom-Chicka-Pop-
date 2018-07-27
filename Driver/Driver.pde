@@ -1,12 +1,16 @@
 //Main file that's going to run everything
 //Use '150' for transparency so that the bubble isn't completely solid (ex: color(60, 180, 20, 150));
-
+import processing.sound.*;
+SoundFile file;
 PFont myFont;
 int clickCounter = 0;
 Bubble other = new Bubble(200, color(60, 180, 20, 150), displayWidth/2, displayHeight/2); 
 
 
 void setup() {
+  file = new SoundFile(this, "Music.mp3");
+  file.play();
+  
   fullScreen();
   background(0);
   smooth(8);
