@@ -57,14 +57,15 @@ void surveyScreen() {
   textAlign(CENTER);
   
   textSize(50);
-  text("QUESTIONS", displayWidth / 2, 90);
-  
-  textSize(20);
-  text("QUESTION 1:", displayWidth / 2, 160);
-  text("QUESTION 2:", displayWidth / 2, 190);
-  text("QUESTION 3:", displayWidth / 2, 220);
-  text("QUESTION 4:", displayWidth / 2, 250);
-  text("click anywhere to continue", displayWidth / 2, 300);
+  text("SURVEY", displayWidth / 2, 90);
+  textAlign(LEFT);
+  textSize(30);
+  text("1. I prefer working through problems on my own.", displayWidth / 4, 160);
+  text("2. I am very talkative.", displayWidth / 4, 190);
+  text("3. I enjoy spending time alone.", displayWidth / 4, 220);
+  text("4. I feel energized after spending time with others.", displayWidth / 4, 250);
+  textAlign(CENTER);
+  text("click anywhere to continue", displayWidth / 2, 400);
 }
 
 //Runs the instructions screen
@@ -76,11 +77,11 @@ void instrucScreen() {
   
   textAlign(LEFT);
   textSize(30);
-  text("1. Move your bubble around using the mouse.", displayWidth / 9, 160);
-  text("2. When you bump in a bubble, a conversation will take place between you", displayWidth / 9, 210);
-  text("and the person in their bubble.", displayWidth / 9, 260);
-  text("3. After you talk to the person, your bubble will either shrink or expand.", displayWidth / 9, 310);
-  text("4. The goal is to get as many bubbles as possible and pop your bubble.", displayWidth / 9, 360);
+  text("1. Move your bubble around using the mouse.", displayWidth / 8, 160);
+  text("2. When you bump in a bubble, a conversation will take place between you", displayWidth / 8, 210);
+  text("and the person in their bubble.", displayWidth / 8, 260);
+  text("3. After you talk to the person, your bubble will either shrink or expand.", displayWidth / 8, 310);
+  text("4. The goal is to get as many bubbles as possible and pop your bubble.", displayWidth / 8, 360);
   textSize(25);
   textAlign(CENTER);
   text("Click anywhere to start", displayWidth / 2, 450);
