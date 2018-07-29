@@ -119,9 +119,6 @@ void gamePlayScreen() {
     allBubbles[i].set(allBubbles[i].getX(), allBubbles[i].getY()); 
     allBubbles[i].display();
     bubbleBumped = allBubbles[i].checkCollision(b);
-    
-   
-
   }
   
   
@@ -140,7 +137,7 @@ void initializeBubbles() {
    int randomYDir = int(random(1, 7)); 
    allBubbles[i] = new Bubble(randomRadius, color(randomRedValue, 
       randomGreenValue, randomBlueValue, 150), randomXStart, randomYStart,
-      randomXDir, randomYDir, "picture.jpg");
+      randomXDir, randomYDir);
   }
   
   

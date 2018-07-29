@@ -6,7 +6,7 @@ class Bubble extends PVector {
   int yDirection; 
   int xDirection;
   String i;
-  PImage img;
+
   
   Bubble() {
     radius = 10;
@@ -39,7 +39,8 @@ class Bubble extends PVector {
   void display() {
     fill(col);
     ellipse(super.x, super.y, radius, radius);
-    image(img, super.x, super.y);
+    if(getRadius() != 0)
+      image(img, super.x, super.y);
     
   }
   
@@ -101,13 +102,13 @@ class Bubble extends PVector {
      else if((super.x + radius/2 > otherBub.getX() && super.x < otherBub.getX())
     && (super.y > otherBub.getY() && super.y < otherBub.getY() + radius/2)) {
       setRadius(0);
-      img = null;
+
       return true;
     }
     else if(super.x < otherBub.getX() + otherBub.getRadius()/2 && super.x + radius/2 > otherBub.getX()
       &&  (super.y > otherBub.getY() && super.y < otherBub.getY() + radius/2)) {
       setRadius(0);
-      img = null;
+
       return true;
      }
      
