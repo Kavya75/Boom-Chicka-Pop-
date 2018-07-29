@@ -8,7 +8,7 @@ int clickCounter = 0;
 Bubble other = new Bubble(200, color(60, 180, 20, 150), displayWidth/2, displayHeight/2); 
 Bubble[] allBubbles = new Bubble[5]; 
 BufferedReader reader;
-String line = "";
+String line = "hi";
 String[] listOfFileNames = {"convo1.txt"};
 boolean bubbleBumped = false;
 
@@ -37,7 +37,7 @@ void draw() {
   } else if (clickCounter >= 3) {
     gamePlayScreen();
   }
-  
+ println("DRAW");
  
 }
 
@@ -119,6 +119,13 @@ void gamePlayScreen() {
     allBubbles[i].set(allBubbles[i].getX(), allBubbles[i].getY()); 
     allBubbles[i].display();
     bubbleBumped = allBubbles[i].checkCollision(b);
+    if(bubbleBumped) {
+      background(150, 40, 60);
+      println("conversation screen is running");
+      conversationScreen();
+   
+    }
+       bubbleBumped = false;
   }
   
   
@@ -143,26 +150,26 @@ void initializeBubbles() {
   
 }
 void conversationScreen() { 
-    background(150, 130, 50);
-    
+  
+   println(" C      O         N ");
     int num = int(random(0, 1)); 
     reader = createReader(listOfFileNames[num]);
-  
+   
     textSize(32);
     fill(0);
     
     try {
       while ((line = reader.readLine()) != null) {
-       line = reader.readLine();
-       println(line);
+       background(150, 130, 50);
+      
        text(line, width/4, height/2);
-       delay(800);
+      
       }
       reader.close();
     } catch (IOException e) {
         e.printStackTrace();
     }
-    
+ 
    
-    bubbleBumped = false;
+    
 }
