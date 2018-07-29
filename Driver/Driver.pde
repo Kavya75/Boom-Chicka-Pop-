@@ -1,6 +1,7 @@
 //Main file that's going to run everything
 //Use '150' for transparency so that the bubble isn't completely solid (ex: color(60, 180, 20, 150));
 import processing.sound.*;
+PImage img;
 SoundFile file;
 PFont myFont;
 int clickCounter = 0;
@@ -16,6 +17,8 @@ void setup() {
   smooth(8);
   initializeBubbles();
   noStroke();
+  
+  img = loadImage("picture.jpg");
 }
 
 void draw() {
@@ -94,6 +97,7 @@ void instrucScreen() {
 //Runs the gameplay screen
 void gamePlayScreen() {
   background(255);
+  image(img, 0, 0);
   fill(255);
   Bubble b = new Bubble(150, color(181, 235, 255, 150), displayWidth / 2, displayHeight / 2);
   b.set(mouseX, mouseY);
