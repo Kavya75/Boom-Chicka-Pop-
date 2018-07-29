@@ -58,14 +58,18 @@ void surveyScreen() {
   
   textSize(50);
   text("SURVEY", displayWidth / 2, 90);
+  textSize(20);
+  text("Press 1 for strongly disagree, 2 for somewhat disagree, 3 for somewhat agree, 4 for strongly agree", displayWidth / 2, 130);
+  
   textAlign(LEFT);
   textSize(30);
-  text("1. I prefer working through problems on my own.", displayWidth / 4, 160);
-  text("2. I am very talkative.", displayWidth / 4, 190);
-  text("3. I enjoy spending time alone.", displayWidth / 4, 220);
-  text("4. I feel energized after spending time with others.", displayWidth / 4, 250);
+  text("1. I prefer working through problems on my own.", displayWidth / 4.25, 200);
+  text("2. I am very talkative.", displayWidth / 4.25, 270);
+  text("3. I enjoy spending time alone.", displayWidth / 4.25, 340);
+  text("4. I feel energized after spending time with others.", displayWidth / 4.25, 410);
+  textSize(25);
   textAlign(CENTER);
-  text("click anywhere to continue", displayWidth / 2, 400);
+  text("click anywhere to continue", displayWidth / 2, 510);
 }
 
 //Runs the instructions screen
@@ -84,7 +88,7 @@ void instrucScreen() {
   text("4. The goal is to get as many bubbles as possible and pop your bubble.", displayWidth / 8, 360);
   textSize(25);
   textAlign(CENTER);
-  text("Click anywhere to start", displayWidth / 2, 450);
+  text("click anywhere to start", displayWidth / 2, 450);
 }
 
 //Runs the gameplay screen
