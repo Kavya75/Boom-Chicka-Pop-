@@ -21,9 +21,6 @@ class Bubble extends PVector {
     col = c;
     yDirection = 5; 
     xDirection = 5;
-   // img = loadImage("picture.jpg");
-   
-   
   }
   
   Bubble(float r, color c, int x, int y, int xDir, int yDir) {
@@ -32,8 +29,6 @@ class Bubble extends PVector {
     col = c;
     yDirection = xDir; 
     xDirection = yDir;
-  //  img = loadImage(iName);
-   
   }
   
   void display() {
@@ -41,7 +36,6 @@ class Bubble extends PVector {
     ellipse(super.x, super.y, radius, radius);
     if(getRadius() != 0)
       image(img, super.x, super.y);
-    
   }
   
   void set(int xPos, int yPos) { 
@@ -50,25 +44,22 @@ class Bubble extends PVector {
   }
   
   void checkXEdges(int xBoundary) { 
-  
     if(super.x + radius/2 > xBoundary)
       xDirection *= -1;
     else if(super.x - radius/2 <= 0) 
       xDirection *= -1;
   }
+  
   void checkYEdges(int yBoundary) { 
-    
     if(super.y + radius/2 > yBoundary)
       yDirection *= -1;
     else if(super.y - radius/2 <= 0)
       yDirection *= -1;
-  
   }
   
   void setX(int xP) { super.x = xP; } 
   
   void setY(int yP) { super.y = yP; } 
-  
   
   int getX() { 
     return int(super.x); 
@@ -85,6 +76,7 @@ class Bubble extends PVector {
   int getYDir() { 
     return yDirection;
   }
+  
   void setColor(int one, int two, int three) { 
     col = color(one, two, three);
   }
@@ -92,6 +84,7 @@ class Bubble extends PVector {
   float getRadius() { 
     return radius;
   }
+  
   void setRadius(int r) {
     radius = r; 
   }
@@ -110,9 +103,7 @@ class Bubble extends PVector {
       setRadius(0);
 
       return true;
-     }
-     
+     } 
      return false;
- 
   }
 }

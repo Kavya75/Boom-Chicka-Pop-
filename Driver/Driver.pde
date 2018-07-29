@@ -1,9 +1,10 @@
 //Main file that's going to run everything
 //Use '150' for transparency so that the bubble isn't completely solid (ex: color(60, 180, 20, 150));
+
 import processing.sound.*;
+PFont myFont;
 PImage img;
 SoundFile file;
-PFont myFont;
 int clickCounter = 0;
 Bubble other = new Bubble(200, color(60, 180, 20, 150), displayWidth/2, displayHeight/2); 
 Bubble[] allBubbles = new Bubble[5]; 
@@ -12,18 +13,16 @@ String line = "hi";
 String[] listOfFileNames = {"convo1.txt"};
 boolean bubbleBumped = false;
 
-
 void setup() {
   file = new SoundFile(this, "Music.mp3");
   file.play();
-  
+
   fullScreen();
   background(0);
   smooth(8);
   initializeBubbles();
   noStroke();
-   
-  
+
   img = loadImage("picture.jpg");
 }
 
@@ -33,12 +32,10 @@ void draw() {
   } else if (clickCounter == 1) {
     surveyScreen();
   } else if (clickCounter == 2) {
-    instrucScreen(); 
+    instrucScreen();
   } else if (clickCounter >= 3) {
     gamePlayScreen();
   }
- println("DRAW");
- 
 }
 
 void mouseClicked() {
@@ -66,12 +63,12 @@ void startScreen() {
 void surveyScreen() {
   background(0);
   textAlign(CENTER);
-  
+
   textSize(50);
   text("SURVEY", displayWidth / 2, 90);
   textSize(20);
   text("Press 1 for strongly disagree, 2 for somewhat disagree, 3 for somewhat agree, 4 for strongly agree", displayWidth / 2, 130);
-  
+
   textAlign(LEFT);
   textSize(30);
   text("1. I prefer working through problems on my own.", displayWidth / 4.25, 200);
@@ -89,7 +86,7 @@ void instrucScreen() {
   textAlign(CENTER);
   textSize(50);
   text("INSTRUCTIONS", displayWidth / 2, 90);
-  
+
   textAlign(LEFT);
   textSize(30);
   text("1. Move your bubble around using the mouse.", displayWidth / 8, 160);
@@ -109,9 +106,9 @@ void gamePlayScreen() {
   Bubble b = new Bubble(150, color(181, 235, 255, 150), displayWidth / 2, displayHeight / 2);
   b.set(mouseX, mouseY);
   b.display();
-  
-   
-  for(int i = 0; i < allBubbles.length; i++) { 
+
+
+  for (int i = 0; i < allBubbles.length; i++) { 
     allBubbles[i].checkXEdges(displayWidth); 
     allBubbles[i].checkYEdges(displayHeight);
     allBubbles[i].setX(allBubbles[i].getX() + allBubbles[i].getXDir()); 
@@ -119,57 +116,48 @@ void gamePlayScreen() {
     allBubbles[i].set(allBubbles[i].getX(), allBubbles[i].getY()); 
     allBubbles[i].display();
     bubbleBumped = allBubbles[i].checkCollision(b);
-    if(bubbleBumped) {
+    if (bubbleBumped) {
       background(150, 40, 60);
       println("conversation screen is running");
       conversationScreen();
-   
     }
-       bubbleBumped = false;
+    bubbleBumped = false;
   }
-  
-  
- 
 }
 
 void initializeBubbles() { 
-  for(int i = 0; i < allBubbles.length; i++) {
-   int randomRadius = int(random(50, 100));
-   int randomRedValue = int(random(10, 250)); 
-   int randomBlueValue = int(random(10, 250)); 
-   int randomGreenValue = int(random(10, 250)); 
-   int randomXStart = int(random(10, displayWidth)); 
-   int randomYStart = int(random(10, displayHeight)); 
-   int randomXDir = int(random(1, 7)); 
-   int randomYDir = int(random(1, 7)); 
-   allBubbles[i] = new Bubble(randomRadius, color(randomRedValue, 
-      randomGreenValue, randomBlueValue, 150), randomXStart, randomYStart,
+  for (int i = 0; i < allBubbles.length; i++) {
+    int randomRadius = int(random(50, 100));
+    int randomRedValue = int(random(10, 250)); 
+    int randomBlueValue = int(random(10, 250)); 
+    int randomGreenValue = int(random(10, 250)); 
+    int randomXStart = int(random(10, displayWidth)); 
+    int randomYStart = int(random(10, displayHeight)); 
+    int randomXDir = int(random(1, 7)); 
+    int randomYDir = int(random(1, 7)); 
+    allBubbles[i] = new Bubble(randomRadius, color(randomRedValue, 
+      randomGreenValue, randomBlueValue, 150), randomXStart, randomYStart, 
       randomXDir, randomYDir);
   }
-  
-  
 }
+
 void conversationScreen() { 
-  
-   println(" C      O         N ");
-    int num = int(random(0, 1)); 
-    reader = createReader(listOfFileNames[num]);
-   
-    textSize(32);
-    fill(0);
-    
-    try {
-      while ((line = reader.readLine()) != null) {
-       background(150, 130, 50);
-      
-       text(line, width/4, height/2);
-      
-      }
-      reader.close();
-    } catch (IOException e) {
-        e.printStackTrace();
+
+  println(" C      O         N ");
+  int num = int(random(0, 1)); 
+  reader = createReader(listOfFileNames[num]);
+
+  textSize(32);
+  fill(0);
+
+  try {
+    while ((line = reader.readLine()) != null) {
+      background(150, 130, 50);
+      text(line, width/4, height/2);
     }
- 
-   
-    
+    reader.close();
+  } 
+  catch (IOException e) {
+    e.printStackTrace();
+  }
 }
