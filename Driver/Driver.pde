@@ -5,7 +5,7 @@ SoundFile file;
 PFont myFont;
 int clickCounter = 0;
 Bubble other = new Bubble(200, color(60, 180, 20, 150), displayWidth/2, displayHeight/2); 
-
+Bubble[] allBubbles = new Bubble[5]; 
 
 void setup() {
   file = new SoundFile(this, "Music.mp3");
@@ -14,7 +14,7 @@ void setup() {
   fullScreen();
   background(0);
   smooth(8);
-
+  initializeBubbles();
   noStroke();
 }
 
@@ -91,15 +91,38 @@ void instrucScreen() {
 void gamePlayScreen() {
   background(255);
   fill(255);
-  Bubble b = new Bubble(200, color(181, 235, 255, 150), displayWidth / 2, displayHeight / 2);
+  Bubble b = new Bubble(150, color(181, 235, 255, 150), displayWidth / 2, displayHeight / 2);
   b.set(mouseX, mouseY);
   b.display();
   
-  other.checkXEdges(displayWidth);
-  other.checkYEdges(displayHeight);
-  other.setX(other.getX() + other.getXDir()); 
-  other.setY(other.getY() + other.getYDir());
-  other.set(other.getX(), other.getY());
-  other.display();
+   
+  for(int i = 0; i < allBubbles.length; i++) { 
+    allBubbles[i].checkXEdges(displayWidth); 
+    allBubbles[i].checkYEdges(displayHeight);
+    allBubbles[i].setX(allBubbles[i].getX() + allBubbles[i].getXDir()); 
+    allBubbles[i].setY(allBubbles[i].getY() + allBubbles[i].getYDir()); 
+    allBubbles[i].set(allBubbles[i].getX(), allBubbles[i].getY()); 
+    allBubbles[i].display();
+    allBubbles[i].checkCollision(b);
+
+  }
+  
+  
  
+}
+
+void initializeBubbles() { 
+  for(int i = 0; i < allBubbles.length; i++) {
+   int randomRadius = int(random(50, 100));
+   int randomRedValue = int(random(10, 250)); 
+   int randomBlueValue = int(random(10, 250)); 
+   int randomGreenValue = int(random(10, 250)); 
+   int randomXStart = int(random(10, displayWidth)); 
+   int randomYStart = int(random(10, displayHeight)); 
+   int randomXDir = int(random(1, 7)); 
+   int randomYDir = int(random(1, 7)); 
+   allBubbles[i] = new Bubble(randomRadius, color(randomRedValue, 
+      randomGreenValue, randomBlueValue, 150), randomXStart, randomYStart,
+      randomXDir, randomYDir);
+  }
 }

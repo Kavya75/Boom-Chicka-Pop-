@@ -23,6 +23,16 @@ class Bubble extends PVector {
    
   }
   
+  Bubble(float r, color c, int x, int y, int xDir, int yDir) {
+    super(x, y);
+    radius = r;
+    col = c;
+    yDirection = xDir; 
+    xDirection = yDir;
+   
+   
+  }
+  
   void display() {
     fill(col);
     ellipse(super.x, super.y, radius, radius);
@@ -37,16 +47,16 @@ class Bubble extends PVector {
   void checkXEdges(int xBoundary) { 
   
     if(super.x + radius/2 > xBoundary)
-      xDirection = -5;
+      xDirection *= -1;
     else if(super.x - radius/2 <= 0) 
-      xDirection = 5;
+      xDirection *= -1;
   }
   void checkYEdges(int yBoundary) { 
     
     if(super.y + radius/2 > yBoundary)
-      yDirection = -5;
+      yDirection *= -1;
     else if(super.y - radius/2 <= 0)
-      yDirection = 5;
+      yDirection *= -1;
   
   }
   
@@ -70,5 +80,24 @@ class Bubble extends PVector {
   int getYDir() { 
     return yDirection;
   }
+  void setColor(int one, int two, int three) { 
+    col = color(one, two, three);
+  }
   
+  float getRadius() { 
+    return radius;
+  }
+  void setRadius(int r) {
+    radius = r; 
+  }
+  
+  void checkCollision(Bubble otherBub) { 
+     if((super.x + radius/2 > otherBub.getX() && super.x < otherBub.getX())
+    && (super.y > otherBub.getY() && super.y < otherBub.getY() + radius/2))
+      setRadius(0);
+    else if(super.x < otherBub.getX() + otherBub.getRadius()/2 && super.x + radius/2 > otherBub.getX()
+      &&  (super.y > otherBub.getY() && super.y < otherBub.getY() + radius/2)) 
+      setRadius(0);
+ 
+  }
 }
