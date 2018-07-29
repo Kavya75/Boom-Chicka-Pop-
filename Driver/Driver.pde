@@ -8,9 +8,10 @@ int clickCounter = 0;
 Bubble other = new Bubble(200, color(60, 180, 20, 150), displayWidth/2, displayHeight/2); 
 Bubble[] allBubbles = new Bubble[5]; 
 BufferedReader reader;
-String line; 
+String line = "";
 String[] listOfFileNames = {"convo1.txt"};
 boolean bubbleBumped = false;
+
 
 void setup() {
   file = new SoundFile(this, "Music.mp3");
@@ -21,6 +22,7 @@ void setup() {
   smooth(8);
   initializeBubbles();
   noStroke();
+   
   
   img = loadImage("picture.jpg");
 }
@@ -35,6 +37,8 @@ void draw() {
   } else if (clickCounter >= 3) {
     gamePlayScreen();
   }
+  
+ 
 }
 
 void mouseClicked() {
@@ -115,10 +119,8 @@ void gamePlayScreen() {
     allBubbles[i].set(allBubbles[i].getX(), allBubbles[i].getY()); 
     allBubbles[i].display();
     bubbleBumped = allBubbles[i].checkCollision(b);
-    if(bubbleBumped) {
-      conversationScreen();
-      println("help");
-    }
+    
+   
 
   }
   
@@ -138,28 +140,32 @@ void initializeBubbles() {
    int randomYDir = int(random(1, 7)); 
    allBubbles[i] = new Bubble(randomRadius, color(randomRedValue, 
       randomGreenValue, randomBlueValue, 150), randomXStart, randomYStart,
-      randomXDir, randomYDir);
+      randomXDir, randomYDir, "picture.jpg");
   }
   
   
 }
 void conversationScreen() { 
-    background(0);
+    background(150, 130, 50);
+    
     int num = int(random(0, 1)); 
     reader = createReader(listOfFileNames[num]);
-    if(line != null) { 
-     text(line, width/4, height/2);
-     delay(800);
-   }
-   while(line != null) {
-     try { 
-     line = reader.readLine();
-    } catch(IOException e) { 
-      e.printStackTrace();
-      line = null;
+  
+    textSize(32);
+    fill(0);
+    
+    try {
+      while ((line = reader.readLine()) != null) {
+       line = reader.readLine();
+       println(line);
+       text(line, width/4, height/2);
+       delay(800);
+      }
+      reader.close();
+    } catch (IOException e) {
+        e.printStackTrace();
     }
-     text(line, width/4, height/2);
-     delay(800);
-   }
+    
+   
     bubbleBumped = false;
 }
