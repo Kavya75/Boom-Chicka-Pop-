@@ -5,6 +5,7 @@ class Bubble extends PVector {
   int yPos;
   int yDirection; 
   int xDirection;
+  String i;
   
   Bubble() {
     radius = 10;
@@ -30,12 +31,12 @@ class Bubble extends PVector {
     yDirection = xDir; 
     xDirection = yDir;
    
-   
   }
   
   void display() {
     fill(col);
     ellipse(super.x, super.y, radius, radius);
+    image(img, super.x, super.y);
     
   }
   

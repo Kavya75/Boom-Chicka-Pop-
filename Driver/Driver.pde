@@ -97,7 +97,6 @@ void instrucScreen() {
 //Runs the gameplay screen
 void gamePlayScreen() {
   background(255);
-  image(img, 0, 0);
   fill(255);
   Bubble b = new Bubble(150, color(181, 235, 255, 150), displayWidth / 2, displayHeight / 2);
   b.set(mouseX, mouseY);
