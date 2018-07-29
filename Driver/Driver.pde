@@ -7,6 +7,10 @@ PFont myFont;
 int clickCounter = 0;
 Bubble other = new Bubble(200, color(60, 180, 20, 150), displayWidth/2, displayHeight/2); 
 Bubble[] allBubbles = new Bubble[5]; 
+BufferedReader reader;
+String line; 
+String[] listOfFileNames = {"convo1.txt"};
+boolean bubbleBumped = false;
 
 void setup() {
   file = new SoundFile(this, "Music.mp3");
@@ -110,7 +114,11 @@ void gamePlayScreen() {
     allBubbles[i].setY(allBubbles[i].getY() + allBubbles[i].getYDir()); 
     allBubbles[i].set(allBubbles[i].getX(), allBubbles[i].getY()); 
     allBubbles[i].display();
-    allBubbles[i].checkCollision(b);
+    bubbleBumped = allBubbles[i].checkCollision(b);
+    if(bubbleBumped) {
+      conversationScreen();
+      println("help");
+    }
 
   }
   
@@ -132,4 +140,26 @@ void initializeBubbles() {
       randomGreenValue, randomBlueValue, 150), randomXStart, randomYStart,
       randomXDir, randomYDir);
   }
+  
+  
+}
+void conversationScreen() { 
+    background(0);
+    int num = int(random(0, 1)); 
+    reader = createReader(listOfFileNames[num]);
+    if(line != null) { 
+     text(line, width/4, height/2);
+     delay(800);
+   }
+   while(line != null) {
+     try { 
+     line = reader.readLine();
+    } catch(IOException e) { 
+      e.printStackTrace();
+      line = null;
+    }
+     text(line, width/4, height/2);
+     delay(800);
+   }
+    bubbleBumped = false;
 }

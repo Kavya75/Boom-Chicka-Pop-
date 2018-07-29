@@ -92,13 +92,20 @@ class Bubble extends PVector {
     radius = r; 
   }
   
-  void checkCollision(Bubble otherBub) { 
-     if((super.x + radius/2 > otherBub.getX() && super.x < otherBub.getX())
-    && (super.y > otherBub.getY() && super.y < otherBub.getY() + radius/2))
+  boolean checkCollision(Bubble otherBub) { 
+     if(getRadius() == 0) 
+       return false;
+     else if((super.x + radius/2 > otherBub.getX() && super.x < otherBub.getX())
+    && (super.y > otherBub.getY() && super.y < otherBub.getY() + radius/2)) {
       setRadius(0);
+      return true;
+    }
     else if(super.x < otherBub.getX() + otherBub.getRadius()/2 && super.x + radius/2 > otherBub.getX()
-      &&  (super.y > otherBub.getY() && super.y < otherBub.getY() + radius/2)) 
+      &&  (super.y > otherBub.getY() && super.y < otherBub.getY() + radius/2)) {
       setRadius(0);
+      return true;
+     }
+     return false;
  
   }
 }
