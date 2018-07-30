@@ -14,8 +14,8 @@ String[] listOfFileNames = {"convo1.txt"};
 boolean bubbleBumped = false;
 
 void setup() {
-  file = new SoundFile(this, "Music.mp3");
-  file.play();
+  //file = new SoundFile(this, "Music.mp3");
+  //file.play();
 
   fullScreen();
   background(0);
@@ -26,13 +26,9 @@ void setup() {
   img = loadImage("bear.png");
 }
 
-  void draw() {
+void draw() {
   if (clickCounter == 0) {
     startScreen();
-    
-    if (mouseX > (displayWidth / 2) - 100 && mouseX < (displayWidth / 2) + 100 && mouseY < (displayHeight / 2) + 145 && mouseY > (displayHeight / 2) + 85) {
-      startScreen1();
-    }
   } else if (clickCounter == 1) {
     surveyScreen();
   } else if (clickCounter == 2) {
@@ -55,32 +51,18 @@ void startScreen() {
   textFont(myFont);
   textAlign(CENTER);
   fill(255);
-
   text("S  O  N  D  E  R", displayWidth / 2, displayHeight / 2);
-
   textSize(18);
   text("the realization that everyone has a story", displayWidth / 2, (displayHeight / 2) + 45);
-  textSize(15);
-  text("click here to begin", displayWidth / 2, (displayHeight / 2) + 120);
-  noFill();
-  stroke(255);
-  rect((displayWidth / 2) - 100, (displayHeight / 2) + 85, 200, 60);
-}
-
-void startScreen1() {
-  //startScreen();
-  fill(255);
-  stroke(255);
-  rect((displayWidth / 2) - 100, (displayHeight / 2) + 85, 200, 60);
-  fill(0);
-  textSize(15);
-  text("click here to begin", displayWidth / 2, (displayHeight / 2) + 120);
+  
+  buttonCreator("click here to begin");
 }
 
 //Runs the screen with the survey questions that determines
 // if the user's bubble shrinks or expands initially
 void surveyScreen() {
   background(0);
+  fill(255);
   textAlign(CENTER);
 
   textSize(50);
@@ -94,14 +76,14 @@ void surveyScreen() {
   text("2. I am very talkative.", displayWidth / 4.25, 270);
   text("3. I enjoy spending time alone.", displayWidth / 4.25, 340);
   text("4. I feel energized after spending time with others.", displayWidth / 4.25, 410);
-  textSize(25);
-  textAlign(CENTER);
-  text("click anywhere to continue", displayWidth / 2, 510);
+  
+  buttonCreator("click here to continue");
 }
 
 //Runs the instructions screen
 void instrucScreen() {
   background(0);
+  fill(255);
   textAlign(CENTER);
   textSize(50);
   text("INSTRUCTIONS", displayWidth / 2, 90);
@@ -113,9 +95,8 @@ void instrucScreen() {
   text("and the person in their bubble.", displayWidth / 8, 260);
   text("3. After you talk to the person, your bubble will either shrink or expand.", displayWidth / 8, 310);
   text("4. The goal is to get as many bubbles as possible and pop your bubble.", displayWidth / 8, 360);
-  textSize(25);
-  textAlign(CENTER);
-  text("click anywhere to start", displayWidth / 2, 450);
+  
+  buttonCreator("click here to begin");
 }
 
 //Runs the gameplay screen
@@ -134,10 +115,8 @@ void gamePlayScreen() {
     allBubbles[i].set(allBubbles[i].getX(), allBubbles[i].getY()); 
     allBubbles[i].display();
     bubbleBumped = allBubbles[i].checkCollision(b);
-    
-    }
-  
   }
+}
 
 
 void initializeBubbles() { 
@@ -153,16 +132,15 @@ void initializeBubbles() {
     allBubbles[i] = new Bubble(randomRadius, color(randomRedValue, 
       randomGreenValue, randomBlueValue, 150), randomXStart, randomYStart, 
       randomXDir, randomYDir);
-    
   }
 }
 
 void conversationScreen() { 
- // noLoop();
+  // noLoop();
   println(" C      O         N ");
   int num = int(random(0, 1)); 
   reader = createReader(listOfFileNames[num]);
- background(150, 130, 50);
+  background(150, 130, 50);
   textSize(32);
   fill(0);
 
@@ -178,5 +156,23 @@ void conversationScreen() {
     e.printStackTrace();
   }
   bubbleBumped = false;
- // loop();
+  // loop();
+}
+
+//Creates the button box and changes the color of the box and label when the mouse is over it
+void buttonCreator(String buttonLabel) {
+  textAlign(CENTER);
+  if (mouseX > (displayWidth / 2) - 100 && mouseX < (displayWidth / 2) + 100 && mouseY < (displayHeight / 2) + 145 && mouseY > (displayHeight / 2) + 85) {
+    fill(255);
+    stroke(255);
+    rect((displayWidth / 2) - 100, (displayHeight / 2) + 85, 200, 60);
+    fill(0);
+    textSize(15);
+    text(buttonLabel, displayWidth / 2, (displayHeight / 2) + 120);
+  }
+    textSize(15);
+    text(buttonLabel, displayWidth / 2, (displayHeight / 2) + 120);
+    noFill();
+    stroke(255);
+    rect((displayWidth / 2) - 100, (displayHeight / 2) + 85, 200, 60);
 }
