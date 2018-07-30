@@ -42,10 +42,14 @@ void setup() {
 void draw() {
   if(screen == Screen.START_SCREEN)
      startScreen();
-  else if(screen == Screen.SURVEY_SCREEN)
+  else if(screen == Screen.SURVEY_SCREEN) {
+      onSurveyPage = true;
      surveyScreen();
-  else if(screen == Screen.INSTRUC_SCREEN)
+  }
+  else if(screen == Screen.INSTRUC_SCREEN) {
+     onSurveyPage = false;
      instrucScreen();
+  }
   else if(screen == Screen.GAMEPLAY_SCREEN)
      gamePlayScreen();
   else if(screen == Screen.CONVO_SCREEN) 
