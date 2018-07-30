@@ -6,16 +6,21 @@ PFont myFont;
 PImage img;
 SoundFile file;
 int clickCounter = 0;
+int enterCounter = 0; //Keeps track of how many times user hits ENTER for the survey page
+int surveyPoints = 0;
 Bubble other = new Bubble(200, color(60, 180, 20, 150), displayWidth/2, displayHeight/2); 
 Bubble[] allBubbles = new Bubble[5]; 
 BufferedReader reader;
 String line = "hi";
 String[] listOfFileNames = {"convo1.txt"};
+String userInput = "--"; //Going to be the number value displayed in the survey screen that represents the user's input
 boolean bubbleBumped = false;
+boolean onSurveyPage = false;
+boolean q1, q2, q3, q4 = false; //Are used to display the survey questions one by one
 
 void setup() {
-  //file = new SoundFile(this, "Music.mp3");
-  //file.play();
+  file = new SoundFile(this, "Music.mp3");
+  file.play();
 
   fullScreen();
   background(0);
@@ -30,8 +35,10 @@ void draw() {
   if (clickCounter == 0) {
     startScreen();
   } else if (clickCounter == 1) {
+    onSurveyPage = true;
     surveyScreen();
   } else if (clickCounter == 2) {
+    onSurveyPage = false;
     instrucScreen();
   } else if (clickCounter >= 3) {
     gamePlayScreen();
@@ -41,6 +48,37 @@ void draw() {
 void mouseClicked() {
   if (mouseX > (displayWidth / 2) - 100 && mouseX < (displayWidth / 2) + 100 && mouseY < (displayHeight / 2) + 145 && mouseY > (displayHeight / 2) + 85) {
     clickCounter++;
+  }
+}
+
+void keyPressed() {
+  if (onSurveyPage == true) {
+    if (keyCode == ENTER) {
+      enterCounter++;
+      if (enterCounter == 1) {
+        q1 = true;
+      } else if (enterCounter == 2) {
+        q2 = true;
+      } else if (enterCounter == 3) {
+        q3 = true;
+      } else if (enterCounter == 4) {
+        q4 = true;
+      }
+    } 
+    
+    if (key == '1') {
+      surveyPoints -= 2;
+      userInput = "1";
+    } else if (key == '2') {
+      surveyPoints--;
+      userInput = "2";
+    } else if (key == '3') {
+      surveyPoints++;
+      userInput = "3";
+    } else if (key == '4') {
+      surveyPoints++;
+      userInput = "4";
+    }
   }
 }
 
@@ -67,15 +105,24 @@ void surveyScreen() {
 
   textSize(50);
   text("SURVEY", displayWidth / 2, 90);
-  textSize(20);
-  text("Press 1 for strongly disagree, 2 for somewhat disagree, 3 for somewhat agree, 4 for strongly agree", displayWidth / 2, 130);
+  textSize(18);
+  text("Press 1 for strongly disagree, 2 for somewhat disagree, 3 for somewhat agree, 4 for strongly agree. Hit 'ENTER' to continue.", displayWidth / 2, 130);
 
   textAlign(LEFT);
   textSize(30);
-  text("1. I prefer working through problems on my own.", displayWidth / 4.25, 200);
-  text("2. I am very talkative.", displayWidth / 4.25, 270);
-  text("3. I enjoy spending time alone.", displayWidth / 4.25, 340);
-  text("4. I feel energized after spending time with others.", displayWidth / 4.25, 410);
+  
+  if (q1 == true) {
+    text("1. I enjoy solitude: " + userInput, displayWidth / 6.5, 200);  
+  }
+  if (q2 == true) {
+    text("2. I feel drained after spending time with a large group of people: " + userInput, displayWidth / 6.5, 270);
+  }
+  if (q3 == true) {
+    text("3. I have a smaller social circle: " + userInput, displayWidth / 6.5, 340);
+  }
+  if (q4 == true) {
+    text("4. I like to work through problems on my own: " + userInput, displayWidth / 6.5, 410);
+  }
   
   buttonCreator("click here to continue");
 }
