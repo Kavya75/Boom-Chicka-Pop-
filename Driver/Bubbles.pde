@@ -35,7 +35,7 @@ class Bubble extends PVector {
     fill(col);
     ellipse(super.x, super.y, radius, radius);
     if(getRadius() != 0)
-      image(img, super.x, super.y);
+      image(img, super.x-radius/4, super.y-radius/4, 25, 35);
   }
   
   void set(int xPos, int yPos) { 

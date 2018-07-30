@@ -23,10 +23,10 @@ void setup() {
   initializeBubbles();
   noStroke();
 
-  img = loadImage("picture.jpg");
+  img = loadImage("bear.png");
 }
 
-void draw() {
+  void draw() {
   if (clickCounter == 0) {
     startScreen();
   } else if (clickCounter == 1) {
@@ -116,14 +116,11 @@ void gamePlayScreen() {
     allBubbles[i].set(allBubbles[i].getX(), allBubbles[i].getY()); 
     allBubbles[i].display();
     bubbleBumped = allBubbles[i].checkCollision(b);
-    if (bubbleBumped) {
-      background(150, 40, 60);
-      println("conversation screen is running");
-      conversationScreen();
+    
     }
-    bubbleBumped = false;
+  
   }
-}
+
 
 void initializeBubbles() { 
   for (int i = 0; i < allBubbles.length; i++) {
@@ -138,15 +135,16 @@ void initializeBubbles() {
     allBubbles[i] = new Bubble(randomRadius, color(randomRedValue, 
       randomGreenValue, randomBlueValue, 150), randomXStart, randomYStart, 
       randomXDir, randomYDir);
+    
   }
 }
 
 void conversationScreen() { 
-
+ // noLoop();
   println(" C      O         N ");
   int num = int(random(0, 1)); 
   reader = createReader(listOfFileNames[num]);
-
+ background(150, 130, 50);
   textSize(32);
   fill(0);
 
@@ -154,10 +152,13 @@ void conversationScreen() {
     while ((line = reader.readLine()) != null) {
       background(150, 130, 50);
       text(line, width/4, height/2);
+      delay(800);
     }
     reader.close();
   } 
   catch (IOException e) {
     e.printStackTrace();
   }
+  bubbleBumped = false;
+ // loop();
 }
