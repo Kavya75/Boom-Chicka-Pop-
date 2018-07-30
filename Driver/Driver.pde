@@ -29,6 +29,10 @@ void setup() {
   void draw() {
   if (clickCounter == 0) {
     startScreen();
+    
+    if (mouseX > (displayWidth / 2) - 100 && mouseX < (displayWidth / 2) + 100 && mouseY < (displayHeight / 2) + 145 && mouseY > (displayHeight / 2) + 85) {
+      startScreen1();
+    }
   } else if (clickCounter == 1) {
     surveyScreen();
   } else if (clickCounter == 2) {
@@ -39,7 +43,9 @@ void setup() {
 }
 
 void mouseClicked() {
-  clickCounter++; //Counts the total number of clicks
+  if (mouseX > (displayWidth / 2) - 100 && mouseX < (displayWidth / 2) + 100 && mouseY < (displayHeight / 2) + 145 && mouseY > (displayHeight / 2) + 85) {
+    clickCounter++;
+  }
 }
 
 //Runs the initial screen 
@@ -55,7 +61,20 @@ void startScreen() {
   textSize(18);
   text("the realization that everyone has a story", displayWidth / 2, (displayHeight / 2) + 45);
   textSize(15);
-  text("click anywhere to begin", displayWidth / 2, (displayHeight / 2) + 120);
+  text("click here to begin", displayWidth / 2, (displayHeight / 2) + 120);
+  noFill();
+  stroke(255);
+  rect((displayWidth / 2) - 100, (displayHeight / 2) + 85, 200, 60);
+}
+
+void startScreen1() {
+  //startScreen();
+  fill(255);
+  stroke(255);
+  rect((displayWidth / 2) - 100, (displayHeight / 2) + 85, 200, 60);
+  fill(0);
+  textSize(15);
+  text("click here to begin", displayWidth / 2, (displayHeight / 2) + 120);
 }
 
 //Runs the screen with the survey questions that determines
