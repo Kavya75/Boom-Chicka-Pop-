@@ -6,6 +6,7 @@ class Bubble extends PVector {
   int yDirection; 
   int xDirection;
   String i;
+  
 
   
   Bubble() {
