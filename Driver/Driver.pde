@@ -209,7 +209,7 @@ void instrucScreen() {
 
 //Runs the gameplay screen
 void gamePlayScreen() {
-  background(0);
+  background(255);
   noStroke();
   mainBub.set(mouseX, mouseY);
   mainBub.display();
@@ -268,18 +268,9 @@ void conversationScreen() {
   reader = createReader(listOfFileNames[num]);
   textSize(32);
   fill(0);
-  text("im gonna die!!!!!!!", width/4, 160);
-  /* try {
-   while ((line = reader.readLine()) != null) {
-   background(150, 130, 50);
-   text(line, width/4, height/2);
-   delay(800);
-   }
-   reader.close();
-   } 
-   catch (IOException e) {
-   e.printStackTrace();
-   } */
+  String[] lines = loadStrings("convo1.txt");
+  for(int i = 0; i < lines.length; i++) 
+    text(lines[i], width/3, height/3 + (i*35)); 
 
   if (keyPressed) { 
     if (key == ENTER)

@@ -1,17 +1,11 @@
 hello, what's your name? 
 my name is ____
 this is my story
-blahblahblahblahblah
-well i dont know what 
-to say here 
-call my name 
-to guide you 
-if you give your heart 
-i'll trade mine 
-sorry
-these are the song lyrics
-to a song im listening 
-to right now 
-from my friend's spotify playlist
-in order to create
-multiple lines
+we're going to have 
+stories here about people's experiences
+(hopefully) 
+as soon as we get it to work 
+because right now this part keeps breaking
+:( 
+press enter or press to continue
+
