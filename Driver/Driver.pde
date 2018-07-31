@@ -10,6 +10,8 @@ SoundFile file;
 int clickCounter = 0;
 int enterCounter = 0; //Keeps track of how many times user hits ENTER for the survey page
 int surveyPoints = 0;
+int userInput1, userInput2, userInput3, userInput4 = 0;
+int totalPoints = 0;
 
 Bubble other = new Bubble(200, color(60, 180, 20, 150), displayWidth/2, displayHeight/2); 
 Bubble[] allBubbles = new Bubble[5]; 
@@ -18,7 +20,6 @@ BufferedReader reader;
 
 String line = "hi";
 String[] listOfFileNames = {"convo1.txt"};
-int userInput1, userInput2, userInput3, userInput4 = 0;
 
 boolean bubbleBumped = false;
 boolean onSurveyPage = false;
@@ -191,6 +192,24 @@ void instrucScreen() {
 
 //Runs the gameplay screen
 void gamePlayScreen() {
+  
+  totalPoints += surveyPointCounter(userInput1);
+  totalPoints += surveyPointCounter(userInput2);
+  totalPoints += surveyPointCounter(userInput3);
+  totalPoints += surveyPointCounter(userInput4);
+  
+  if (totalPoints <= -5 && totalPoints >= -8) {
+    //Bubble expands 2x 
+  } else if (totalPoints <= -1 && totalPoints >= -4) {
+    //Bubble expands 1x
+  } else if (totalPoints == 0) {
+    //Bubble does not expand, basically don't need this else if statement but included to avoid confusion
+  } else if (totalPoints <= 4 && totalPoints >= 1) {
+    //Bubble shrinks 1x
+  } else if (totalPoints <= 8 && totalPoints >= 5) {
+    //Bubble shrinks 2x
+  }
+  
   background(255);
   Bubble b = new Bubble(150, color(181, 235, 255, 150), displayWidth / 2, displayHeight / 2);
   b.set(mouseX, mouseY);
