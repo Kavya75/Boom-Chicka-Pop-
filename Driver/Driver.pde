@@ -34,7 +34,11 @@ public enum Screen {
 Screen screen = Screen.START_SCREEN;
 
 void setup() {
-  file = new SoundFile(this, "windmill.mp3");
+  String[] musicNames = {"aspen-starlight.mp3", "breeze.mp3", "colors.mp3", 
+      "colors.mp3", "dawn-light.mp3", "farewell.mp3", "here.mp3", "looking-up.mp3", 
+       "oak.mp3", "ocean-of-sky.mp3", "skylark.mp3", "windmill.mp3"};
+  int rando = int(random(0, musicNames.length)); 
+  file = new SoundFile(this, musicNames[rando]);
   file.play();
 
   fullScreen();
@@ -233,11 +237,9 @@ void gamePlayScreen() {
         float collideBubbleRadius = collideBubble.getRadius();
 
         screen = Screen.CONVO_SCREEN;
-        
+        collideBubble.setRadius(0);
         if (mainBub.getRadius() <= 500 && mainBub.getRadius() >= 50) {
-          
           mainBub.setRadius(mainBub.getRadius() + (collideBubbleRadius / 2));
-          collideBubble.setRadius(0);
         }
         
         bubbleBumped = false;
