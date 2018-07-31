@@ -3,6 +3,7 @@ import processing.sound.*;
 
 PFont myFont;
 PImage img;
+PImage bg;
 SoundFile file;
 
 int clickCounter = 0; //Keeps track of the number of clicks
@@ -42,10 +43,10 @@ void setup() {
   file.play();
 
   fullScreen();
+  bg = loadImage("SonderBackground.jpg");
   background(0);
   smooth(8);
   noStroke();
-
   initializeBubbles();
   img = loadImage("bear.png");
 }
@@ -156,7 +157,8 @@ int surveyPointCounter(int userInput) {
 
 //Runs the initial screen 
 void startScreen() {
-  background(0);
+  background(bg);
+  image(bg, width, height);
   myFont = createFont("Georgia", 100, true);
   textFont(myFont);
   textAlign(CENTER);
