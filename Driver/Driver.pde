@@ -227,10 +227,6 @@ void gamePlayScreen() {
     if (allBubbles[i].getRadius() != 0) {
       bubbleBumped = allBubbles[i].checkCollision(mainBub);
 
-
-      //Bubble collideBubble = allBubbles[i];
-      //float collideBubbleRadius = collideBubble.getRadius();
-
       if (bubbleBumped) {
         Bubble collideBubble = allBubbles[i];
         float collideBubbleRadius = collideBubble.getRadius();
