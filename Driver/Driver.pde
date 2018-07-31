@@ -33,8 +33,8 @@ public enum Screen {
 Screen screen = Screen.START_SCREEN;
 
 void setup() {
-  file = new SoundFile(this, "Music.mp3");
-  file.play();
+  //file = new SoundFile(this, "Music.mp3");
+  //file.play();
 
   fullScreen();
   background(0);
@@ -75,7 +75,7 @@ void mouseClicked() {
     screen = Screen.GAMEPLAY_SCREEN;
 
   if (onSurveyPage == true) {
-    if (mouseX > (displayWidth / 2) - 198 && mouseX < (displayWidth / 2) - 168 && mouseY > (displayHeight / 2) - 225 && mouseY < (displayHeight / 2) - 195) {
+    if (mouseX > (displayWidth / 2) + 110 && mouseX < (displayWidth / 2) + 140 && mouseY > (displayHeight / 2) - 225 && mouseY < (displayHeight / 2) - 195) {
       if (userInput1 < 4 && userInput1 > -1)
         userInput1++;
       else
@@ -89,14 +89,14 @@ void mouseClicked() {
         userInput2 = 1;
     }
 
-    if (mouseX > (displayWidth / 2) - 29 && mouseX < (displayWidth / 2) + 1 && mouseY > (displayHeight / 2) - 83 && mouseY < (displayHeight / 2) - 53) {
+    if (mouseX > (displayWidth / 2) + 195 && mouseX < (displayWidth / 2) + 225 && mouseY > (displayHeight / 2) - 83 && mouseY < (displayHeight / 2) - 53) {
       if (userInput3 < 4 && userInput3 > -1)
         userInput3++;
       else
         userInput3 = 1;
     }
 
-    if (mouseX > (displayWidth / 2) + 175 && mouseX < (displayWidth / 2) + 205 && mouseY > (displayHeight / 2) - 13 && mouseY < (displayHeight / 2) + 17) {
+    if (mouseX > (displayWidth / 2) + 297 && mouseX < (displayWidth / 2) + 327 && mouseY > (displayHeight / 2) - 13 && mouseY < (displayHeight / 2) + 17) {
       if (userInput4 < 4 && userInput4 > -1)
         userInput4++;
       else
@@ -152,14 +152,14 @@ void surveyScreen() {
   textSize(18);
   text("Click on the blank to change the values. 1 - strongly disagree, 2 - somewhat disagree, 3 - somewhat agree, 4 - strongly agree.", displayWidth / 2, 130);
 
-  textAlign(LEFT);
+  textAlign(CENTER);
   textSize(30);
 
   if (enterCounter >= 1) {
-    text("1. I enjoy solitude: " + userInput1, displayWidth / 6.5, 200);
-    text("2. I feel drained after spending time with a large group of people: " + userInput2, displayWidth / 6.5, 270);
-    text("3. I have a smaller social circle: " + userInput3, displayWidth / 6.5, 340);
-    text("4. I like to work through problems on my own: " + userInput4, displayWidth / 6.5, 410);
+    text("1. I enjoy solitude: " + userInput1, displayWidth / 2, 200);
+    text("2. I feel drained after spending time with a large group of people: " + userInput2, displayWidth / 2, 270);
+    text("3. I have a smaller social circle: " + userInput3, displayWidth / 2, 340);
+    text("4. I like to work through problems on my own: " + userInput4, displayWidth / 2, 410);
   }
 
   if (userInput1 != 0 && userInput2 != 0 && userInput3 != 0 && userInput4 != 0) {
