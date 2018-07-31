@@ -2,58 +2,64 @@
 //Use '150' for transparency so that the bubble isn't completely solid (ex: color(60, 180, 20, 150));
 
 import processing.sound.*;
+
 PFont myFont;
 PImage img;
 SoundFile file;
+
 int clickCounter = 0;
 int enterCounter = 0; //Keeps track of how many times user hits ENTER for the survey page
 int surveyPoints = 0;
+
 Bubble other = new Bubble(200, color(60, 180, 20, 150), displayWidth/2, displayHeight/2); 
 Bubble[] allBubbles = new Bubble[5]; 
+
 BufferedReader reader;
+
 String line = "hi";
 String[] listOfFileNames = {"convo1.txt"};
-String userInput = "--"; //Going to be the number value displayed in the survey screen that represents the user's input
+int userInput1, userInput2, userInput3, userInput4 = 0;
+
 boolean bubbleBumped = false;
 boolean onSurveyPage = false;
 boolean q1, q2, q3, q4 = false; //Are used to display the survey questions one by one
+
 public enum Screen {
-    START_SCREEN, 
-    SURVEY_SCREEN,
-    INSTRUC_SCREEN,
-    GAMEPLAY_SCREEN,
+  START_SCREEN, 
+    SURVEY_SCREEN, 
+    INSTRUC_SCREEN, 
+    GAMEPLAY_SCREEN, 
     CONVO_SCREEN
 }
+
 Screen screen = Screen.START_SCREEN;
 
 void setup() {
-  file = new SoundFile(this, "Music.mp3");
-  file.play();
+  //file = new SoundFile(this, "Music.mp3");
+  //file.play();
 
   fullScreen();
   background(0);
   smooth(8);
-  initializeBubbles();
   noStroke();
 
+  initializeBubbles();
   img = loadImage("bear.png");
 }
 
 void draw() {
-  if(screen == Screen.START_SCREEN)
-     startScreen();
-  else if(screen == Screen.SURVEY_SCREEN) {
-      onSurveyPage = true;
-     surveyScreen();
-  }
-  else if(screen == Screen.INSTRUC_SCREEN) {
-     onSurveyPage = false;
-     instrucScreen();
-  }
-  else if(screen == Screen.GAMEPLAY_SCREEN)
-     gamePlayScreen();
-  else if(screen == Screen.CONVO_SCREEN) 
-     conversationScreen();
+  if (screen == Screen.START_SCREEN)
+    startScreen();
+  else if (screen == Screen.SURVEY_SCREEN) {
+    onSurveyPage = true;
+    surveyScreen();
+  } else if (screen == Screen.INSTRUC_SCREEN) {
+    onSurveyPage = false;
+    instrucScreen();
+  } else if (screen == Screen.GAMEPLAY_SCREEN)
+    gamePlayScreen();
+  else if (screen == Screen.CONVO_SCREEN) 
+    conversationScreen();
 }
 
 void mouseClicked() {
@@ -61,45 +67,66 @@ void mouseClicked() {
     clickCounter++;
   }
 
-  if(clickCounter == 0)
+  if (clickCounter == 0)
     screen = Screen.START_SCREEN;
-  else if(clickCounter == 1)
+  else if (clickCounter == 1)
     screen = Screen.SURVEY_SCREEN;
-  else if(clickCounter == 2)
+  else if (clickCounter == 2)
     screen = Screen.INSTRUC_SCREEN; 
-  else if(clickCounter == 3)
+  else if (clickCounter == 3)
     screen = Screen.GAMEPLAY_SCREEN;
+
+  if (onSurveyPage == true) {
+    if (mouseX > (displayWidth / 2) - 198 && mouseX < (displayWidth / 2) - 168 && mouseY > (displayHeight / 2) - 225 && mouseY < (displayHeight / 2) - 195) {
+      if (userInput1 < 4 && userInput1 > -1)
+        userInput1++;
+      else
+        userInput1 = 1;
+    }
+
+    if (mouseX > (displayWidth / 2) + 418 && mouseX < (displayWidth / 2) + 448 && mouseY > (displayHeight / 2) - 154 && mouseY < (displayHeight / 2) - 124) {
+      if (userInput2 < 4 && userInput2 > -1)
+        userInput2++;
+      else
+        userInput2 = 1;
+    }
+
+    if (mouseX > (displayWidth / 2) - 29 && mouseX < (displayWidth / 2) + 1 && mouseY > (displayHeight / 2) - 83 && mouseY < (displayHeight / 2) - 53) {
+      if (userInput3 < 4 && userInput3 > -1)
+        userInput3++;
+      else
+        userInput3 = 1;
+    }
+
+    if (mouseX > (displayWidth / 2) + 175 && mouseX < (displayWidth / 2) + 205 && mouseY > (displayHeight / 2) - 13 && mouseY < (displayHeight / 2) + 17) {
+      if (userInput4 < 4 && userInput4 > -1)
+        userInput4++;
+      else
+        userInput4 = 1;
+    }
+  }
 }
 
 void keyPressed() {
   if (onSurveyPage == true) {
     if (keyCode == ENTER) {
       enterCounter++;
-      if (enterCounter == 1) {
-        q1 = true;
-      } else if (enterCounter == 2) {
-        q2 = true;
-      } else if (enterCounter == 3) {
-        q3 = true;
-      } else if (enterCounter == 4) {
-        q4 = true;
-      }
-    } 
-    
-    if (key == '1') {
-      surveyPoints -= 2;
-      userInput = "1";
-    } else if (key == '2') {
-      surveyPoints--;
-      userInput = "2";
-    } else if (key == '3') {
-      surveyPoints++;
-      userInput = "3";
-    } else if (key == '4') {
-      surveyPoints++;
-      userInput = "4";
     }
   }
+}
+
+//Checks if ONE input is either a 1, 2, 3, or 4 
+int surveyPointCounter(int userInput) {
+  int answer = 0;
+  if (userInput == 1)
+    answer -= 2;
+  else if (userInput == 2)
+    answer -= 1;
+  else if (userInput == 3)
+    answer += 1;
+  else if (userInput == 4)
+    answer += 2;
+  return answer;
 }
 
 //Runs the initial screen 
@@ -112,7 +139,7 @@ void startScreen() {
   text("S  O  N  D  E  R", displayWidth / 2, displayHeight / 2);
   textSize(18);
   text("the realization that everyone has a story", displayWidth / 2, (displayHeight / 2) + 45);
-  
+
   buttonCreator("click here to begin");
 }
 
@@ -126,25 +153,21 @@ void surveyScreen() {
   textSize(50);
   text("SURVEY", displayWidth / 2, 90);
   textSize(18);
-  text("Press 1 for strongly disagree, 2 for somewhat disagree, 3 for somewhat agree, 4 for strongly agree. Hit 'ENTER' to continue.", displayWidth / 2, 130);
+  text("Click on the blank to change the values. 1 - strongly disagree, 2 - somewhat disagree, 3 - somewhat agree, 4 - strongly agree.", displayWidth / 2, 130);
 
   textAlign(LEFT);
   textSize(30);
-  
-  if (q1 == true) {
-    text("1. I enjoy solitude: " + userInput, displayWidth / 6.5, 200);  
+
+  if (enterCounter >= 1) {
+    text("1. I enjoy solitude: " + userInput1, displayWidth / 6.5, 200);
+    text("2. I feel drained after spending time with a large group of people: " + userInput2, displayWidth / 6.5, 270);
+    text("3. I have a smaller social circle: " + userInput3, displayWidth / 6.5, 340);
+    text("4. I like to work through problems on my own: " + userInput4, displayWidth / 6.5, 410);
   }
-  if (q2 == true) {
-    text("2. I feel drained after spending time with a large group of people: " + userInput, displayWidth / 6.5, 270);
+
+  if (userInput1 != 0 && userInput2 != 0 && userInput3 != 0 && userInput4 != 0) {
+    buttonCreator("click here to continue");
   }
-  if (q3 == true) {
-    text("3. I have a smaller social circle: " + userInput, displayWidth / 6.5, 340);
-  }
-  if (q4 == true) {
-    text("4. I like to work through problems on my own: " + userInput, displayWidth / 6.5, 410);
-  }
-  
-  buttonCreator("click here to continue");
 }
 
 //Runs the instructions screen
@@ -162,7 +185,7 @@ void instrucScreen() {
   text("and the person in their bubble.", displayWidth / 8, 260);
   text("3. After you talk to the person, your bubble will either shrink or expand.", displayWidth / 8, 310);
   text("4. The goal is to get as many bubbles as possible and pop your bubble.", displayWidth / 8, 360);
-  
+
   buttonCreator("click here to begin");
 }
 
@@ -173,7 +196,6 @@ void gamePlayScreen() {
   b.set(mouseX, mouseY);
   b.display();
 
-
   for (int i = 0; i < allBubbles.length; i++) { 
     allBubbles[i].checkXEdges(displayWidth); 
     allBubbles[i].checkYEdges(displayHeight);
@@ -181,24 +203,19 @@ void gamePlayScreen() {
     allBubbles[i].setY(allBubbles[i].getY() + allBubbles[i].getYDir()); 
     allBubbles[i].set(allBubbles[i].getX(), allBubbles[i].getY()); 
     allBubbles[i].display();
-
   }
-  
-   for(int i = 0; i < allBubbles.length; i++) {
+
+  for (int i = 0; i < allBubbles.length; i++) {
     bubbleBumped = false;
-    if(allBubbles[i].getRadius() != 0) {
+    if (allBubbles[i].getRadius() != 0) {
       bubbleBumped = allBubbles[i].checkCollision(b);
-      //bubbleBumped = allBubbles[i].getBumped();
- 
-      if(bubbleBumped) {
+
+      if (bubbleBumped) {
         screen = Screen.CONVO_SCREEN;
-       
         bubbleBumped = false;
       }
     }
-   }
-    
-    
+  }
 }
 
 
@@ -227,24 +244,23 @@ void conversationScreen() {
   text("HLAKSJFLKSADF", width/4, 40);
   text("alskjdflaskdf", width/4, 80);
   text("asdlkfjsadf", width/4, 120);
-  
+
   text("im gonna die!!!!!!!", width/4, 160);
- /* try {
-    while ((line = reader.readLine()) != null) {
-      background(150, 130, 50);
-      text(line, width/4, height/2);
-      delay(800);
-    }
-    reader.close();
-  } 
-  catch (IOException e) {
-    e.printStackTrace();
-  } */
-  
-   if(keyPressed) { 
-    if(key == ENTER)
-       screen = Screen.GAMEPLAY_SCREEN;
- 
+  /* try {
+   while ((line = reader.readLine()) != null) {
+   background(150, 130, 50);
+   text(line, width/4, height/2);
+   delay(800);
+   }
+   reader.close();
+   } 
+   catch (IOException e) {
+   e.printStackTrace();
+   } */
+
+  if (keyPressed) { 
+    if (key == ENTER)
+      screen = Screen.GAMEPLAY_SCREEN;
   }
 }
 
@@ -259,9 +275,9 @@ void buttonCreator(String buttonLabel) {
     textSize(15);
     text(buttonLabel, displayWidth / 2, (displayHeight / 2) + 120);
   }
-    textSize(15);
-    text(buttonLabel, displayWidth / 2, (displayHeight / 2) + 120);
-    noFill();
-    stroke(255);
-    rect((displayWidth / 2) - 100, (displayHeight / 2) + 85, 200, 60);
+  textSize(15);
+  text(buttonLabel, displayWidth / 2, (displayHeight / 2) + 120);
+  noFill();
+  stroke(255);
+  rect((displayWidth / 2) - 100, (displayHeight / 2) + 85, 200, 60);
 }
