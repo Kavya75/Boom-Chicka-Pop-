@@ -192,6 +192,10 @@ void instrucScreen() {
 
 //Runs the gameplay screen
 void gamePlayScreen() {
+  background(255);
+  Bubble b = new Bubble(150, color(181, 235, 255, 150), displayWidth / 2, displayHeight / 2);
+  b.set(mouseX, mouseY);
+  b.display();
   
   totalPoints += surveyPointCounter(userInput1);
   totalPoints += surveyPointCounter(userInput2);
@@ -199,21 +203,16 @@ void gamePlayScreen() {
   totalPoints += surveyPointCounter(userInput4);
   
   if (totalPoints <= -5 && totalPoints >= -8) {
-    //Bubble expands 2x 
+    b.expandBubble(2);
   } else if (totalPoints <= -1 && totalPoints >= -4) {
-    //Bubble expands 1x
+    b.expandBubble(1);
   } else if (totalPoints == 0) {
     //Bubble does not expand, basically don't need this else if statement but included to avoid confusion
   } else if (totalPoints <= 4 && totalPoints >= 1) {
-    //Bubble shrinks 1x
+    b.shrinkBubble(1);
   } else if (totalPoints <= 8 && totalPoints >= 5) {
-    //Bubble shrinks 2x
+    b.shrinkBubble(2);
   }
-  
-  background(255);
-  Bubble b = new Bubble(150, color(181, 235, 255, 150), displayWidth / 2, displayHeight / 2);
-  b.set(mouseX, mouseY);
-  b.display();
 
   for (int i = 0; i < allBubbles.length; i++) { 
     allBubbles[i].checkXEdges(displayWidth); 

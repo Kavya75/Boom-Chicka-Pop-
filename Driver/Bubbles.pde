@@ -32,6 +32,18 @@ class Bubble extends PVector {
     xDirection = yDir;
   }
   
+  void expandBubble(int expandRate) {
+    while (radius <= 50) {
+      radius += expandRate;
+    }
+  }
+  
+  void shrinkBubble(int shrinkRate) {
+    while (radius >= 10) {
+      radius -= shrinkRate;
+    }
+  }
+  
   void display() {
     fill(col);
     ellipse(super.x, super.y, radius, radius);
