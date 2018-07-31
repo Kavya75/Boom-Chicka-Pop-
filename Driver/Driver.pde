@@ -15,7 +15,7 @@ Bubble[] allBubbles = new Bubble[5];
 
 BufferedReader reader;
 
-String line = "hi";
+//String line = "hi";
 String[] listOfFileNames = {"convo1.txt"};
 
 boolean bubbleBumped = false;
@@ -175,11 +175,11 @@ void instrucScreen() {
   textSize(50);
   text("INSTRUCTIONS", displayWidth / 2, (displayHeight / 2) - 310);
   textSize(30);
-  text("1. Move your bubble around using the mouse.", displayWidth / 8, (displayHeight / 2) - 240);
-  text("2. When you bump in a bubble, a conversation will take place between you", displayWidth / 8, (displayHeight / 2) - 180);
-  text("and the person in their bubble.", displayWidth / 8, (displayHeight / 2) - 120);
-  text("3. After you talk to the person, your bubble will either shrink or expand.", displayWidth / 8, (displayHeight / 2) - 60);
-  text("4. The goal is to get as many bubbles as possible and pop your bubble.", displayWidth / 8, (displayHeight / 2));
+  text("1. Move your bubble around using the mouse.", displayWidth / 2, (displayHeight / 2) - 240);
+  text("2. When you bump in a bubble, a conversation will take place between you", displayWidth / 2, (displayHeight / 2) - 180);
+  text("and the person in their bubble.", displayWidth / 2, (displayHeight / 2) - 120);
+  text("3. After you talk to the person, your bubble will either shrink or expand.", displayWidth / 2, (displayHeight / 2) - 60);
+  text("4. The goal is to get as many bubbles as possible and pop your bubble.", displayWidth / 2, (displayHeight / 2));
 
   buttonCreator("click here to begin");
 }
