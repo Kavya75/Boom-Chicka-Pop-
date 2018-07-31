@@ -229,7 +229,11 @@ void gamePlayScreen() {
       //float collideBubbleRadius = collideBubble.getRadius();
       
       if (bubbleBumped) {
+        Bubble collideBubble = allBubbles[i];
+        float collideBubbleRadius = collideBubble.getRadius();
+        
         screen = Screen.CONVO_SCREEN;
+        b.setRadius(b.getRadius() + collideBubbleRadius);
         bubbleBumped = false;
       }
     }

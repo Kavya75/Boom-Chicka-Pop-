@@ -98,7 +98,7 @@ class Bubble extends PVector {
     return radius;
   }
   
-  void setRadius(int r) {
+  void setRadius(float r) {
     radius = r; 
   }
   
