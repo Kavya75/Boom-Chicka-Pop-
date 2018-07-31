@@ -75,28 +75,28 @@ void mouseClicked() {
     screen = Screen.GAMEPLAY_SCREEN;
 
   if (onSurveyPage == true) {
-    if (mouseX > (displayWidth / 2) + 110 && mouseX < (displayWidth / 2) + 140 && mouseY > (displayHeight / 2) - 225 && mouseY < (displayHeight / 2) - 195) {
+    if (mouseX > (displayWidth / 2) + 110 && mouseX < (displayWidth / 2) + 140 && mouseY > (displayHeight / 2) - 204 && mouseY < (displayHeight / 2) - 174) {
       if (userInput1 < 4 && userInput1 > -1)
         userInput1++;
       else
         userInput1 = 1;
     }
 
-    if (mouseX > (displayWidth / 2) + 418 && mouseX < (displayWidth / 2) + 448 && mouseY > (displayHeight / 2) - 154 && mouseY < (displayHeight / 2) - 124) {
+    if (mouseX > (displayWidth / 2) + 418 && mouseX < (displayWidth / 2) + 448 && mouseY > (displayHeight / 2) - 144 && mouseY < (displayHeight / 2) - 114) {
       if (userInput2 < 4 && userInput2 > -1)
         userInput2++;
       else
         userInput2 = 1;
     }
 
-    if (mouseX > (displayWidth / 2) + 195 && mouseX < (displayWidth / 2) + 225 && mouseY > (displayHeight / 2) - 83 && mouseY < (displayHeight / 2) - 53) {
+    if (mouseX > (displayWidth / 2) + 195 && mouseX < (displayWidth / 2) + 225 && mouseY > (displayHeight / 2) - 84 && mouseY < (displayHeight / 2) - 54) {
       if (userInput3 < 4 && userInput3 > -1)
         userInput3++;
       else
         userInput3 = 1;
     }
 
-    if (mouseX > (displayWidth / 2) + 297 && mouseX < (displayWidth / 2) + 327 && mouseY > (displayHeight / 2) - 13 && mouseY < (displayHeight / 2) + 17) {
+    if (mouseX > (displayWidth / 2) + 297 && mouseX < (displayWidth / 2) + 327 && mouseY > (displayHeight / 2) - 24 && mouseY < (displayHeight / 2) + 14) {
       if (userInput4 < 4 && userInput4 > -1)
         userInput4++;
       else
@@ -148,18 +148,18 @@ void surveyScreen() {
   textAlign(CENTER);
 
   textSize(50);
-  text("SURVEY", displayWidth / 2, 90);
+  text("SURVEY", displayWidth / 2, (displayHeight / 2) - 310);
   textSize(18);
-  text("Click on the blank to change the values. 1 - strongly disagree, 2 - somewhat disagree, 3 - somewhat agree, 4 - strongly agree.", displayWidth / 2, 130);
+  text("Hit enter to continue. Click on the blank to change the values. 1 - strongly disagree, 2 - somewhat disagree, 3 - somewhat agree, 4 - strongly agree.", displayWidth / 2, (displayHeight / 2) - 265);
 
   textAlign(CENTER);
   textSize(30);
 
   if (enterCounter >= 1) {
-    text("1. I enjoy solitude: " + userInput1, displayWidth / 2, 200);
-    text("2. I feel drained after spending time with a large group of people: " + userInput2, displayWidth / 2, 270);
-    text("3. I have a smaller social circle: " + userInput3, displayWidth / 2, 340);
-    text("4. I like to work through problems on my own: " + userInput4, displayWidth / 2, 410);
+    text("1. I enjoy solitude: " + userInput1, displayWidth / 2, (displayHeight / 2) - 180 );
+    text("2. I feel drained after spending time with a large group of people: " + userInput2, displayWidth / 2, (displayHeight / 2) - 120);
+    text("3. I have a smaller social circle: " + userInput3, displayWidth / 2, (displayHeight / 2) - 60); 
+    text("4. I like to work through problems on my own: " + userInput4, displayWidth / 2, (displayHeight / 2));
   }
 
   if (userInput1 != 0 && userInput2 != 0 && userInput3 != 0 && userInput4 != 0) {
@@ -173,15 +173,13 @@ void instrucScreen() {
   fill(255);
   textAlign(CENTER);
   textSize(50);
-  text("INSTRUCTIONS", displayWidth / 2, 90);
-
-  textAlign(LEFT);
+  text("INSTRUCTIONS", displayWidth / 2, (displayHeight / 2) - 310);
   textSize(30);
-  text("1. Move your bubble around using the mouse.", displayWidth / 8, 160);
-  text("2. When you bump in a bubble, a conversation will take place between you", displayWidth / 8, 220);
-  text("and the person in their bubble.", displayWidth / 8, 280);
-  text("3. After you talk to the person, your bubble will either shrink or expand.", displayWidth / 8, 340);
-  text("4. The goal is to get as many bubbles as possible and pop your bubble.", displayWidth / 8, 400);
+  text("1. Move your bubble around using the mouse.", displayWidth / 8, (displayHeight / 2) - 240);
+  text("2. When you bump in a bubble, a conversation will take place between you", displayWidth / 8, (displayHeight / 2) - 180);
+  text("and the person in their bubble.", displayWidth / 8, (displayHeight / 2) - 120);
+  text("3. After you talk to the person, your bubble will either shrink or expand.", displayWidth / 8, (displayHeight / 2) - 60);
+  text("4. The goal is to get as many bubbles as possible and pop your bubble.", displayWidth / 8, (displayHeight / 2));
 
   buttonCreator("click here to begin");
 }
@@ -226,6 +224,10 @@ void gamePlayScreen() {
     if (allBubbles[i].getRadius() != 0) {
       bubbleBumped = allBubbles[i].checkCollision(b);
 
+
+      //Bubble collideBubble = allBubbles[i];
+      //float collideBubbleRadius = collideBubble.getRadius();
+      
       if (bubbleBumped) {
         screen = Screen.CONVO_SCREEN;
         bubbleBumped = false;
