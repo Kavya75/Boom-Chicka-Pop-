@@ -10,7 +10,7 @@ int enterCounter = 0; //Keeps track of how many times user hits ENTER for the su
 int totalPoints = 0; //Keeps track of the total number of survey points
 int userInput1, userInput2, userInput3, userInput4 = 0; 
 
-Bubble other = new Bubble(200, color(60, 180, 20, 150), displayWidth/2, displayHeight/2); 
+Bubble mainBub = new Bubble(150, color(181, 235, 255, 150), displayWidth / 2, displayHeight / 2); 
 Bubble[] allBubbles = new Bubble[5]; 
 
 BufferedReader reader;
@@ -24,17 +24,17 @@ boolean q1, q2, q3, q4 = false; //Are used to display the survey questions one b
 
 public enum Screen {
   START_SCREEN, 
-  SURVEY_SCREEN, 
-  INSTRUC_SCREEN, 
-  GAMEPLAY_SCREEN, 
-  CONVO_SCREEN
+    SURVEY_SCREEN, 
+    INSTRUC_SCREEN, 
+    GAMEPLAY_SCREEN, 
+    CONVO_SCREEN
 }
 
 Screen screen = Screen.START_SCREEN;
 
 void setup() {
-  //file = new SoundFile(this, "Music.mp3");
-  //file.play();
+  file = new SoundFile(this, "Music.mp3");
+  file.play();
 
   fullScreen();
   background(0);
@@ -56,6 +56,28 @@ void draw() {
     instrucScreen();
   } else if (screen == Screen.GAMEPLAY_SCREEN) {
     gamePlayScreen();
+
+    //Totals up the points from the survey
+    while (isDone == false) {
+      totalPoints += surveyPointCounter(userInput1);
+      totalPoints += surveyPointCounter(userInput2);
+      totalPoints += surveyPointCounter(userInput3);
+      totalPoints += surveyPointCounter(userInput4);
+      isDone = true;
+    }
+
+    //Draws the shrinking or expanding bubble
+    if (mainBub.getRadius() <= 500 && mainBub.getRadius() >= 50) {
+      if (totalPoints <= -5 && totalPoints >= -8) {
+        mainBub.setRadius(mainBub.getRadius() + 0.5);
+      } else if (totalPoints <= -1 && totalPoints >= -4) {
+        mainBub.setRadius(mainBub.getRadius() + 0.25);
+      } else if (totalPoints <= 4 && totalPoints >= 1) {
+        mainBub.setRadius(mainBub.getRadius() - 0.25);
+      } else if (totalPoints <= 8 && totalPoints >= 5) {
+        mainBub.setRadius(mainBub.getRadius() - 0.5);
+      }
+    }
   } else if (screen == Screen.CONVO_SCREEN) 
     conversationScreen();
 }
@@ -188,27 +210,8 @@ void instrucScreen() {
 boolean isDone = false;
 void gamePlayScreen() {
   background(255);
-  Bubble b = new Bubble(150, color(181, 235, 255, 150), displayWidth / 2, displayHeight / 2);
-  b.set(mouseX, mouseY);
-  b.display();
-  
-  while (isDone == false) {
-    totalPoints += surveyPointCounter(userInput1);
-    totalPoints += surveyPointCounter(userInput2);
-    totalPoints += surveyPointCounter(userInput3);
-    totalPoints += surveyPointCounter(userInput4);
-    isDone = true;
-  }
-  
-  if (totalPoints <= -5 && totalPoints >= -8) {
-    b.expandBubble(2);
-  } else if (totalPoints <= -1 && totalPoints >= -4) {
-    b.expandBubble(1);
-  } else if (totalPoints <= 4 && totalPoints >= 1) {
-    b.shrinkBubble(1);
-  } else if (totalPoints <= 8 && totalPoints >= 5) {
-    b.shrinkBubble(2);
-  }
+  mainBub.set(mouseX, mouseY);
+  mainBub.display();
 
   for (int i = 0; i < allBubbles.length; i++) { 
     allBubbles[i].checkXEdges(displayWidth); 
@@ -222,18 +225,18 @@ void gamePlayScreen() {
   for (int i = 0; i < allBubbles.length; i++) {
     bubbleBumped = false;
     if (allBubbles[i].getRadius() != 0) {
-      bubbleBumped = allBubbles[i].checkCollision(b);
+      bubbleBumped = allBubbles[i].checkCollision(mainBub);
 
 
       //Bubble collideBubble = allBubbles[i];
       //float collideBubbleRadius = collideBubble.getRadius();
-      
+
       if (bubbleBumped) {
         Bubble collideBubble = allBubbles[i];
         float collideBubbleRadius = collideBubble.getRadius();
-        
+
         screen = Screen.CONVO_SCREEN;
-        b.setRadius(b.getRadius() + collideBubbleRadius);
+        mainBub.setRadius(mainBub.getRadius() + collideBubbleRadius);
         bubbleBumped = false;
       }
     }
