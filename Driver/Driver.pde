@@ -18,6 +18,7 @@ BufferedReader reader;
 //String line = "hi";
 String[] listOfFileNames = {"convo1.txt"};
 
+boolean isDone = false; //used in line 62 for totaling up the survey points only ONCE
 boolean bubbleBumped = false;
 boolean onSurveyPage = false;
 boolean q1, q2, q3, q4 = false; //Are used to display the survey questions one by one
@@ -207,9 +208,9 @@ void instrucScreen() {
 }
 
 //Runs the gameplay screen
-boolean isDone = false;
 void gamePlayScreen() {
-  background(255);
+  background(0);
+  noStroke();
   mainBub.set(mouseX, mouseY);
   mainBub.display();
 
@@ -232,7 +233,13 @@ void gamePlayScreen() {
         float collideBubbleRadius = collideBubble.getRadius();
 
         screen = Screen.CONVO_SCREEN;
-        mainBub.setRadius(mainBub.getRadius() + collideBubbleRadius);
+        
+        if (mainBub.getRadius() <= 500 && mainBub.getRadius() >= 50) {
+          
+          mainBub.setRadius(mainBub.getRadius() + (collideBubbleRadius / 2));
+          collideBubble.setRadius(0);
+        }
+        
         bubbleBumped = false;
       }
     }
