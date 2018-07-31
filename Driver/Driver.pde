@@ -34,7 +34,7 @@ public enum Screen {
 Screen screen = Screen.START_SCREEN;
 
 void setup() {
-  file = new SoundFile(this, "Music.mp3");
+  file = new SoundFile(this, "windmill.mp3");
   file.play();
 
   fullScreen();
