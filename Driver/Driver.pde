@@ -1,17 +1,14 @@
 //Main file that's going to run everything
-//Use '150' for transparency so that the bubble isn't completely solid (ex: color(60, 180, 20, 150));
-
 import processing.sound.*;
 
 PFont myFont;
 PImage img;
 SoundFile file;
 
-int clickCounter = 0;
+int clickCounter = 0; //Keeps track of the number of clicks
 int enterCounter = 0; //Keeps track of how many times user hits ENTER for the survey page
-int surveyPoints = 0;
-int userInput1, userInput2, userInput3, userInput4 = 0;
-int totalPoints = 0;
+int totalPoints = 0; //Keeps track of the total number of survey points
+int userInput1, userInput2, userInput3, userInput4 = 0; 
 
 Bubble other = new Bubble(200, color(60, 180, 20, 150), displayWidth/2, displayHeight/2); 
 Bubble[] allBubbles = new Bubble[5]; 
@@ -27,17 +24,17 @@ boolean q1, q2, q3, q4 = false; //Are used to display the survey questions one b
 
 public enum Screen {
   START_SCREEN, 
-    SURVEY_SCREEN, 
-    INSTRUC_SCREEN, 
-    GAMEPLAY_SCREEN, 
-    CONVO_SCREEN
+  SURVEY_SCREEN, 
+  INSTRUC_SCREEN, 
+  GAMEPLAY_SCREEN, 
+  CONVO_SCREEN
 }
 
 Screen screen = Screen.START_SCREEN;
 
 void setup() {
-  //file = new SoundFile(this, "Music.mp3");
-  //file.play();
+  file = new SoundFile(this, "Music.mp3");
+  file.play();
 
   fullScreen();
   background(0);
@@ -57,9 +54,9 @@ void draw() {
   } else if (screen == Screen.INSTRUC_SCREEN) {
     onSurveyPage = false;
     instrucScreen();
-  } else if (screen == Screen.GAMEPLAY_SCREEN)
+  } else if (screen == Screen.GAMEPLAY_SCREEN) {
     gamePlayScreen();
-  else if (screen == Screen.CONVO_SCREEN) 
+  } else if (screen == Screen.CONVO_SCREEN) 
     conversationScreen();
 }
 
@@ -144,8 +141,7 @@ void startScreen() {
   buttonCreator("click here to begin");
 }
 
-//Runs the screen with the survey questions that determines
-// if the user's bubble shrinks or expands initially
+//Runs the screen with the survey questions 
 void surveyScreen() {
   background(0);
   fill(255);
@@ -191,23 +187,25 @@ void instrucScreen() {
 }
 
 //Runs the gameplay screen
+boolean isDone = false;
 void gamePlayScreen() {
   background(255);
   Bubble b = new Bubble(150, color(181, 235, 255, 150), displayWidth / 2, displayHeight / 2);
   b.set(mouseX, mouseY);
   b.display();
   
-  totalPoints += surveyPointCounter(userInput1);
-  totalPoints += surveyPointCounter(userInput2);
-  totalPoints += surveyPointCounter(userInput3);
-  totalPoints += surveyPointCounter(userInput4);
+  while (isDone == false) {
+    totalPoints += surveyPointCounter(userInput1);
+    totalPoints += surveyPointCounter(userInput2);
+    totalPoints += surveyPointCounter(userInput3);
+    totalPoints += surveyPointCounter(userInput4);
+    isDone = true;
+  }
   
   if (totalPoints <= -5 && totalPoints >= -8) {
     b.expandBubble(2);
   } else if (totalPoints <= -1 && totalPoints >= -4) {
     b.expandBubble(1);
-  } else if (totalPoints == 0) {
-    //Bubble does not expand, basically don't need this else if statement but included to avoid confusion
   } else if (totalPoints <= 4 && totalPoints >= 1) {
     b.shrinkBubble(1);
   } else if (totalPoints <= 8 && totalPoints >= 5) {
@@ -236,7 +234,6 @@ void gamePlayScreen() {
   }
 }
 
-
 void initializeBubbles() { 
   for (int i = 0; i < allBubbles.length; i++) {
     int randomRadius = int(random(50, 100));
@@ -259,10 +256,6 @@ void conversationScreen() {
   reader = createReader(listOfFileNames[num]);
   textSize(32);
   fill(0);
-  text("HLAKSJFLKSADF", width/4, 40);
-  text("alskjdflaskdf", width/4, 80);
-  text("asdlkfjsadf", width/4, 120);
-
   text("im gonna die!!!!!!!", width/4, 160);
   /* try {
    while ((line = reader.readLine()) != null) {
