@@ -24,10 +24,10 @@ boolean q1, q2, q3, q4 = false; //Are used to display the survey questions one b
 
 public enum Screen {
   START_SCREEN, 
-    SURVEY_SCREEN, 
-    INSTRUC_SCREEN, 
-    GAMEPLAY_SCREEN, 
-    CONVO_SCREEN
+  SURVEY_SCREEN, 
+  INSTRUC_SCREEN, 
+  GAMEPLAY_SCREEN, 
+  CONVO_SCREEN
 }
 
 Screen screen = Screen.START_SCREEN;
