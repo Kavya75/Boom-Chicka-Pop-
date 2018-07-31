@@ -7,8 +7,6 @@ class Bubble extends PVector {
   int xDirection;
   String i;
   
-
-  
   Bubble() {
     radius = 10;
     col = color(0, 0, 0);
