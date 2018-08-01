@@ -6,6 +6,7 @@ PFont myFont;
 PImage img;
 PImage backgroundImg;
 PImage surveyImg;
+PImage instrImg;
 SoundFile file;
 AudioPlayer pop;
 Minim minim;
@@ -66,6 +67,9 @@ void setup() {
 
   surveyImg = loadImage("SurveyBackground.png");
   surveyImg.resize(displayWidth, displayHeight);
+  
+  instrImg = loadImage ("InstrBackground.png");
+  instrImg.resize(displayWidth, displayHeight);
 }
 
 void draw() {
@@ -240,7 +244,7 @@ void surveyScreen() {
 //Runs the instructions screen
 void instrucScreen() {
   onInstrucPage = true;
-  background(0);
+  background(instrImg);
   fill(255);
   textAlign(CENTER);
   isButton = false;
