@@ -35,6 +35,8 @@ boolean q1, q2, q3, q4 = false; //Used to display the survey questions one by on
 
 boolean allLinesRead = false;
 boolean screenSwitch = false;
+boolean option1 = false;
+boolean option2 = false;
 
 public enum Screen {
   START_SCREEN, 
@@ -351,17 +353,37 @@ void textScreen() {
   int num = int(random(0, 1)); 
   reader = createReader(listOfFileNames[num]);
   String[] lines = loadStrings("convo1.txt");
-
+  
   if (lineCounter < lines.length) {
-    delay(600);
+    
     textSize(32);
     fill(0);
     text(lines[lineCounter], displayWidth/2, displayHeight/8 + (lineCounter * 50));
-    lineCounter++;
-  } else {
+    text("press 1 or 2", displayWidth/2, displayHeight/8 + (lineCounter*50) + 20);
+    if(keyPressed) { 
+      if(key == '1') {
+        option1 = true;
+      }
+      else if(key == '2')
+        option2 = true;
+    }
+    if(option1) {
+      option1 = option2 = false;
+      lineCounter++;
+      delay(600);
+       
+    }
+    if(option2) {
+      option1 = option2 = false;
+      lineCounter+=2;
+      delay(600);
+    }
+  }
+  else {
     allLinesRead = true;
     isButton = true;
-    noBoxButtonCreator("testing", displayWidth/2, displayHeight/8 + (lineCounter * 50) + 50, 60, 20);
+    noBoxButtonCreator("testing", displayWidth/2, displayHeight/8 + (lineCounter * 50) + 50, "testing".length()*16, 32);
+ 
   }
 }
 
@@ -383,19 +405,34 @@ void buttonCreator(String buttonLabel) {
   rect((displayWidth / 2) - 100, (displayHeight / 2) + 85, 200, 60);
 }
 
+
 void noBoxButtonCreator(String buttonLabel, int buttonX, int buttonY, int buttonLength, int buttonHeight) {
   textAlign(CENTER);
-  if (mouseX > buttonX && mouseX < buttonX + buttonLength
-    && mouseY < buttonY + buttonHeight && mouseY > buttonHeight) {
 
+ 
+  if (mouseX > buttonX - buttonLength/2 && mouseX < buttonX + buttonLength/2
+    && mouseY < buttonY + buttonHeight/2 && mouseY > buttonY-buttonHeight/2) {
+    fill(10, 200, 80);
     stroke(10, 200, 80);
-    //rect((displayWidth / 2) - 100, (displayHeight / 2) + 85, 200, 60);
     //fill(0);
-    textSize(15);
-    text(buttonLabel, buttonX, buttonY);
-  } else {
-    textSize(15);
-    stroke(80, 5, 100);
+    textSize(32);
     text(buttonLabel, buttonX, buttonY);
   }
+  else {
+    textSize(32);
+    fill(80, 5, 100);
+    stroke(80, 5, 100);
+    text(buttonLabel, buttonX, buttonY);
+  
+  
+  }
+}
+
+  
+boolean mouseInBounds(int xPt, int yPt, int xDistance, int yDistance) { 
+  stroke(0);
+  if((mouseX > xPt - xDistance/2 && mouseX < xPt + xDistance/2) && 
+      (mouseY > yPt -  yDistance/2 && mouseY < yPt + yDistance/2)) 
+      return true;
+  return false;
 }
