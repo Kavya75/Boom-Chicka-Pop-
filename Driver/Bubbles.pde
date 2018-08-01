@@ -3,8 +3,8 @@ class Bubble extends PVector {
   color col;
   int xPos;
   int yPos;
-  int yDirection; 
-  int xDirection;
+  float xDirection;
+  float yDirection; 
   String i;
   
   Bubble() {
@@ -22,7 +22,7 @@ class Bubble extends PVector {
     xDirection = 5;
   }
   
-  Bubble(float r, color c, int x, int y, int xDir, int yDir) {
+  Bubble(float r, color c, int x, int y, float xDir, float yDir) {
     super(x, y);
     radius = r;
     col = c;
@@ -56,36 +56,44 @@ class Bubble extends PVector {
       yDirection *= -1;
   }
   
-  void setX(int xP) { super.x = xP; } 
+  void setX(float xP) { super.x = xP; } 
   
-  void setY(int yP) { super.y = yP; } 
+  void setY(float yP) { super.y = yP; } 
   
-  int getX() { 
-    return int(super.x); 
+  void setXDir(float xDir) {
+    xDirection = xDir;
   }
   
-  int getY() {
-    return int(super.y); 
+  void setYDir(float yDir) {
+    yDirection = yDir;  
   }
   
-  int getXDir() { 
-    return xDirection;
-  }
-  
-  int getYDir() { 
-    return yDirection;
+  void setRadius(float r) {
+    radius = r; 
   }
   
   void setColor(int one, int two, int three) { 
     col = color(one, two, three);
   }
   
-  float getRadius() { 
-    return radius;
+  float getX() { 
+    return int(super.x); 
   }
   
-  void setRadius(float r) {
-    radius = r; 
+  float getY() {
+    return int(super.y); 
+  }
+  
+  float getXDir() { 
+    return xDirection;
+  }
+  
+  float getYDir() { 
+    return yDirection;
+  }
+  
+  float getRadius() { 
+    return radius;
   }
   
   boolean checkCollision(Bubble otherBub) { 

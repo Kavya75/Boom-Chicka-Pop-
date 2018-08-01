@@ -92,15 +92,31 @@ void draw() {
     //Draws the shrinking or expanding bubble
     if (mainBub.getRadius() <= 500 && mainBub.getRadius() >= 50) {
       if (totalPoints <= -5 && totalPoints >= -8) {
-        mainBub.setRadius(mainBub.getRadius() + 0.5);
-      } else if (totalPoints <= -1 && totalPoints >= -4) {
         mainBub.setRadius(mainBub.getRadius() + 0.25);
+      } else if (totalPoints <= -1 && totalPoints >= -4) {
+        mainBub.setRadius(mainBub.getRadius() + 0.1);
       } else if (totalPoints <= 4 && totalPoints >= 1) {
-        mainBub.setRadius(mainBub.getRadius() - 0.25);
+        mainBub.setRadius(mainBub.getRadius() - 0.1);
       } else if (totalPoints <= 8 && totalPoints >= 5) {
-        mainBub.setRadius(mainBub.getRadius() - 0.5);
+        mainBub.setRadius(mainBub.getRadius() - 0.25);
       }
     }
+        
+    for (int i = 0; i < allBubbles.length; i++) {
+      
+      if (allBubbles[i].getXDir() <= 2.5 && allBubbles[i].getXDir() >= -0.5) {
+        allBubbles[i].setXDir(allBubbles[i].getXDir() + random(-0.25, 0.25));
+      } else {
+        allBubbles[i].setXDir(random(1, 4));
+      }
+      
+      if (allBubbles[i].getYDir() <= 2.5 && allBubbles[i].getYDir() >= -2.5) {
+        allBubbles[i].setYDir(allBubbles[i].getYDir() + random(-0.25, 0.25));
+      } else {
+        allBubbles[i].setYDir(random(1, 4));
+      }
+    }
+    
   } else if (screen == Screen.CONVO_SCREEN && convBGDisplayed == false) {
     delay(50);
     conversationScreen();
@@ -235,26 +251,25 @@ void instrucScreen() {
   textAlign(CENTER);
   isButton = false;
   textSize(50);
-  text("INSTRUCTIONS", displayWidth / 2, (displayHeight / 2) - 340);
+  text("INSTRUCTIONS", displayWidth / 2, (displayHeight / 2) - 310);
   textSize(20);
-  text("Hit enter to display instructions.", displayWidth/2, (displayHeight / 2) - 300);
+  text("Hit enter to display the instructions.", displayWidth/2, (displayHeight / 2) - 270);
   
   textSize(30);
   if(enterCounterInstruc >= 1) {
-    text("1. Move your bubble around using the mouse.", displayWidth / 2, (displayHeight / 2) - 240);
+    text("1. Use the mouse to move your bubble around.", displayWidth / 2, (displayHeight / 2) - 210);
   }
   
   if(enterCounterInstruc >= 2) {
-    text("2. When you bump in a bubble, a conversation will take place between you", displayWidth / 2, (displayHeight / 2) - 180);
-    text("and the person in their bubble.", displayWidth / 2, (displayHeight / 2) - 120);
+    text("2. When you bump in a bubble, a conversation will occur.", displayWidth / 2, (displayHeight / 2) - 130);
   }
   
   if(enterCounterInstruc >= 3) {
-    text("3. After you talk to the person, your bubble will either shrink or expand.", displayWidth / 2, (displayHeight / 2) - 60);
+    text("3. Afterwards, your bubble will either shrink or expand.", displayWidth / 2, (displayHeight / 2) - 50);
   }
   
   if(enterCounterInstruc >= 4) {
-    text("4. The goal is to get as many bubbles as possible and pop your bubble.", displayWidth / 2, (displayHeight / 2));
+    text("4. The goal is to get as many bubbles as possible and pop your bubble.", displayWidth / 2, (displayHeight / 2) + 30);
   }
 
   if(enterCounterInstruc >= 4) {
@@ -314,8 +329,8 @@ void initializeBubbles() {
     int randomGreenValue = int(random(10, 250)); 
     int randomXStart = int(random(10, displayWidth)); 
     int randomYStart = int(random(10, displayHeight)); 
-    int randomXDir = int(random(1, 7)); 
-    int randomYDir = int(random(1, 7)); 
+    float randomXDir = int(random(-2, 2)); 
+    float randomYDir = int(random(-2, 2)); 
     allBubbles[i] = new Bubble(randomRadius, color(randomRedValue, 
       randomGreenValue, randomBlueValue, 150), randomXStart, randomYStart, 
       randomXDir, randomYDir);
