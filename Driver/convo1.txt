@@ -1,11 +1,5 @@
 hello, what's your name? 
 my name is ____
 this is my story
-we're going to have 
-stories here about people's experiences
-(hopefully) 
-as soon as we get it to work 
-because right now this part keeps breaking
-:( 
-click to continue
+
 

@@ -37,6 +37,7 @@ boolean allLinesRead = false;
 boolean screenSwitch = false;
 boolean option1 = false;
 boolean option2 = false;
+boolean mouseIn = false;
 
 public enum Screen {
   START_SCREEN, 
@@ -47,6 +48,11 @@ public enum Screen {
 }
 
 Screen screen = Screen.START_SCREEN;
+
+public enum UserOptions { 
+  END_CONVO, 
+  MORE_OPTIONS } 
+  UserOptions userchoice = UserOptions.MORE_OPTIONS;
 
 void setup() {
   String[] musicNames = {"aspen-starlight.mp3", "breeze.mp3", "colors.mp3", 
@@ -125,6 +131,11 @@ void mouseClicked() {
     clickCounter++;
   }
 
+  if(screen == Screen.CONVO_SCREEN && mouseIn && isButton) {
+    background(20, 40, 30);
+    println("this works");
+  }
+  
   if (clickCounter == 0)
     screen = Screen.START_SCREEN;
   else if (clickCounter == 1)
@@ -282,6 +293,7 @@ void instrucScreen() {
 void gamePlayScreen() {
 
   isButton = false;
+  mouseIn = false;
   background(255);
   noStroke();
   mainBub.set(mouseX, mouseY);
@@ -350,6 +362,7 @@ void conversationScreen() {
 
 //Displays the text from the text file line by line
 void textScreen() {
+  textAlign(CENTER); 
   int num = int(random(0, 1)); 
   reader = createReader(listOfFileNames[num]);
   String[] lines = loadStrings("convo1.txt");
@@ -358,6 +371,13 @@ void textScreen() {
     
     textSize(32);
     fill(0);
+    String temp = lines[lineCounter];
+    int characterSpace = 0;
+   /* for(int c = 0; c < temp.length()-1; c++) { 
+      text(temp.substring(c, c+1), displayWidth/2+characterSpace, displayHeight/8 + (lineCounter*50));
+      
+      characterSpace += 19; 
+    } */
     text(lines[lineCounter], displayWidth/2, displayHeight/8 + (lineCounter * 50));
     text("press 1 or 2", displayWidth/2, displayHeight/8 + (lineCounter*50) + 20);
     if(keyPressed) { 
@@ -383,7 +403,7 @@ void textScreen() {
     allLinesRead = true;
     isButton = true;
     noBoxButtonCreator("testing", displayWidth/2, displayHeight/8 + (lineCounter * 50) + 50, "testing".length()*16, 32);
- 
+    mouseInBounds(displayWidth/2, displayHeight/8 + (lineCounter * 50) + 50, "testing".length()*16, 32);
   }
 }
 
@@ -423,16 +443,17 @@ void noBoxButtonCreator(String buttonLabel, int buttonX, int buttonY, int button
     fill(80, 5, 100);
     stroke(80, 5, 100);
     text(buttonLabel, buttonX, buttonY);
-  
+    mouseIn = true;
   
   }
 }
 
   
-boolean mouseInBounds(int xPt, int yPt, int xDistance, int yDistance) { 
+void mouseInBounds(int xPt, int yPt, int xDistance, int yDistance) { 
   stroke(0);
   if((mouseX > xPt - xDistance/2 && mouseX < xPt + xDistance/2) && 
       (mouseY > yPt -  yDistance/2 && mouseY < yPt + yDistance/2)) 
-      return true;
-  return false;
+      mouseIn = true;
+  else
+    mouseIn = false;
 }
