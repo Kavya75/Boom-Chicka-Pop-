@@ -223,14 +223,16 @@ void surveyScreen() {
 
 //Runs the instructions screen
 void instrucScreen() {
-  onInstrucPage = true;
+    onInstrucPage = true;
   background(0);
   fill(255);
   textAlign(CENTER);
   isButton = false;
-  
   textSize(50);
-  text("INSTRUCTIONS", displayWidth / 2, (displayHeight / 2) - 310);
+  text("INSTRUCTIONS", displayWidth / 2, (displayHeight / 2) - 340);
+  textSize(20);
+  text("Hit enter to display instructions.", displayWidth/2, (displayHeight / 2) - 300);
+  
   textSize(30);
   if(enterCounterInstruc >= 1) {
     text("1. Move your bubble around using the mouse.", displayWidth / 2, (displayHeight / 2) - 240);
@@ -249,8 +251,10 @@ void instrucScreen() {
     text("4. The goal is to get as many bubbles as possible and pop your bubble.", displayWidth / 2, (displayHeight / 2));
   }
 
-  isButton = true;
-  buttonCreator("click here to begin");
+  if(enterCounterInstruc == 4) {
+    isButton = true;
+    buttonCreator("click here to begin");
+  }
 }
 
 //Runs the gameplay screen
