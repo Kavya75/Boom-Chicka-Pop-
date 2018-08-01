@@ -7,5 +7,5 @@ stories here about people's experiences
 as soon as we get it to work 
 because right now this part keeps breaking
 :( 
-press enter or press to continue
+click to continue
 

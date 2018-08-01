@@ -3,26 +3,27 @@ import processing.sound.*;
 
 PFont myFont;
 PImage img;
-PImage bg;
+PImage backgroundImg;
 SoundFile file;
 
 int clickCounter = 0; //Keeps track of the number of clicks
 int enterCounter = 0; //Keeps track of how many times user hits ENTER for the survey page
 int totalPoints = 0; //Keeps track of the total number of survey points
 int userInput1, userInput2, userInput3, userInput4 = 0; 
+int lineCounter = 0;
 
 Bubble mainBub = new Bubble(150, color(181, 235, 255, 150), displayWidth / 2, displayHeight / 2); 
 Bubble[] allBubbles = new Bubble[5]; 
 
 BufferedReader reader;
 
-//String line = "hi";
 String[] listOfFileNames = {"convo1.txt"};
 
-boolean isDone = false; //used in line 62 for totaling up the survey points only ONCE
+boolean isDone = false; //Used in line 62 for totaling up the survey points only ONCE
 boolean bubbleBumped = false;
 boolean onSurveyPage = false;
-boolean q1, q2, q3, q4 = false; //Are used to display the survey questions one by one
+boolean convBGDisplayed = false; //Used to check if the conversation page background is drawn - Ensures that background is drawn once
+boolean q1, q2, q3, q4 = false; //Used to display the survey questions one by one
 
 public enum Screen {
   START_SCREEN, 
@@ -41,14 +42,16 @@ void setup() {
   int rando = int(random(0, musicNames.length)); 
   file = new SoundFile(this, musicNames[rando]);
   file.play();
-
+  
   fullScreen();
-  bg = loadImage("SonderBackground.jpg");
-  background(0);
+
   smooth(8);
   noStroke();
   initializeBubbles();
   img = loadImage("bear.png");
+  
+  backgroundImg = loadImage("SonderBackground.png");
+  backgroundImg.resize(displayWidth, displayHeight);
 }
 
 void draw() {
@@ -84,8 +87,13 @@ void draw() {
         mainBub.setRadius(mainBub.getRadius() - 0.5);
       }
     }
-  } else if (screen == Screen.CONVO_SCREEN) 
+  } else if (screen == Screen.CONVO_SCREEN && convBGDisplayed == false) {
+    delay(50);
     conversationScreen();
+    convBGDisplayed = true;
+  } else if (convBGDisplayed == true) {
+      textScreen();
+    } 
 }
 
 void mouseClicked() {
@@ -157,8 +165,7 @@ int surveyPointCounter(int userInput) {
 
 //Runs the initial screen 
 void startScreen() {
-  background(bg);
-  image(bg, width, height);
+  background(backgroundImg);
   myFont = createFont("Georgia", 100, true);
   textFont(myFont);
   textAlign(CENTER);
@@ -243,7 +250,6 @@ void gamePlayScreen() {
         if (mainBub.getRadius() <= 500 && mainBub.getRadius() >= 50) {
           mainBub.setRadius(mainBub.getRadius() + (collideBubbleRadius / 2));
         }
-        
         bubbleBumped = false;
       }
     }
@@ -266,19 +272,29 @@ void initializeBubbles() {
   }
 }
 
+//Sets the conversation background to a solid color and
+//  checks if user clicks or hits ENTER. If yes, will return to gamePlayScreen
 void conversationScreen() { 
   background(150, 130, 50);
+  if (keyPressed) {
+    if (key == ENTER) { 
+      screen = Screen.GAMEPLAY_SCREEN;
+    }
+  }
+}
+
+//Displays the text from the text file line by line
+void textScreen() {
   int num = int(random(0, 1)); 
   reader = createReader(listOfFileNames[num]);
-  textSize(32);
-  fill(0);
   String[] lines = loadStrings("convo1.txt");
-  for(int i = 0; i < lines.length; i++) 
-    text(lines[i], width/3, height/3 + (i*35)); 
-
-  if (keyPressed) { 
-    if (key == ENTER)
-      screen = Screen.GAMEPLAY_SCREEN;
+  
+  if (lineCounter < lines.length) {
+    delay(600);
+    textSize(32);
+    fill(0);
+    text(lines[lineCounter], displayWidth/2, displayHeight/8 + (lineCounter * 50));
+    lineCounter++;
   }
 }
 
