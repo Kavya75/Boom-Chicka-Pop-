@@ -37,18 +37,18 @@ boolean screenSwitch = false;
 
 public enum Screen {
   START_SCREEN, 
-  SURVEY_SCREEN, 
-  INSTRUC_SCREEN, 
-  GAMEPLAY_SCREEN, 
-  CONVO_SCREEN
+    SURVEY_SCREEN, 
+    INSTRUC_SCREEN, 
+    GAMEPLAY_SCREEN, 
+    CONVO_SCREEN
 }
 
 Screen screen = Screen.START_SCREEN;
 
 void setup() {
   String[] musicNames = {"aspen-starlight.mp3", "breeze.mp3", "colors.mp3", 
-      "colors.mp3", "dawn-light.mp3", "farewell.mp3", "here.mp3", "looking-up.mp3", 
-       "oak.mp3", "ocean-of-sky.mp3", "skylark.mp3", "windmill.mp3"};
+    "colors.mp3", "dawn-light.mp3", "farewell.mp3", "here.mp3", "looking-up.mp3", 
+    "oak.mp3", "ocean-of-sky.mp3", "skylark.mp3", "windmill.mp3"};
   int rando = int(random(0, musicNames.length)); 
   file = new SoundFile(this, musicNames[rando]);
   file.play();
@@ -60,10 +60,10 @@ void setup() {
   noStroke();
   initializeBubbles();
   img = loadImage("bear.png");
-  
+
   backgroundImg = loadImage("SonderBackground.png");
   backgroundImg.resize(displayWidth, displayHeight);
-  
+
   surveyImg = loadImage("SurveyBackground.png");
   surveyImg.resize(displayWidth, displayHeight);
 }
@@ -105,16 +105,13 @@ void draw() {
         mainBub.setRadius(mainBub.getRadius() - 0.25);
       }
     }
-       
-    
-    
   } else if (screen == Screen.CONVO_SCREEN && convBGDisplayed == false) {
     delay(50);
     conversationScreen();
     convBGDisplayed = true;
   } else if (convBGDisplayed == true) {
-      textScreen();
-    } 
+    textScreen();
+  }
 }
 
 void mouseClicked() {
@@ -130,7 +127,7 @@ void mouseClicked() {
     screen = Screen.INSTRUC_SCREEN; 
   else if (clickCounter == 3) {
     screen = Screen.GAMEPLAY_SCREEN;
-    clickCounter = -1; 
+    clickCounter = -1;
   }
 
   if (onSurveyPage == true) {
@@ -170,16 +167,16 @@ void keyPressed() {
       enterCounterSurvey++;
     }
   }
-  
-  if(onInstrucPage == true) {
-    if(key == ENTER || key == RETURN) {
-       enterCounterInstruc++;
+
+  if (onInstrucPage == true) {
+    if (key == ENTER || key == RETURN) {
+      enterCounterInstruc++;
     }
   }
   if ((key == ENTER || key == RETURN)&& allLinesRead) { 
-      screen = Screen.GAMEPLAY_SCREEN;
-      screenSwitch = true;
-    }
+    screen = Screen.GAMEPLAY_SCREEN;
+    screenSwitch = true;
+  }
 }
 
 //Checks if ONE input is either a 1, 2, 3, or 4 
@@ -242,7 +239,7 @@ void surveyScreen() {
 
 //Runs the instructions screen
 void instrucScreen() {
-    onInstrucPage = true;
+  onInstrucPage = true;
   background(0);
   fill(255);
   textAlign(CENTER);
@@ -251,25 +248,25 @@ void instrucScreen() {
   text("INSTRUCTIONS", displayWidth / 2, (displayHeight / 2) - 310);
   textSize(20);
   text("Hit enter to display the instructions.", displayWidth/2, (displayHeight / 2) - 270);
-  
+
   textSize(30);
-  if(enterCounterInstruc >= 1) {
+  if (enterCounterInstruc >= 1) {
     text("1. Use the mouse to move your bubble around.", displayWidth / 2, (displayHeight / 2) - 210);
   }
-  
-  if(enterCounterInstruc >= 2) {
+
+  if (enterCounterInstruc >= 2) {
     text("2. When you bump in a bubble, a conversation will occur.", displayWidth / 2, (displayHeight / 2) - 130);
   }
-  
-  if(enterCounterInstruc >= 3) {
+
+  if (enterCounterInstruc >= 3) {
     text("3. Afterwards, your bubble will either shrink or expand.", displayWidth / 2, (displayHeight / 2) - 50);
   }
-  
-  if(enterCounterInstruc >= 4) {
+
+  if (enterCounterInstruc >= 4) {
     text("4. The goal is to get as many bubbles as possible and pop your bubble.", displayWidth / 2, (displayHeight / 2) + 30);
   }
 
-  if(enterCounterInstruc >= 4) {
+  if (enterCounterInstruc >= 4) {
     isButton = true;
     buttonCreator("click here to begin");
   }
@@ -277,7 +274,7 @@ void instrucScreen() {
 
 //Runs the gameplay screen
 void gamePlayScreen() {
-  
+
   isButton = false;
   background(255);
   noStroke();
@@ -299,9 +296,12 @@ void gamePlayScreen() {
       bubbleBumped = allBubbles[i].checkCollision(mainBub);
 
       if (bubbleBumped) {
+        pop.play();
+        
         Bubble collideBubble = allBubbles[i];
         float collideBubbleRadius = collideBubble.getRadius();
-
+        
+        delay(75);
         screen = Screen.CONVO_SCREEN;
         collideBubble.setRadius(0);
         if (mainBub.getRadius() <= 500 && mainBub.getRadius() >= 50) {
@@ -347,20 +347,17 @@ void textScreen() {
   int num = int(random(0, 1)); 
   reader = createReader(listOfFileNames[num]);
   String[] lines = loadStrings("convo1.txt");
-  
+
   if (lineCounter < lines.length) {
     delay(600);
     textSize(32);
     fill(0);
     text(lines[lineCounter], displayWidth/2, displayHeight/8 + (lineCounter * 50));
     lineCounter++;
-  }
-  else {
+  } else {
     allLinesRead = true;
     isButton = true;
     noBoxButtonCreator("testing", displayWidth/2, displayHeight/8 + (lineCounter * 50) + 50, 60, 20);
-   
-    
   }
 }
 
@@ -386,19 +383,15 @@ void noBoxButtonCreator(String buttonLabel, int buttonX, int buttonY, int button
   textAlign(CENTER);
   if (mouseX > buttonX && mouseX < buttonX + buttonLength
     && mouseY < buttonY + buttonHeight && mouseY > buttonHeight) {
-    
+
     stroke(10, 200, 80);
     //rect((displayWidth / 2) - 100, (displayHeight / 2) + 85, 200, 60);
     //fill(0);
     textSize(15);
     text(buttonLabel, buttonX, buttonY);
-  }
-  else {
+  } else {
     textSize(15);
     stroke(80, 5, 100);
     text(buttonLabel, buttonX, buttonY);
-  
-  
   }
-  
 }
