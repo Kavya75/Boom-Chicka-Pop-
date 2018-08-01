@@ -20,10 +20,12 @@ BufferedReader reader;
 String[] listOfFileNames = {"convo1.txt"};
 
 boolean isDone = false; //Used in line 62 for totaling up the survey points only ONCE
+boolean isButton = false; //True if there is a button present on page, false if there is not
 boolean bubbleBumped = false;
 boolean onSurveyPage = false;
 boolean convBGDisplayed = false; //Used to check if the conversation page background is drawn - Ensures that background is drawn once
 boolean q1, q2, q3, q4 = false; //Used to display the survey questions one by one
+
 
 public enum Screen {
   START_SCREEN, 
@@ -41,7 +43,7 @@ void setup() {
        "oak.mp3", "ocean-of-sky.mp3", "skylark.mp3", "windmill.mp3"};
   int rando = int(random(0, musicNames.length)); 
   file = new SoundFile(this, musicNames[rando]);
-  file.play();
+  //file.play();
   
   fullScreen();
 
@@ -97,7 +99,7 @@ void draw() {
 }
 
 void mouseClicked() {
-  if (mouseX > (displayWidth / 2) - 100 && mouseX < (displayWidth / 2) + 100 && mouseY < (displayHeight / 2) + 145 && mouseY > (displayHeight / 2) + 85) {
+  if (isButton == true && mouseX > (displayWidth / 2) - 100 && mouseX < (displayWidth / 2) + 100 && mouseY < (displayHeight / 2) + 145 && mouseY > (displayHeight / 2) + 85) {
     clickCounter++;
   }
 
@@ -174,6 +176,7 @@ void startScreen() {
   textSize(18);
   text("the realization that everyone has a story", displayWidth / 2, (displayHeight / 2) + 45);
 
+  isButton = true;
   buttonCreator("click here to begin");
 }
 
@@ -182,11 +185,13 @@ void surveyScreen() {
   background(0);
   fill(255);
   textAlign(CENTER);
+  isButton = false;
 
   textSize(50);
   text("SURVEY", displayWidth / 2, (displayHeight / 2) - 310);
   textSize(18);
-  text("Hit enter to continue. Click on the blank to change the values. 1 - strongly disagree, 2 - somewhat disagree, 3 - somewhat agree, 4 - strongly agree.", displayWidth / 2, (displayHeight / 2) - 265);
+  text("Click on the zero to change the values. Hit 'ENTER' to display the questions.", displayWidth / 2, (displayHeight / 2) - 275);
+  text("KEY: 1 - strongly disagree, 2 - somewhat disagree, 3 - somewhat agree, 4 - strongly agree", displayWidth / 2, (displayHeight / 2) - 250);
 
   textAlign(CENTER);
   textSize(30);
@@ -199,6 +204,7 @@ void surveyScreen() {
   }
 
   if (userInput1 != 0 && userInput2 != 0 && userInput3 != 0 && userInput4 != 0) {
+    isButton = true;
     buttonCreator("click here to continue");
   }
 }
@@ -208,6 +214,8 @@ void instrucScreen() {
   background(0);
   fill(255);
   textAlign(CENTER);
+  isButton = false;
+  
   textSize(50);
   text("INSTRUCTIONS", displayWidth / 2, (displayHeight / 2) - 310);
   textSize(30);
@@ -217,11 +225,13 @@ void instrucScreen() {
   text("3. After you talk to the person, your bubble will either shrink or expand.", displayWidth / 2, (displayHeight / 2) - 60);
   text("4. The goal is to get as many bubbles as possible and pop your bubble.", displayWidth / 2, (displayHeight / 2));
 
+  isButton = true;
   buttonCreator("click here to begin");
 }
 
 //Runs the gameplay screen
 void gamePlayScreen() {
+  isButton = false;
   background(255);
   noStroke();
   mainBub.set(mouseX, mouseY);
