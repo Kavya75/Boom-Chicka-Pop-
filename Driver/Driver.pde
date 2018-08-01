@@ -4,6 +4,7 @@ import processing.sound.*;
 PFont myFont;
 PImage img;
 PImage backgroundImg;
+PImage surveyImg;
 SoundFile file;
 
 int clickCounter = 0; //Keeps track of the number of clicks
@@ -45,7 +46,7 @@ void setup() {
        "oak.mp3", "ocean-of-sky.mp3", "skylark.mp3", "windmill.mp3"};
   int rando = int(random(0, musicNames.length)); 
   file = new SoundFile(this, musicNames[rando]);
-  //file.play();
+  file.play();
   
   fullScreen();
 
@@ -56,6 +57,9 @@ void setup() {
   
   backgroundImg = loadImage("SonderBackground.png");
   backgroundImg.resize(displayWidth, displayHeight);
+  
+  surveyImg = loadImage("SurveyBackground.png");
+  surveyImg.resize(displayWidth, displayHeight);
 }
 
 void draw() {
@@ -190,7 +194,7 @@ void startScreen() {
 
 //Runs the screen with the survey questions 
 void surveyScreen() {
-  background(0);
+  background(surveyImg);
   fill(255);
   textAlign(CENTER);
   isButton = false;
