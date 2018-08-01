@@ -114,7 +114,7 @@ void draw() {
 }
 
 void mouseClicked() {
-  if (isButton == true && mouseX > (displayWidth / 2) - 100 && mouseX < (displayWidth / 2) + 100 && mouseY < (displayHeight / 2) + 145 && mouseY > (displayHeight / 2) + 85) {
+  if (clickCounter != -1 && isButton == true && mouseX > (displayWidth / 2) - 100 && mouseX < (displayWidth / 2) + 100 && mouseY < (displayHeight / 2) + 145 && mouseY > (displayHeight / 2) + 85) {
     clickCounter++;
   }
 
@@ -124,8 +124,10 @@ void mouseClicked() {
     screen = Screen.SURVEY_SCREEN;
   else if (clickCounter == 2)
     screen = Screen.INSTRUC_SCREEN; 
-  else if (clickCounter == 3)
+  else if (clickCounter == 3) {
     screen = Screen.GAMEPLAY_SCREEN;
+    clickCounter = -1; 
+  }
 
   if (onSurveyPage == true) {
     if (mouseX > (displayWidth / 2) + 110 && mouseX < (displayWidth / 2) + 140 && mouseY > (displayHeight / 2) - 204 && mouseY < (displayHeight / 2) - 174) {
@@ -160,16 +162,20 @@ void mouseClicked() {
 
 void keyPressed() {
   if (onSurveyPage == true) {
-    if (keyCode == ENTER) {
+    if (key == ENTER || key == RETURN) {
       enterCounterSurvey++;
     }
   }
   
   if(onInstrucPage == true) {
-    if(keyCode == ENTER) {
+    if(key == ENTER || key == RETURN) {
        enterCounterInstruc++;
     }
   }
+  if ((key == ENTER || key == RETURN)&& allLinesRead) { 
+      screen = Screen.GAMEPLAY_SCREEN;
+      screenSwitch = true;
+    }
 }
 
 //Checks if ONE input is either a 1, 2, 3, or 4 
@@ -267,12 +273,7 @@ void instrucScreen() {
 
 //Runs the gameplay screen
 void gamePlayScreen() {
-  if(screenSwitch) { 
-    delay(2000);
-    
-    screenSwitch = false;
-    println("does this work");
-  }
+  
   isButton = false;
   background(255);
   noStroke();
@@ -327,7 +328,8 @@ void initializeBubbles() {
 //Sets the conversation background to a solid color and
 //  checks if user clicks or hits ENTER. If yes, will return to gamePlayScreen
 void conversationScreen() { 
-  background(150, 130, 50);
+  background(255);
+  image(img, displayWidth/20, displayHeight/8 * 5, 230, 280);
   if (keyPressed) {
     if (key == ENTER && allLinesRead) { 
       screen = Screen.GAMEPLAY_SCREEN;
@@ -351,7 +353,9 @@ void textScreen() {
   }
   else {
     allLinesRead = true;
-    lineCounter = 0; 
+    isButton = true;
+    noBoxButtonCreator("testing", displayWidth/2, displayHeight/8 + (lineCounter * 50) + 50, 60, 20);
+   
     
   }
 }
@@ -372,4 +376,25 @@ void buttonCreator(String buttonLabel) {
   noFill();
   stroke(255);
   rect((displayWidth / 2) - 100, (displayHeight / 2) + 85, 200, 60);
+}
+
+void noBoxButtonCreator(String buttonLabel, int buttonX, int buttonY, int buttonLength, int buttonHeight) {
+  textAlign(CENTER);
+  if (mouseX > buttonX && mouseX < buttonX + buttonLength
+    && mouseY < buttonY + buttonHeight && mouseY > buttonHeight) {
+    
+    stroke(10, 200, 80);
+    //rect((displayWidth / 2) - 100, (displayHeight / 2) + 85, 200, 60);
+    //fill(0);
+    textSize(15);
+    text(buttonLabel, buttonX, buttonY);
+  }
+  else {
+    textSize(15);
+    stroke(80, 5, 100);
+    text(buttonLabel, buttonX, buttonY);
+  
+  
+  }
+  
 }
