@@ -8,6 +8,7 @@ SoundFile file;
 
 int clickCounter = 0; //Keeps track of the number of clicks
 int enterCounterSurvey = 0; //Keeps track of how many times user hits ENTER for the survey page
+int enterCounterInstruc = 0; //Keeos track of how many times user hits ENTER for the instructions page
 int totalPoints = 0; //Keeps track of the total number of survey points
 int userInput1, userInput2, userInput3, userInput4 = 0; 
 int lineCounter = 0;
@@ -23,6 +24,7 @@ boolean isDone = false; //Used in line 62 for totaling up the survey points only
 boolean isButton = false; //True if there is a button present on page, false if there is not
 boolean bubbleBumped = false;
 boolean onSurveyPage = false;
+boolean onInstrucPage = false;
 boolean convBGDisplayed = false; //Used to check if the conversation page background is drawn - Ensures that background is drawn once
 boolean q1, q2, q3, q4 = false; //Used to display the survey questions one by one
 
@@ -149,6 +151,12 @@ void keyPressed() {
       enterCounterSurvey++;
     }
   }
+  
+  if(onInstrucPage == true) {
+    if(keyCode == ENTER) {
+       enterCounterInstruc++;
+    }
+  }
 }
 
 //Checks if ONE input is either a 1, 2, 3, or 4 
@@ -211,6 +219,7 @@ void surveyScreen() {
 
 //Runs the instructions screen
 void instrucScreen() {
+  onInstrucPage = true;
   background(0);
   fill(255);
   textAlign(CENTER);
@@ -219,11 +228,22 @@ void instrucScreen() {
   textSize(50);
   text("INSTRUCTIONS", displayWidth / 2, (displayHeight / 2) - 310);
   textSize(30);
-  text("1. Move your bubble around using the mouse.", displayWidth / 2, (displayHeight / 2) - 240);
-  text("2. When you bump in a bubble, a conversation will take place between you", displayWidth / 2, (displayHeight / 2) - 180);
-  text("and the person in their bubble.", displayWidth / 2, (displayHeight / 2) - 120);
-  text("3. After you talk to the person, your bubble will either shrink or expand.", displayWidth / 2, (displayHeight / 2) - 60);
-  text("4. The goal is to get as many bubbles as possible and pop your bubble.", displayWidth / 2, (displayHeight / 2));
+  if(enterCounterInstruc >= 1) {
+    text("1. Move your bubble around using the mouse.", displayWidth / 2, (displayHeight / 2) - 240);
+  }
+  
+  if(enterCounterInstruc >= 2) {
+    text("2. When you bump in a bubble, a conversation will take place between you", displayWidth / 2, (displayHeight / 2) - 180);
+    text("and the person in their bubble.", displayWidth / 2, (displayHeight / 2) - 120);
+  }
+  
+  if(enterCounterInstruc >= 3) {
+    text("3. After you talk to the person, your bubble will either shrink or expand.", displayWidth / 2, (displayHeight / 2) - 60);
+  }
+  
+  if(enterCounterInstruc >= 4) {
+    text("4. The goal is to get as many bubbles as possible and pop your bubble.", displayWidth / 2, (displayHeight / 2));
+  }
 
   isButton = true;
   buttonCreator("click here to begin");
