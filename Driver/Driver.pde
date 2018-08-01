@@ -1,12 +1,14 @@
 //Main file that's going to run everything
 import processing.sound.*;
+import ddf.minim.*;
 
 PFont myFont;
 PImage img;
 PImage backgroundImg;
 PImage surveyImg;
 SoundFile file;
-SoundFile pop;
+AudioPlayer pop;
+Minim minim;
 
 int clickCounter = 0; //Keeps track of the number of clicks
 int enterCounterSurvey = 0; //Keeps track of how many times user hits ENTER for the survey page
@@ -48,10 +50,10 @@ void setup() {
       "colors.mp3", "dawn-light.mp3", "farewell.mp3", "here.mp3", "looking-up.mp3", 
        "oak.mp3", "ocean-of-sky.mp3", "skylark.mp3", "windmill.mp3"};
   int rando = int(random(0, musicNames.length)); 
-  pop = new SoundFile(this, "Sonder Bubble Pop.mp3");
   file = new SoundFile(this, musicNames[rando]);
   file.play();
-  
+  minim = new Minim(this);
+  pop = minim.loadFile("Sonder Bubble Pop.mp3", 2048);
   fullScreen();
 
   smooth(8);

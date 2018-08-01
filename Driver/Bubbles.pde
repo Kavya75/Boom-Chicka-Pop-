@@ -1,5 +1,5 @@
 import processing.sound.*;
-
+import ddf.minim.*;
 class Bubble extends PVector {
   float radius;
   color col;
@@ -108,6 +108,7 @@ class Bubble extends PVector {
     }
     else if(super.x < otherBub.getX() + otherBub.getRadius()/2 && super.x + radius/2 > otherBub.getX()
       &&  (super.y > otherBub.getY() && super.y < otherBub.getY() + radius/2)) {
+      pop.play();
       return true;
      } 
      return false;
