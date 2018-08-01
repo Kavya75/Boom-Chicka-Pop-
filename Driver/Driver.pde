@@ -7,7 +7,7 @@ PImage backgroundImg;
 SoundFile file;
 
 int clickCounter = 0; //Keeps track of the number of clicks
-int enterCounter = 0; //Keeps track of how many times user hits ENTER for the survey page
+int enterCounterSurvey = 0; //Keeps track of how many times user hits ENTER for the survey page
 int totalPoints = 0; //Keeps track of the total number of survey points
 int userInput1, userInput2, userInput3, userInput4 = 0; 
 int lineCounter = 0;
@@ -146,7 +146,7 @@ void mouseClicked() {
 void keyPressed() {
   if (onSurveyPage == true) {
     if (keyCode == ENTER) {
-      enterCounter++;
+      enterCounterSurvey++;
     }
   }
 }
@@ -196,7 +196,7 @@ void surveyScreen() {
   textAlign(CENTER);
   textSize(30);
 
-  if (enterCounter >= 1) {
+  if (enterCounterSurvey >= 1) {
     text("1. I enjoy solitude: " + userInput1, displayWidth / 2, (displayHeight / 2) - 180 );
     text("2. I feel drained after spending time with a large group of people: " + userInput2, displayWidth / 2, (displayHeight / 2) - 120);
     text("3. I have a smaller social circle: " + userInput3, displayWidth / 2, (displayHeight / 2) - 60); 
