@@ -101,21 +101,8 @@ void draw() {
         mainBub.setRadius(mainBub.getRadius() - 0.25);
       }
     }
-        
-    for (int i = 0; i < allBubbles.length; i++) {
-      
-      if (allBubbles[i].getXDir() <= 2.5 && allBubbles[i].getXDir() >= -0.5) {
-        allBubbles[i].setXDir(allBubbles[i].getXDir() + random(-0.25, 0.25));
-      } else {
-        allBubbles[i].setXDir(random(1, 4));
-      }
-      
-      if (allBubbles[i].getYDir() <= 2.5 && allBubbles[i].getYDir() >= -2.5) {
-        allBubbles[i].setYDir(allBubbles[i].getYDir() + random(-0.25, 0.25));
-      } else {
-        allBubbles[i].setYDir(random(1, 4));
-      }
-    }
+       
+    
     
   } else if (screen == Screen.CONVO_SCREEN && convBGDisplayed == false) {
     delay(50);
