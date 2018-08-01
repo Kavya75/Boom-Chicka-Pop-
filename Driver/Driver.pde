@@ -29,6 +29,8 @@ boolean onInstrucPage = false;
 boolean convBGDisplayed = false; //Used to check if the conversation page background is drawn - Ensures that background is drawn once
 boolean q1, q2, q3, q4 = false; //Used to display the survey questions one by one
 
+boolean allLinesRead = false;
+boolean screenSwitch = false;
 
 public enum Screen {
   START_SCREEN, 
@@ -72,6 +74,10 @@ void draw() {
     onSurveyPage = false;
     instrucScreen();
   } else if (screen == Screen.GAMEPLAY_SCREEN) {
+    allLinesRead = false;
+    lineCounter = 0; 
+    convBGDisplayed = false;
+
     gamePlayScreen();
 
     //Totals up the points from the survey
@@ -251,7 +257,7 @@ void instrucScreen() {
     text("4. The goal is to get as many bubbles as possible and pop your bubble.", displayWidth / 2, (displayHeight / 2));
   }
 
-  if(enterCounterInstruc == 4) {
+  if(enterCounterInstruc >= 4) {
     isButton = true;
     buttonCreator("click here to begin");
   }
@@ -259,6 +265,12 @@ void instrucScreen() {
 
 //Runs the gameplay screen
 void gamePlayScreen() {
+  if(screenSwitch) { 
+    delay(2000);
+    
+    screenSwitch = false;
+    println("does this work");
+  }
   isButton = false;
   background(255);
   noStroke();
@@ -315,8 +327,9 @@ void initializeBubbles() {
 void conversationScreen() { 
   background(150, 130, 50);
   if (keyPressed) {
-    if (key == ENTER) { 
+    if (key == ENTER && allLinesRead) { 
       screen = Screen.GAMEPLAY_SCREEN;
+      screenSwitch = true;
     }
   }
 }
@@ -333,6 +346,11 @@ void textScreen() {
     fill(0);
     text(lines[lineCounter], displayWidth/2, displayHeight/8 + (lineCounter * 50));
     lineCounter++;
+  }
+  else {
+    allLinesRead = true;
+    lineCounter = 0; 
+    
   }
 }
 
