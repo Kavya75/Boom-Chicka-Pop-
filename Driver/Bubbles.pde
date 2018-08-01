@@ -1,3 +1,5 @@
+import processing.sound.*;
+
 class Bubble extends PVector {
   float radius;
   color col;
@@ -96,11 +98,12 @@ class Bubble extends PVector {
     return radius;
   }
   
-  boolean checkCollision(Bubble otherBub) { 
-     if(getRadius() == 0) 
+  boolean checkCollision(Bubble otherBub) {
+    if(getRadius() == 0)
        return false;
      else if((super.x + radius/2 > otherBub.getX() && super.x < otherBub.getX())
     && (super.y > otherBub.getY() && super.y < otherBub.getY() + radius/2)) {
+      pop.play();
       return true;
     }
     else if(super.x < otherBub.getX() + otherBub.getRadius()/2 && super.x + radius/2 > otherBub.getX()
