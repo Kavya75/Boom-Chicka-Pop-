@@ -18,7 +18,6 @@ int totalPoints = 0; //Keeps track of the total number of survey points
 int userInput1, userInput2, userInput3, userInput4 = 0; 
 int lineCounter = 0;
 
-
 Bubble mainBub = new Bubble(150, color(181, 235, 255, 150), displayWidth / 2, displayHeight / 2); 
 Bubble[] allBubbles = new Bubble[5]; 
 
@@ -35,7 +34,8 @@ boolean onInstrucPage = false;
 boolean convBGDisplayed = false; //Used to check if the conversation page background is drawn - Ensures that background is drawn once
 boolean q1, q2, q3, q4 = false; //Used to display the survey questions one by one
 
-boolean allLinesRead = false;
+boolean allLinesRead = false; //Moves from page to page
+boolean allFilesRead = false; //Moves from file to file
 boolean screenSwitch = false;
 boolean option1 = false;
 boolean option2 = false;
@@ -45,7 +45,6 @@ int buttonHit = 0;
 int verticalSpaceMultiplier = 0; 
 int startingHeight = displayHeight/8;
 int fileCounter = 1;
-boolean allFilesRead = false;
 
 public enum Screen {
   START_SCREEN, 
@@ -403,7 +402,7 @@ void textScreen() {
   String fileN = "divorce" + fileCounter + ".txt";
   String[] lines = loadStrings(fileN); 
 
-  if (lineCounter < lines.length-2) {
+  if (lineCounter < lines.length - 2) {
 
     textSize(28);
     fill(0);
