@@ -23,8 +23,10 @@ Bubble[] allBubbles = new Bubble[5];
 
 BufferedReader reader;
 
-String[] listOfFileNames = {"convo1.txt"};
+String[] listOfFileNames = {"divorce", "depression"};
+int randomFileName = -1;
 String[][] stopLines = new String[listOfFileNames.length][5];
+
 
 boolean isDone = false; //Used in line 62 for totaling up the survey points only ONCE
 boolean isButton = false; //True if there is a button present on page, false if there is not
@@ -47,6 +49,7 @@ int verticalSpaceMultiplier = 0;
 int startingHeight = displayHeight/8;
 int fileCounter = 1;
 boolean allFilesRead = false; //Moves from file to file
+int stopFileNumber = -1; 
 
 public enum Screen {
   START_SCREEN, 
@@ -152,7 +155,7 @@ void mouseClicked() {
       background(175, 71, 71);
       lineCounter = 0;
       verticalSpaceMultiplier = 0;
-      if (fileCounter < 4)
+      if (fileCounter < findStopFile())
         fileCounter++;
       else
         allFilesRead = true;
@@ -165,7 +168,7 @@ void mouseClicked() {
       background(98, 104, 182);
       lineCounter = 0;
       verticalSpaceMultiplier = 0;
-      if (fileCounter < 4)
+      if (fileCounter < findStopFile())
         fileCounter++;
       else
         allFilesRead = true;
@@ -382,6 +385,7 @@ void gamePlayScreen() {
         screen = Screen.CONVO_SCREEN;
         collideBubble.setRadius(0);
         bubbleBumped = false;
+        randomFileName = int(random(0, listOfFileNames.length));
       }
     }
   }
@@ -419,7 +423,7 @@ void conversationScreen() {
 //Displays the text from the text file line by line
 void textScreen() {
   textAlign(CENTER); 
-  String fileN = "divorce" + fileCounter + ".txt";
+  String fileN = listOfFileNames[randomFileName] + fileCounter + ".txt";
   String[] lines = loadStrings(fileN);
 
   if (lineCounter < lines.length-2) {
@@ -436,7 +440,7 @@ void textScreen() {
     lineCounter++;    
     buttonHit = 0;
     delay(1000);
-  } else if (lineCounter >= lines.length-2 && lineCounter < lines.length && fileCounter != 4) {
+  } else if (lineCounter >= lines.length-2 && lineCounter < lines.length && fileCounter != findStopFile()) {
 
     isButton = true;
     noBoxButtonCreator(lines[lineCounter], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 50, lines[lineCounter].length()*16, 32);
@@ -444,7 +448,7 @@ void textScreen() {
     noBoxButtonCreator(lines[lineCounter+1], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 80, lines[lineCounter].length()*16, 32);
     lineCounter = lines.length;
     delay(1000);
-  } else if (lineCounter >= lines.length-2 && lineCounter < lines.length && fileCounter == 4) {
+  } else if (lineCounter >= lines.length-2 && lineCounter < lines.length && fileCounter == findStopFile()) {
     text(lines[lineCounter], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40)+40);
     lineCounter++;
     verticalSpaceMultiplier++;
@@ -454,7 +458,7 @@ void textScreen() {
     allLinesRead = true;
   }
 
-  if (fileCounter == 4 && allLinesRead) {
+  if (fileCounter == findStopFile() && allLinesRead) {
     allFilesRead = true;
     println("aslkjdfasdf");
   } else
@@ -511,4 +515,19 @@ void mouseInBounds(int xPt, int yPt, int xDistance, int yDistance, int whichButt
     mouseIn = false;
     buttonHit = 0;
   }
+}
+
+int findStopFile() { 
+     switch (randomFileName) {
+        case 0: 
+          stopFileNumber = 4; 
+          break;
+       case 1: 
+         stopFileNumber = 3; 
+         break;
+        default: 
+          stopFileNumber = 1;
+            break;
+     }
+     return stopFileNumber;
 }
