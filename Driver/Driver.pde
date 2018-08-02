@@ -58,7 +58,7 @@ public enum UserOptions {
   UserOptions userchoice = UserOptions.MORE_OPTIONS;
 
 void setup() {
-  String[] musicNames = {"aspen-starlight.mp3", "breeze.mp3", "colors.mp3", 
+  String[] musicNames = {"Feelin' Good.mp3", "aspen-starlight.mp3", "breeze.mp3", "colors.mp3", 
     "colors.mp3", "dawn-light.mp3", "farewell.mp3", "here.mp3", "looking-up.mp3", 
     "oak.mp3", "ocean-of-sky.mp3", "skylark.mp3", "windmill.mp3"};
   int rando = int(random(0, musicNames.length)); 
