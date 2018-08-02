@@ -26,7 +26,6 @@ BufferedReader reader;
 
 String[] listOfFileNames = {"convo1.txt"};
 String[][] stopLines = new String[listOfFileNames.length][5];
-//stopLines[0] = {4, 7};
 
 boolean isDone = false; //Used in line 62 for totaling up the survey points only ONCE
 boolean isButton = false; //True if there is a button present on page, false if there is not
@@ -60,8 +59,9 @@ Screen screen = Screen.START_SCREEN;
 
 public enum UserOptions { 
   END_CONVO, 
-  MORE_OPTIONS } 
-  UserOptions userchoice = UserOptions.MORE_OPTIONS;
+    MORE_OPTIONS
+} 
+UserOptions userchoice = UserOptions.MORE_OPTIONS;
 
 void setup() {
   String[] musicNames = {"Feelin' Good.mp3", "aspen-starlight.mp3", "breeze.mp3", "colors.mp3", 
@@ -84,7 +84,7 @@ void setup() {
 
   surveyImg = loadImage("SurveyBackground.png");
   surveyImg.resize(displayWidth, displayHeight);
-  
+
   instrImg = loadImage ("InstrBackground.png");
   instrImg.resize(displayWidth, displayHeight);
 }
@@ -115,15 +115,15 @@ void draw() {
     }
 
     //Draws the shrinking or expanding bubble
-    if (mainBub.getRadius() <= 500 && mainBub.getRadius() >= 50) {
+    if (mainBub.getRadius() <= 250 && mainBub.getRadius() >= 50) {
       if (totalPoints <= -5 && totalPoints >= -8) {
-        mainBub.setRadius(mainBub.getRadius() + 0.25);
-      } else if (totalPoints <= -1 && totalPoints >= -4) {
         mainBub.setRadius(mainBub.getRadius() + 0.1);
+      } else if (totalPoints <= -1 && totalPoints >= -4) {
+        mainBub.setRadius(mainBub.getRadius() + 0.05);
       } else if (totalPoints <= 4 && totalPoints >= 1) {
-        mainBub.setRadius(mainBub.getRadius() - 0.1);
+        mainBub.setRadius(mainBub.getRadius() - 0.05);
       } else if (totalPoints <= 8 && totalPoints >= 5) {
-        mainBub.setRadius(mainBub.getRadius() - 0.25);
+        mainBub.setRadius(mainBub.getRadius() - 0.1);
       }
     }
   } else if (screen == Screen.CONVO_SCREEN && convBGDisplayed == false) {
@@ -140,45 +140,35 @@ void mouseClicked() {
     clickCounter++;
   }
 
-
-  if(screen == Screen.CONVO_SCREEN) {
-  
-    if((mouseX > displayWidth/2 - ("one".length()*16)/2 && 
-        mouseX < displayWidth/2 + ("one".length()*16)/2) && 
+  if (screen == Screen.CONVO_SCREEN) {
+    if ((mouseX > displayWidth/2 - ("one".length()*16)/2 && 
+      mouseX < displayWidth/2 + ("one".length()*16)/2) && 
       (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 50 -  32/2 
       && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 50 + 32/2)) {
-        buttonHit = 1;
-        background(175, 71, 71);
-        verticalSpaceMultiplier = 0;
-         if(fileCounter < 3)
-          fileCounter++;
-         else
-           allFilesRead = true;
-        lineCounter = 0;
-        
-      }
-    else if((mouseX > displayWidth/2 - ("two".length()*16)/2 && 
-        mouseX < displayWidth/2 + ("two".length()*16)/2) && 
+      buttonHit = 1;
+      background(175, 71, 71);
+      verticalSpaceMultiplier = 0;
+      if (fileCounter < 3)
+        fileCounter++;
+      else
+        allFilesRead = true;
+      lineCounter = 0;
+    } else if ((mouseX > displayWidth/2 - ("two".length()*16)/2 && 
+      mouseX < displayWidth/2 + ("two".length()*16)/2) && 
       (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 80 -  32/2 
       && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 80 + 32/2)) {
-        buttonHit = 2;
-        
-        background(98, 104, 182);
-       // lineCounter++;
-       lineCounter = 0;
-        verticalSpaceMultiplier = 0;
-        if(fileCounter < 3)
-          fileCounter++;
-         else
-           allFilesRead = true;
-      }
-      
-      
+      buttonHit = 2;
+
+      background(98, 104, 182);
+      lineCounter = 0;
+      verticalSpaceMultiplier = 0;
+      if (fileCounter < 3)
+        fileCounter++;
+      else
+        allFilesRead = true;
     }
-    
-   
-  
-  
+  }
+
   if (clickCounter == 0)
     screen = Screen.START_SCREEN;
   else if (clickCounter == 1)
@@ -357,15 +347,15 @@ void gamePlayScreen() {
   for (int i = 0; i < allBubbles.length; i++) {
     bubbleBumped = false;
     if (allBubbles[i].getRadius() != 0) {
-      bubbleBumped = allBubbles[i].checkCollision(mainBub, allBubbles[i]);
+      bubbleBumped = allBubbles[i].checkCollision(mainBub);
 
       if (bubbleBumped) {
         pop = minim.loadFile("Sonder Bubble Pop.mp3", 2048);
         pop.play();
-        
+
         Bubble collideBubble = allBubbles[i];
         float collideBubbleRadius = collideBubble.getRadius();
-        
+
         delay(75);
         screen = Screen.CONVO_SCREEN;
         collideBubble.setRadius(0);
@@ -380,7 +370,7 @@ void gamePlayScreen() {
 
 void initializeBubbles() { 
   for (int i = 0; i < allBubbles.length; i++) {
-    int randomRadius = int(random(50, 100));
+    int randomRadius = int(random(40, 50));
     int randomRedValue = int(random(10, 250)); 
     int randomBlueValue = int(random(10, 250)); 
     int randomGreenValue = int(random(10, 250)); 
@@ -410,40 +400,33 @@ void conversationScreen() {
 //Displays the text from the text file line by line
 void textScreen() {
   textAlign(CENTER); 
-  int num = int(random(0, 1)); 
-  //reader = createReader(listOfFileNames[num]);
   String fileN = "divorce" + fileCounter + ".txt";
-  String[] lines = loadStrings(fileN);
-//  String[][] actualLines = new String[lines.length][5]; 
-  
+  String[] lines = loadStrings(fileN); 
+
   if (lineCounter < lines.length-2) {
-    
+
     textSize(28);
     fill(0);
- 
-    if(startingHeight + (verticalSpaceMultiplier*40) + 80 > displayHeight) 
+
+    if (startingHeight + (verticalSpaceMultiplier*40) + 80 > displayHeight) 
       verticalSpaceMultiplier = 0;
-    
-    if(lineCounter == 12 && buttonHit == 0) {
+
+    if (lineCounter == 12 && buttonHit == 0) {
       isButton = true;
       noBoxButtonCreator(lines[lineCounter], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 50, lines[lineCounter].length()*16, 32);
-       println(lines[lineCounter+1]);
+      println(lines[lineCounter+1]);
       noBoxButtonCreator(lines[lineCounter+1], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 80, lines[lineCounter].length()*16, 32);
-     
-    }
-    else {
+    } else {
       text(lines[lineCounter], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40)+40);
-      if(buttonHit == 1)
+      if (buttonHit == 1)
         lineCounter += 2;
       verticalSpaceMultiplier++;
       lineCounter++;    
       buttonHit = 0;
       delay(900);
     }
-  }
-  else {
+  } else {
     allLinesRead = true;
-    
   }
 }
 
@@ -472,33 +455,29 @@ void noBoxButtonCreator(String buttonLabel, int buttonX, int buttonY, int button
     && mouseY < buttonY + buttonHeight/2 && mouseY > buttonY-buttonHeight/2) {
     fill(10, 200, 80);
     stroke(10, 200, 80);
-    //fill(0);
     textSize(32);
     text(buttonLabel, buttonX, buttonY);
     mouseIn = true;
-  }
-  else {
+  } else {
     textSize(32);
     fill(80, 5, 100);
     stroke(80, 5, 100);
     text(buttonLabel, buttonX, buttonY);
     mouseIn = false;
-  
   }
 }
 
-  
+
 void mouseInBounds(int xPt, int yPt, int xDistance, int yDistance, int whichButton) { 
   stroke(0);
-  if((mouseX > xPt - xDistance/2 && mouseX < xPt + xDistance/2) && 
-      (mouseY > yPt -  yDistance/2 && mouseY < yPt + yDistance/2)) {
-      mouseIn = true;
-      if(yPt == startingHeight + (verticalSpaceMultiplier*40) + 50)
-        buttonHit = 1;
-      if(yPt == startingHeight + (verticalSpaceMultiplier*40) + 80) 
-        buttonHit = 2;
-  }
-  else {
+  if ((mouseX > xPt - xDistance/2 && mouseX < xPt + xDistance/2) && 
+    (mouseY > yPt -  yDistance/2 && mouseY < yPt + yDistance/2)) {
+    mouseIn = true;
+    if (yPt == startingHeight + (verticalSpaceMultiplier*40) + 50)
+      buttonHit = 1;
+    if (yPt == startingHeight + (verticalSpaceMultiplier*40) + 80) 
+      buttonHit = 2;
+  } else {
     mouseIn = false;
     buttonHit = 0;
   }
