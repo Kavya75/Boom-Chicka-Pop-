@@ -379,8 +379,8 @@ void initializeBubbles() {
     int randomGreenValue = int(random(10, 250)); 
     int randomXStart = int(random(10, displayWidth)); 
     int randomYStart = int(random(10, displayHeight)); 
-    float randomXDir = int(random(-2, 2)); 
-    float randomYDir = int(random(-2, 2)); 
+    float randomXDir = int(random(-4, -1)); 
+    float randomYDir = int(random(1, 4)); 
     allBubbles[i] = new Bubble(randomRadius, color(randomRedValue, 
       randomGreenValue, randomBlueValue, 150), randomXStart, randomYStart, 
       randomXDir, randomYDir);
