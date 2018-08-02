@@ -7,10 +7,10 @@ PImage img;
 PImage backgroundImg;
 PImage surveyImg;
 PImage instrImg;
+PImage[] pics = new PImage[19];
 SoundFile file;
 AudioPlayer pop;
 Minim minim;
-PImage[] pics = new PImage[19];
 
 int clickCounter = 0; //Keeps track of the number of clicks
 int enterCounterSurvey = 0; //Keeps track of how many times user hits ENTER for the survey page
@@ -51,6 +51,7 @@ int startingHeight = displayHeight/8;
 int fileCounter = 1;
 boolean allFilesRead = false; //Moves from file to file
 int stopFileNumber = -1; 
+int randomImage = int(random(0, 18));
 
 public enum Screen {
   START_SCREEN, 
@@ -90,7 +91,7 @@ void setup() {
   pics[17] = loadImage("Rob.png");
   pics[18] = loadImage("taffyBoy.png");
 
-
+  
   String[] musicNames = {"Feelin' Good.mp3", "aspen-starlight.mp3", "breeze.mp3", "colors.mp3", 
     "colors.mp3", "dawn-light.mp3", "farewell.mp3", "here.mp3", "looking-up.mp3", 
     "oak.mp3", "ocean-of-sky.mp3", "skylark.mp3", "windmill.mp3"};
@@ -427,13 +428,19 @@ void initializeBubbles() {
       randomGreenValue, randomBlueValue, 150), randomXStart, randomYStart, 
       randomXDir, randomYDir);
   }
+  
+     // for(int e = 0; e < pics.length; e++) {
+     //   if(randomImg == e) {
+          
+       // }
+   // }
 }
 
 //Sets the conversation background to a solid color and
 //  checks if user clicks or hits ENTER. If yes, will return to gamePlayScreen
 void conversationScreen() { 
   background(255);
-  image(img, displayWidth/20, startingHeight * 5, 230, 280);
+  image(pics[randomImage], displayWidth/20, startingHeight * 5, 230, 280);
   if (keyPressed) {
     if (key == ENTER && allFilesRead) { 
       screen = Screen.GAMEPLAY_SCREEN;
