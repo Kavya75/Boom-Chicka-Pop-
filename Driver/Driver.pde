@@ -11,6 +11,7 @@ SoundFile file;
 AudioPlayer pop;
 Minim minim;
 PImage[] pics = new PImage[19];
+int randomImage;
 
 int clickCounter = 0; //Keeps track of the number of clicks
 int enterCounterSurvey = 0; //Keeps track of how many times user hits ENTER for the survey page
@@ -19,7 +20,8 @@ int totalPoints = 0; //Keeps track of the total number of survey points
 int userInput1, userInput2, userInput3, userInput4 = 0; 
 int lineCounter = 0;
 
-Bubble mainBub = new Bubble(150, color(181, 235, 255, 150), displayWidth / 2, displayHeight / 2); 
+//initialize main bubble
+Bubble mainBub = new Bubble(50, color(181, 235, 255, 150), displayWidth / 2, displayHeight / 2); 
 Bubble[] allBubbles = new Bubble[5]; 
 
 BufferedReader reader;
@@ -51,7 +53,6 @@ int startingHeight = displayHeight/8;
 int fileCounter = 1;
 boolean allFilesRead = false; //Moves from file to file
 int stopFileNumber = -1; 
-int randomImage = int(random(0, 18));
 
 public enum Screen {
   START_SCREEN, 
@@ -74,7 +75,7 @@ void setup() {
   pics[0] = loadImage("basketballBoy.png");
   pics[1] = loadImage("blackboi1.png");
   pics[2] = loadImage("blondeBeanie.png");
-  pics[3] = loadImage("blondeGirlPig Tails.png");
+  pics[3] = loadImage("blondeGirlPigTails.png");
   pics[4] = loadImage("blueberry .png");
   pics[5] = loadImage("caramelBoy.png");
   pics[6] = loadImage("coffeeGirl.png");
@@ -426,7 +427,7 @@ void initializeBubbles() {
     float randomYDir = int(random(1, 4)); 
     allBubbles[i] = new Bubble(randomRadius, color(randomRedValue, 
       randomGreenValue, randomBlueValue, 150), randomXStart, randomYStart, 
-      randomXDir, randomYDir);
+      randomXDir, randomYDir, pics.length);
   }
 }
 

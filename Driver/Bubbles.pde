@@ -9,6 +9,7 @@ class Bubble extends PVector {
   float xDirection;
   float yDirection; 
   String i;
+  int randImg;
 
   Bubble() {
     radius = 10;
@@ -25,12 +26,13 @@ class Bubble extends PVector {
     xDirection = 5;
   }
 
-  Bubble(float r, color c, int x, int y, float xDir, float yDir) {
+  Bubble(float r, color c, int x, int y, float xDir, float yDir, int imgLength) {
     super(x, y);
     radius = r;
     col = c;
     yDirection = xDir; 
     xDirection = yDir;
+    randImg = int(random(imgLength));
   }
 
   void display() {
@@ -38,7 +40,7 @@ class Bubble extends PVector {
     ellipseMode(CENTER);
     ellipse(super.x, super.y, radius * 2, radius * 2);
     if (getRadius() != 0)
-      image(img, super.x-radius/4, super.y-radius/4, 25, 35);
+    image(pics[randImg], super.x-radius/4, super.y-radius/4, 25, 35);
   }
 
   void checkXEdges(int xBoundary) { 
