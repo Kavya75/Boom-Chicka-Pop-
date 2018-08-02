@@ -35,7 +35,7 @@ class Bubble extends PVector {
   void display() {
     fill(col);
     ellipseMode(CENTER);
-    ellipse(super.x, super.y, radius, radius);
+    ellipse(super.x, super.y, radius * 2, radius * 2);
     if (getRadius() != 0)
       image(img, super.x-radius/4, super.y-radius/4, 25, 35);
   }
@@ -107,12 +107,12 @@ class Bubble extends PVector {
     return sqrt(sq((x1 - x2)) + sq((y1 - y2)));
   }
 
-  boolean checkCollision(Bubble mainBub, Bubble otherBub) {
-    float dis = (distanceFormula(mainBub.getX(), otherBub.getX(), mainBub.getY(), otherBub.getY()));
+  boolean checkCollision(Bubble otherBub) {
+    float dis = (distanceFormula(super.x, otherBub.getX(), super.y, otherBub.getY()));
 
     if (otherBub.getRadius() == 0)
       return false;
-    else if (dis + 118 < (mainBub.getRadius() + otherBub.getRadius()))
+    else if (dis <= (getRadius() + otherBub.getRadius()))
       return true;
     return false;
   }
