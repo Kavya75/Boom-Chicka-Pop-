@@ -51,6 +51,7 @@ int startingHeight = displayHeight/8;
 int fileCounter = 1;
 boolean allFilesRead = false; //Moves from file to file
 int stopFileNumber = -1; 
+int randomImage = int(random(0, 18));
 
 public enum Screen {
   START_SCREEN, 
@@ -433,7 +434,7 @@ void initializeBubbles() {
 //  checks if user clicks or hits ENTER. If yes, will return to gamePlayScreen
 void conversationScreen() { 
   background(255);
-  image(img, displayWidth/20, startingHeight * 5, 230, 280);
+  image(pics[randomImage], displayWidth/20, startingHeight * 5, 230, 280);
   if (keyPressed) {
     if (key == ENTER && allFilesRead) { 
       screen = Screen.GAMEPLAY_SCREEN;
