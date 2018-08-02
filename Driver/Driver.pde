@@ -10,7 +10,7 @@ PImage instrImg;
 SoundFile file;
 AudioPlayer pop;
 Minim minim;
-PImage[] pics = new PImage[19];
+PImage[] pics = new PImage[2];
 int randomImage;
 
 int clickCounter = 0; //Keeps track of the number of clicks
@@ -64,33 +64,16 @@ public enum Screen {
 
 Screen screen = Screen.START_SCREEN;
 
-public enum UserOptions { 
-  END_CONVO, 
-    MORE_OPTIONS
-} 
-
-UserOptions userchoice = UserOptions.MORE_OPTIONS;
 
 void setup() {
-  pics[0] = loadImage("basketballBoy.png");
-  pics[1] = loadImage("blackboi1.png");
-  pics[2] = loadImage("blondeBeanie.png");
-  pics[3] = loadImage("blondeGirlPigTails.png");
-  pics[4] = loadImage("blueberry .png");
-  pics[5] = loadImage("caramelBoy.png");
-  pics[6] = loadImage("coffeeGirl.png");
-  pics[7] = loadImage("cookieBoi.png");
-  pics[8] = loadImage("DJboi.png");
-  pics[9] = loadImage("farmerBoy.png");
-  pics[10] = loadImage("greyBoy.png");
-  pics[11] = loadImage("jabami.png");
-  pics[12] = loadImage("Keshawn.png");
-  pics[13] = loadImage("Mexicano.png");
-  pics[14] = loadImage("momNerd.png");
-  pics[15] = loadImage("mushroom.png");
-  pics[16] = loadImage("perryboi.png");
-  pics[17] = loadImage("Rob.png");
-  pics[18] = loadImage("taffyBoy.png");
+    randomImage = int(random(0, pics.length));
+   String[] imageNames = {"basketballBoy.png", "blackboi1.png", "blondeBeanie.png",
+  "blondeGirlPigTails.png", "blueberry.png", "caramelBoy.png", "coffeeGirl.png", "cookieBoi.png",
+  "DJboi.png", "farmerBoy.png", "greyBoy.png", "jabami.png", "Keshawn.png", "Mexicano.png", 
+  "momNerd.png", "mushroom.png", "perryboi.png", "Rob.png", "taffyBoy.png"};
+  
+  for(int i = 0; i < pics.length; i++) 
+    pics[i] = loadImage(imageNames[i]);
 
 
   String[] musicNames = {"Feelin' Good.mp3", "aspen-starlight.mp3", "breeze.mp3", "colors.mp3", 
@@ -169,22 +152,21 @@ void mouseClicked() {
     clickCounter++;
   }
 
-  if (screen == Screen.CONVO_SCREEN) {
+    if (screen == Screen.CONVO_SCREEN && isButton) {
 
-    if ((mouseX > displayWidth/2 - ("one".length()*16)/2 && 
-      mouseX < displayWidth/2 + ("one".length()*16)/2) && 
+    if ((mouseX > displayWidth/2 - ("oneoneone".length()*16)/2 && 
+      mouseX < displayWidth/2 + ("oneoneone".length()*16)/2) && 
       (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 50 -  32/2 
       && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 50 + 32/2)) {
       buttonHit = 1;
       background(175, 71, 71);
       lineCounter = 0;
       verticalSpaceMultiplier = 0;
-      if (fileCounter < findStopFile())
-        fileCounter++;
-      else
-        allFilesRead = true;
-    } else if ((mouseX > displayWidth/2 - ("two".length()*16)/2 && 
-      mouseX < displayWidth/2 + ("two".length()*16)/2) && 
+      fileCounter = 5;
+      allFilesRead = true;
+   
+    } else if ((mouseX > displayWidth/2 - ("twotwotwo".length()*16)/2 && 
+      mouseX < displayWidth/2 + ("twotwotwo".length()*16)/2) && 
       (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 80 -  32/2 
       && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 80 + 32/2)) {
       buttonHit = 2;
@@ -198,6 +180,7 @@ void mouseClicked() {
         allFilesRead = true;
     }
   }
+
 
   if (clickCounter == 0)
     screen = Screen.START_SCREEN;
@@ -449,8 +432,9 @@ void textScreen() {
   textAlign(CENTER); 
   String fileN = listOfFileNames[randomFileName] + fileCounter + ".txt";
   String[] lines = loadStrings(fileN);
-
+  
   if (lineCounter < lines.length-2) {
+    isButton = false;
     textSize(28);
     fill(0);
     if (startingHeight + (verticalSpaceMultiplier*40) + 80 > displayHeight) {
@@ -463,26 +447,26 @@ void textScreen() {
     verticalSpaceMultiplier++;
     lineCounter++;    
     buttonHit = 0;
-    delay(1000);
-  } else if (lineCounter >= lines.length-2 && lineCounter < lines.length && fileCounter != findStopFile()) {
+  //  delay(1000);
+  } else if (lineCounter >= lines.length-2 && lineCounter < lines.length && fileCounter != findStopFile() && fileCounter != 5) {
 
-    isButton = true;
-    noBoxButtonCreator(lines[lineCounter], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 50, lines[lineCounter].length()*16, 32);
-    println(lines[lineCounter+1]);
-    noBoxButtonCreator(lines[lineCounter+1], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 80, lines[lineCounter].length()*16, 32);
-    lineCounter = lines.length;
-    delay(1000);
-  } else if (lineCounter >= lines.length-2 && lineCounter < lines.length && fileCounter == findStopFile()) {
+      isButton = true;
+      noBoxButtonCreator(lines[lineCounter], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 50, lines[lineCounter].length()*16, 32);
+      noBoxButtonCreator(lines[lineCounter+1], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 80, lines[lineCounter].length()*16, 32);
+      lineCounter = lines.length;
+ //   delay(1000);
+  } else if (lineCounter >= lines.length-2 && lineCounter < lines.length && (fileCounter == findStopFile() || fileCounter == 5)) {
     text(lines[lineCounter], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40)+40);
     lineCounter++;
     verticalSpaceMultiplier++;
     delay(1000);
   }
-  if (lineCounter == lines.length) {
+  if (lineCounter == lines.length || fileCounter == 5) {
+    println("i hope this is true");
     allLinesRead = true;
   }
 
-  if (fileCounter == findStopFile() && allLinesRead) {
+  if ((fileCounter == findStopFile() || fileCounter == 5) && allLinesRead) {
     allFilesRead = true;
     println("aslkjdfasdf");
   } else
