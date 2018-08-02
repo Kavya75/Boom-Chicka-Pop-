@@ -134,25 +134,46 @@ void mouseClicked() {
     clickCounter++;
   }
 
-  mouseInBounds(displayWidth/2, displayHeight/8 + (lineCounter * 50) + 50, "one".length()*16, 32, 1);
+  //mouseInBounds(displayWidth/2, displayHeight/8 + (lineCounter * 50) + 50, "one".length()*16, 32, 1);
+  //mouseInBounds(displayWidth/2, displayHeight/8 + (lineCounter * 50) + 50, "two".length()*16, 32, 1);
  // mouseTwoBounds(displayWidth/2, displayHeight/8 + (lineCounter * 50) + 80, "two".length()*16, 32, 2);
  
-  if(screen == Screen.CONVO_SCREEN && mouseIn) {
-    if(buttonHit == 1) {
+  if(screen == Screen.CONVO_SCREEN) {
+  /*  if(buttonHit == 1) {
       background(175, 71, 71); //red
     //  lineCounter++;
       println("is this ever true");
     //  delay(600);
+     // buttonHit = 0;
     }
     else if(buttonHit == 2) {
       background(98, 104, 182); //blue
       println("blue is true");
       lineCounter++; 
-    //  delay(600);
+    //  buttonHit = 0;  */
+    if((mouseX > displayWidth/2 - ("one".length()*16)/2 && 
+        mouseX < displayWidth/2 + ("one".length()*16)/2) && 
+      (mouseY >  displayHeight/8 + (lineCounter * 50) + 50 -  32/2 
+      && mouseY <  displayHeight/8 + (lineCounter * 50) + 50 + 32/2)) {
+        buttonHit = 1;
+        background(175, 71, 71);
+        
+      }
+    else if((mouseX > displayWidth/2 - ("two".length()*16)/2 && 
+        mouseX < displayWidth/2 + ("two".length()*16)/2) && 
+      (mouseY >  displayHeight/8 + (lineCounter * 50) + 80 -  32/2 
+      && mouseY <  displayHeight/8 + (lineCounter * 50) + 80 + 32/2)) {
+        buttonHit = 2;
+        
+        background(98, 104, 182);
+        lineCounter++;
+      }
+      
+      
     }
     
    
-  }
+  
   
   if (clickCounter == 0)
     screen = Screen.START_SCREEN;
@@ -399,18 +420,18 @@ void textScreen() {
       
       characterSpace += 19; 
     } */
+    
  
     if((lineCounter == 4 || lineCounter == 7) && buttonHit == 0) {
       isButton = true;
       noBoxButtonCreator("one", displayWidth/2, displayHeight/8 + (lineCounter * 50) + 50, "one".length()*16, 32);
-     
-      
       noBoxButtonCreator("two", displayWidth/2, displayHeight/8 + (lineCounter * 50) + 80, "two".length()*16, 32);
      
     }
     else {
       text(lines[lineCounter], displayWidth/2, displayHeight/8 + (lineCounter * 50));
       lineCounter++;    
+      buttonHit = 0;
       delay(600);
     }
   }
@@ -466,7 +487,10 @@ void mouseInBounds(int xPt, int yPt, int xDistance, int yDistance, int whichButt
   if((mouseX > xPt - xDistance/2 && mouseX < xPt + xDistance/2) && 
       (mouseY > yPt -  yDistance/2 && mouseY < yPt + yDistance/2)) {
       mouseIn = true;
-      buttonHit = 1;
+      if(yPt == displayHeight/8 + (lineCounter * 50) + 50)
+        buttonHit = 1;
+      if(yPt == displayHeight/8 + (lineCounter * 50) + 80) 
+        buttonHit = 2;
   }
   else {
     mouseIn = false;
