@@ -18,6 +18,7 @@ int totalPoints = 0; //Keeps track of the total number of survey points
 int userInput1, userInput2, userInput3, userInput4 = 0; 
 int lineCounter = 0;
 
+
 Bubble mainBub = new Bubble(150, color(181, 235, 255, 150), displayWidth / 2, displayHeight / 2); 
 Bubble[] allBubbles = new Bubble[5]; 
 
@@ -41,6 +42,11 @@ boolean option1 = false;
 boolean option2 = false;
 boolean mouseIn = false;
 int buttonHit = 0;
+
+int verticalSpaceMultiplier = 0; 
+int startingHeight = displayHeight/8;
+int fileCounter = 1;
+boolean allFilesRead = false;
 
 public enum Screen {
   START_SCREEN, 
@@ -134,39 +140,37 @@ void mouseClicked() {
     clickCounter++;
   }
 
-  //mouseInBounds(displayWidth/2, displayHeight/8 + (lineCounter * 50) + 50, "one".length()*16, 32, 1);
-  //mouseInBounds(displayWidth/2, displayHeight/8 + (lineCounter * 50) + 50, "two".length()*16, 32, 1);
- // mouseTwoBounds(displayWidth/2, displayHeight/8 + (lineCounter * 50) + 80, "two".length()*16, 32, 2);
- 
+
   if(screen == Screen.CONVO_SCREEN) {
-  /*  if(buttonHit == 1) {
-      background(175, 71, 71); //red
-    //  lineCounter++;
-      println("is this ever true");
-    //  delay(600);
-     // buttonHit = 0;
-    }
-    else if(buttonHit == 2) {
-      background(98, 104, 182); //blue
-      println("blue is true");
-      lineCounter++; 
-    //  buttonHit = 0;  */
+  
     if((mouseX > displayWidth/2 - ("one".length()*16)/2 && 
         mouseX < displayWidth/2 + ("one".length()*16)/2) && 
-      (mouseY >  displayHeight/8 + (lineCounter * 50) + 50 -  32/2 
-      && mouseY <  displayHeight/8 + (lineCounter * 50) + 50 + 32/2)) {
+      (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 50 -  32/2 
+      && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 50 + 32/2)) {
         buttonHit = 1;
         background(175, 71, 71);
+        verticalSpaceMultiplier = 0;
+         if(fileCounter < 3)
+          fileCounter++;
+         else
+           allFilesRead = true;
+        lineCounter = 0;
         
       }
     else if((mouseX > displayWidth/2 - ("two".length()*16)/2 && 
         mouseX < displayWidth/2 + ("two".length()*16)/2) && 
-      (mouseY >  displayHeight/8 + (lineCounter * 50) + 80 -  32/2 
-      && mouseY <  displayHeight/8 + (lineCounter * 50) + 80 + 32/2)) {
+      (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 80 -  32/2 
+      && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 80 + 32/2)) {
         buttonHit = 2;
         
         background(98, 104, 182);
-        lineCounter++;
+       // lineCounter++;
+       lineCounter = 0;
+        verticalSpaceMultiplier = 0;
+        if(fileCounter < 3)
+          fileCounter++;
+         else
+           allFilesRead = true;
       }
       
       
@@ -229,7 +233,7 @@ void keyPressed() {
       enterCounterInstruc++;
     }
   }
-  if ((key == ENTER || key == RETURN) && allLinesRead) { 
+  if ((key == ENTER || key == RETURN) && allFilesRead) { 
     screen = Screen.GAMEPLAY_SCREEN;
     screenSwitch = true;
   }
@@ -330,8 +334,10 @@ void instrucScreen() {
 
 //Runs the gameplay screen
 void gamePlayScreen() {
-
+  verticalSpaceMultiplier = 0;
   buttonHit = 0;
+  allFilesRead = false;
+  fileCounter = 0;
   isButton = false;
   mouseIn = false;
   background(255);
@@ -354,6 +360,7 @@ void gamePlayScreen() {
       bubbleBumped = allBubbles[i].checkCollision(mainBub, allBubbles[i]);
 
       if (bubbleBumped) {
+        pop = minim.loadFile("Sonder Bubble Pop.mp3", 2048);
         pop.play();
         
         Bubble collideBubble = allBubbles[i];
@@ -391,9 +398,9 @@ void initializeBubbles() {
 //  checks if user clicks or hits ENTER. If yes, will return to gamePlayScreen
 void conversationScreen() { 
   background(255);
-  image(img, displayWidth/20, displayHeight/8 * 5, 230, 280);
+  image(img, displayWidth/20, startingHeight * 5, 230, 280);
   if (keyPressed) {
-    if (key == ENTER && allLinesRead) { 
+    if (key == ENTER && allFilesRead) { 
       screen = Screen.GAMEPLAY_SCREEN;
       screenSwitch = true;
     }
@@ -404,35 +411,34 @@ void conversationScreen() {
 void textScreen() {
   textAlign(CENTER); 
   int num = int(random(0, 1)); 
-  reader = createReader(listOfFileNames[num]);
-  String[] lines = loadStrings("convo1.txt");
+  //reader = createReader(listOfFileNames[num]);
+  String fileN = "divorce" + fileCounter + ".txt";
+  String[] lines = loadStrings(fileN);
 //  String[][] actualLines = new String[lines.length][5]; 
   
-  if (lineCounter < lines.length) {
+  if (lineCounter < lines.length-2) {
     
-    textSize(32);
+    textSize(28);
     fill(0);
-    String temp = lines[lineCounter];
-    int characterSpace = 0;
-   // println("this is line counter " + lineCounter);
-   /* for(int c = 0; c < temp.length()-1; c++) { 
-      text(temp.substring(c, c+1), displayWidth/2+characterSpace, displayHeight/8 + (lineCounter*50));
-      
-      characterSpace += 19; 
-    } */
-    
  
-    if((lineCounter == 4 || lineCounter == 7) && buttonHit == 0) {
+    if(startingHeight + (verticalSpaceMultiplier*40) + 80 > displayHeight) 
+      verticalSpaceMultiplier = 0;
+    
+    if(lineCounter == 12 && buttonHit == 0) {
       isButton = true;
-      noBoxButtonCreator("one", displayWidth/2, displayHeight/8 + (lineCounter * 50) + 50, "one".length()*16, 32);
-      noBoxButtonCreator("two", displayWidth/2, displayHeight/8 + (lineCounter * 50) + 80, "two".length()*16, 32);
+      noBoxButtonCreator(lines[lineCounter], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 50, lines[lineCounter].length()*16, 32);
+       println(lines[lineCounter+1]);
+      noBoxButtonCreator(lines[lineCounter+1], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 80, lines[lineCounter].length()*16, 32);
      
     }
     else {
-      text(lines[lineCounter], displayWidth/2, displayHeight/8 + (lineCounter * 50));
+      text(lines[lineCounter], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40)+40);
+      if(buttonHit == 1)
+        lineCounter += 2;
+      verticalSpaceMultiplier++;
       lineCounter++;    
       buttonHit = 0;
-      delay(600);
+      delay(900);
     }
   }
   else {
@@ -487,23 +493,10 @@ void mouseInBounds(int xPt, int yPt, int xDistance, int yDistance, int whichButt
   if((mouseX > xPt - xDistance/2 && mouseX < xPt + xDistance/2) && 
       (mouseY > yPt -  yDistance/2 && mouseY < yPt + yDistance/2)) {
       mouseIn = true;
-      if(yPt == displayHeight/8 + (lineCounter * 50) + 50)
+      if(yPt == startingHeight + (verticalSpaceMultiplier*40) + 50)
         buttonHit = 1;
-      if(yPt == displayHeight/8 + (lineCounter * 50) + 80) 
+      if(yPt == startingHeight + (verticalSpaceMultiplier*40) + 80) 
         buttonHit = 2;
-  }
-  else {
-    mouseIn = false;
-    buttonHit = 0;
-  }
-}
-
-void mouseTwoBounds(int xPt, int yPt, int xDistance, int yDistance, int whichButton) { 
-  stroke(0);
-  if((mouseX > xPt - xDistance/2 && mouseX < xPt + xDistance/2) && 
-      (mouseY > yPt -  yDistance/2 && mouseY < yPt + yDistance/2)) {
-      mouseIn = true;
-      buttonHit = 2;
   }
   else {
     mouseIn = false;
