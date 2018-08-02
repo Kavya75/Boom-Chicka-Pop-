@@ -351,7 +351,7 @@ void gamePlayScreen() {
   for (int i = 0; i < allBubbles.length; i++) {
     bubbleBumped = false;
     if (allBubbles[i].getRadius() != 0) {
-      bubbleBumped = allBubbles[i].checkCollision(mainBub);
+      bubbleBumped = allBubbles[i].checkCollision(mainBub, allBubbles[i]);
 
       if (bubbleBumped) {
         pop.play();
