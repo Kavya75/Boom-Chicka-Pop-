@@ -33,18 +33,21 @@ boolean onSurveyPage = false;
 boolean onInstrucPage = false;
 boolean convBGDisplayed = false; //Used to check if the conversation page background is drawn - Ensures that background is drawn once
 boolean q1, q2, q3, q4 = false; //Used to display the survey questions one by one
+boolean firstGameScreen = true; //True - If gamePlayScreen() has only been called one (before any collisions); False - If gamePlayScreen() has been called 1+ times (after a collision)
 
 boolean allLinesRead = false; //Moves from page to page
-boolean allFilesRead = false; //Moves from file to file
+
 boolean screenSwitch = false;
 boolean option1 = false;
 boolean option2 = false;
 boolean mouseIn = false;
 int buttonHit = 0;
 
+
 int verticalSpaceMultiplier = 0; 
 int startingHeight = displayHeight/8;
 int fileCounter = 1;
+boolean allFilesRead = false; //Moves from file to file
 
 public enum Screen {
   START_SCREEN, 
@@ -68,7 +71,7 @@ void setup() {
     "oak.mp3", "ocean-of-sky.mp3", "skylark.mp3", "windmill.mp3"};
   int rando = int(random(0, musicNames.length)); 
   file = new SoundFile(this, musicNames[rando]);
-  file.play();
+  //file.play();
   minim = new Minim(this);
   pop = minim.loadFile("Sonder Bubble Pop.mp3", 2048);
   fullScreen();
@@ -139,64 +142,39 @@ void mouseClicked() {
     clickCounter++;
   }
 
-  if (screen == Screen.CONVO_SCREEN) {
-    if ((mouseX > displayWidth/2 - ("one".length()*16)/2 && 
-      mouseX < displayWidth/2 + ("one".length()*16)/2) && 
+ if(screen == Screen.CONVO_SCREEN) {
+  
+    if((mouseX > displayWidth/2 - ("one".length()*16)/2 && 
+        mouseX < displayWidth/2 + ("one".length()*16)/2) && 
       (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 50 -  32/2 
       && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 50 + 32/2)) {
-<<<<<<< HEAD
         buttonHit = 1;
         background(175, 71, 71);
+        lineCounter = 0;
         verticalSpaceMultiplier = 0;
-         if(fileCounter <= 2)
+         if(fileCounter < 4)
           fileCounter++;
          else
            allFilesRead = true;
-        lineCounter = 0;
+        
         
       }
     else if((mouseX > displayWidth/2 - ("two".length()*16)/2 && 
         mouseX < displayWidth/2 + ("two".length()*16)/2) && 
       (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 80 -  32/2 
       && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 80 + 32/2)) {
-        buttonHit = 2;
+       buttonHit = 2;
         
-        background(98, 104, 182);
-       // lineCounter++;
+       background(98, 104, 182);
        lineCounter = 0;
-        verticalSpaceMultiplier = 0;
-        if(fileCounter <= 3)
+       verticalSpaceMultiplier = 0;
+        if(fileCounter < 4)
           fileCounter++;
          else
            allFilesRead = true;
       }
-      
-      
-=======
-      buttonHit = 1;
-      background(175, 71, 71);
-      verticalSpaceMultiplier = 0;
-      if (fileCounter < 3)
-        fileCounter++;
-      else
-        allFilesRead = true;
-      lineCounter = 0;
-    } else if ((mouseX > displayWidth/2 - ("two".length()*16)/2 && 
-      mouseX < displayWidth/2 + ("two".length()*16)/2) && 
-      (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 80 -  32/2 
-      && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 80 + 32/2)) {
-      buttonHit = 2;
+   }
 
-      background(98, 104, 182);
-      lineCounter = 0;
-      verticalSpaceMultiplier = 0;
-      if (fileCounter < 3)
-        fileCounter++;
-      else
-        allFilesRead = true;
->>>>>>> acb51d116628a27672c9652ea90745457e95ed21
-    }
-  }
 
   if (clickCounter == 0)
     screen = Screen.START_SCREEN;
@@ -253,6 +231,7 @@ void keyPressed() {
     }
   }
   if ((key == ENTER || key == RETURN) && allFilesRead) { 
+    firstGameScreen = false;
     screen = Screen.GAMEPLAY_SCREEN;
     screenSwitch = true;
   }
@@ -364,6 +343,29 @@ void gamePlayScreen() {
   mainBub.set(mouseX, mouseY);
   mainBub.display();
 
+  if (firstGameScreen == false) {
+    float xDirValues[] = new float[allBubbles.length];
+    float yDirValues[] = new float[allBubbles.length];
+    
+ 
+    
+    for (int i = 0; i < allBubbles.length; i++) {
+      allBubbles[i].pause();
+      xDirValues[i] = allBubbles[i].getXDir();
+      yDirValues[i] = allBubbles[i].getYDir();
+    }
+
+    if (mainBub.getRadius() <= 500 && mainBub.getRadius() >= 50) {
+      mainBub.setRadius(mainBub.getRadius() + (random(20, 40)));
+    }
+    
+    for (int i = 0; i < allBubbles.length; i++) {
+      allBubbles[i].unPause(xDirValues[i], yDirValues[i]); 
+    }
+  } // ends here
+
+
+
   for (int i = 0; i < allBubbles.length; i++) { 
     allBubbles[i].checkXEdges(displayWidth); 
     allBubbles[i].checkYEdges(displayHeight);
@@ -383,14 +385,15 @@ void gamePlayScreen() {
         pop.play();
 
         Bubble collideBubble = allBubbles[i];
-        float collideBubbleRadius = collideBubble.getRadius();
+        //float collideBubbleRadius = collideBubble.getRadius();
 
         delay(75);
         screen = Screen.CONVO_SCREEN;
         collideBubble.setRadius(0);
+        /*
         if (mainBub.getRadius() <= 500 && mainBub.getRadius() >= 50) {
-          mainBub.setRadius(mainBub.getRadius() + (collideBubbleRadius / 2));
-        }
+         mainBub.setRadius(mainBub.getRadius() + (collideBubbleRadius / 2));
+         } */
         bubbleBumped = false;
       }
     }
@@ -429,45 +432,56 @@ void conversationScreen() {
 //Displays the text from the text file line by line
 void textScreen() {
   textAlign(CENTER); 
+  int num = int(random(0, 1)); 
+  //reader = createReader(listOfFileNames[num]);
   String fileN = "divorce" + fileCounter + ".txt";
-<<<<<<< HEAD
   String[] lines = loadStrings(fileN);
 //  String[][] actualLines = new String[lines.length][5]; 
-  if(fileCounter == 2)
-    allFilesRead = true;
-  else
-    allFilesRead = false;
-  if (lineCounter < lines.length-2) {
+  
     
-=======
-  String[] lines = loadStrings(fileN); 
-
-  if (lineCounter < lines.length - 2) {
-
->>>>>>> acb51d116628a27672c9652ea90745457e95ed21
+  if (lineCounter < lines.length-2) {
     textSize(28);
     fill(0);
-
-    if (startingHeight + (verticalSpaceMultiplier*40) + 80 > displayHeight) 
+    if(startingHeight + (verticalSpaceMultiplier*40) + 80 > displayHeight) {
       verticalSpaceMultiplier = 0;
-
-    if (lineCounter == 12 && buttonHit == 0) {
-      isButton = true;
-      noBoxButtonCreator(lines[lineCounter], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 50, lines[lineCounter].length()*16, 32);
-      println(lines[lineCounter+1]);
-      noBoxButtonCreator(lines[lineCounter+1], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 80, lines[lineCounter].length()*16, 32);
-    } else {
+      background(255);
+    }
       text(lines[lineCounter], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40)+40);
-      if (buttonHit == 1)
+      if(buttonHit == 1)
         lineCounter += 2;
       verticalSpaceMultiplier++;
       lineCounter++;    
       buttonHit = 0;
-      delay(900);
-    }
-  } else {
-    allLinesRead = true;
+      delay(1000);
   }
+  else if(lineCounter >= lines.length-2 && lineCounter < lines.length && fileCounter != 4) {
+    
+      isButton = true;
+      noBoxButtonCreator(lines[lineCounter], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 50, lines[lineCounter].length()*16, 32);
+      println(lines[lineCounter+1]);
+      noBoxButtonCreator(lines[lineCounter+1], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 80, lines[lineCounter].length()*16, 32);
+      lineCounter = lines.length;
+      delay(1000);
+    
+  }
+  else if(lineCounter >= lines.length-2 && lineCounter < lines.length && fileCounter == 4) {
+     text(lines[lineCounter], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40)+40);
+     lineCounter++;
+     verticalSpaceMultiplier++;
+     delay(1000);
+}
+  if(lineCounter == lines.length){
+    allLinesRead = true;
+    
+  }
+    
+  if(fileCounter == 4 && allLinesRead) {
+    allFilesRead = true;
+    println("aslkjdfasdf");
+   }
+  else
+    allFilesRead = false;
+ 
 }
 
 //Creates the button box and changes the color of the box and label when the mouse is over it

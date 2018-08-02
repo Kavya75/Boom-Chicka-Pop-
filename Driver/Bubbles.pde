@@ -1,3 +1,4 @@
+
 import processing.sound.*;
 import ddf.minim.*;
 class Bubble extends PVector {
@@ -40,11 +41,6 @@ class Bubble extends PVector {
       image(img, super.x-radius/4, super.y-radius/4, 25, 35);
   }
 
-  void set(int xPos, int yPos) { 
-    super.x = xPos;
-    super.y = yPos;
-  }
-
   void checkXEdges(int xBoundary) { 
     if (super.x + radius/2 > xBoundary)
       xDirection *= -1;
@@ -57,6 +53,23 @@ class Bubble extends PVector {
       yDirection *= -1;
     else if (super.y - radius/2 <= 0)
       yDirection *= -1;
+  }
+  
+  //Pauses the bubble movement 
+  void pause() {
+    xDirection = 0;
+    yDirection = 0;
+  }
+  
+  //Resumes the bubble movement
+  void unPause(float xDirection, float yDirection) {
+    this.xDirection = xDirection;
+    this.yDirection = yDirection;
+  }
+  
+  void set(int xPos, int yPos) { 
+    super.x = xPos;
+    super.y = yPos;
   }
 
   void setX(float xP) { 
