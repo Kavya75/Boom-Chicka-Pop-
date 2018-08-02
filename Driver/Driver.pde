@@ -150,7 +150,7 @@ void mouseClicked() {
         buttonHit = 1;
         background(175, 71, 71);
         verticalSpaceMultiplier = 0;
-         if(fileCounter < 3)
+         if(fileCounter <= 2)
           fileCounter++;
          else
            allFilesRead = true;
@@ -167,7 +167,7 @@ void mouseClicked() {
        // lineCounter++;
        lineCounter = 0;
         verticalSpaceMultiplier = 0;
-        if(fileCounter < 3)
+        if(fileCounter <= 3)
           fileCounter++;
          else
            allFilesRead = true;
@@ -337,7 +337,7 @@ void gamePlayScreen() {
   verticalSpaceMultiplier = 0;
   buttonHit = 0;
   allFilesRead = false;
-  fileCounter = 0;
+  fileCounter = 1;
   isButton = false;
   mouseIn = false;
   background(255);
@@ -415,7 +415,10 @@ void textScreen() {
   String fileN = "divorce" + fileCounter + ".txt";
   String[] lines = loadStrings(fileN);
 //  String[][] actualLines = new String[lines.length][5]; 
-  
+  if(fileCounter == 2)
+    allFilesRead = true;
+  else
+    allFilesRead = false;
   if (lineCounter < lines.length-2) {
     
     textSize(28);
