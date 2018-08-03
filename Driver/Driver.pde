@@ -7,6 +7,7 @@ PImage img;
 PImage backgroundImg;
 PImage surveyImg;
 PImage instrImg;
+PImage convoImg;
 SoundFile file;
 AudioPlayer pop;
 Minim minim;
@@ -102,6 +103,9 @@ void setup() {
 
   instrImg = loadImage ("InstrBackground.png");
   instrImg.resize(displayWidth, displayHeight);
+  
+  convoImg = loadImage ("ConvoBackground.png");
+  convoImg.resize(displayWidth, displayHeight);
 }
 
 void draw() {
@@ -403,7 +407,7 @@ void initializeBubbles() {
 //Sets the conversation background to a solid color and
 //  checks if user clicks or hits ENTER. If yes, will return to gamePlayScreen
 void conversationScreen() { 
-  background(255);
+  background(convoImg);
   image(pics[activeBubble.randImg], displayWidth/20, startingHeight * 5, 230, 280);
   if (keyPressed) {
     if (key == ENTER && allFilesRead) { 
