@@ -10,8 +10,7 @@ PImage instrImg;
 SoundFile file;
 AudioPlayer pop;
 Minim minim;
-PImage[] pics = new PImage[2];
-int randomImage;
+PImage[] pics = new PImage[19];
 
 int clickCounter = 0; //Keeps track of the number of clicks
 int enterCounterSurvey = 0; //Keeps track of how many times user hits ENTER for the survey page
@@ -20,14 +19,12 @@ int totalPoints = 0; //Keeps track of the total number of survey points
 int userInput1, userInput2, userInput3, userInput4 = 0; 
 int lineCounter = 0;
 
-//initialize main bubble
 Bubble mainBub = new Bubble(50, color(181, 235, 255, 150), displayWidth / 2, displayHeight / 2); 
 Bubble[] allBubbles = new Bubble[5]; 
 
 BufferedReader reader;
 
-//String[] listOfFileNames = {"divorce", "depression"};
-String[] listOfFileNames = {"parental"};
+String[] listOfFileNames = {"divorce", "depression"};
 int randomFileName = -1;
 String[][] stopLines = new String[listOfFileNames.length][5];
 
@@ -39,7 +36,6 @@ boolean onSurveyPage = false;
 boolean onInstrucPage = false;
 boolean convBGDisplayed = false; //Used to check if the conversation page background is drawn - Ensures that background is drawn once
 boolean q1, q2, q3, q4 = false; //Used to display the survey questions one by one
-boolean firstGameScreen = true; //True - If gamePlayScreen() has only been called one (before any collisions); False - If gamePlayScreen() has been called 1+ times (after a collision)
 
 boolean allLinesRead = false; //Moves from page to page
 
@@ -54,8 +50,7 @@ int startingHeight = displayHeight/8;
 int fileCounter = 1;
 boolean allFilesRead = false; //Moves from file to file
 int stopFileNumber = -1; 
-
-Bubble activeBubble;
+int randomImage = int(random(0, 18));
 
 public enum Screen {
   START_SCREEN, 
@@ -67,17 +62,35 @@ public enum Screen {
 
 Screen screen = Screen.START_SCREEN;
 
+public enum UserOptions { 
+  END_CONVO, 
+    MORE_OPTIONS
+} 
+
+UserOptions userchoice = UserOptions.MORE_OPTIONS;
 
 void setup() {
-  randomImage = int(random(0, pics.length));
-  String[] imageNames = {"basketballBoy.png", "blackboi1.png", "blondeBeanie.png", 
-    "blondeGirlPigTails.png", "blueberry.png", "caramelBoy.png", "coffeeGirl.png", "cookieBoi.png", 
-    "DJboi.png", "farmerBoy.png", "greyBoy.png", "jabami.png", "Keshawn.png", "Mexicano.png", 
-    "momNerd.png", "mushroom.png", "perryboi.png", "Rob.png", "taffyBoy.png"};
-
-  for (int i = 0; i < pics.length; i++) 
-    pics[i] = loadImage(imageNames[i]);
-
+  /*
+  pics[0] = loadImage("basketballBoy.png");
+  pics[1] = loadImage("blackboi1.png");
+  pics[2] = loadImage("blondeBeanie.png");
+  pics[3] = loadImage("blondeGirlPig Tails.png");
+  pics[4] = loadImage("blueberry .png");
+  pics[5] = loadImage("caramelBoy.png");
+  pics[6] = loadImage("coffeeGirl.png");
+  pics[7] = loadImage("cookieBoi.png");
+  pics[8] = loadImage("DJboi.png");
+  pics[9] = loadImage("farmerBoy.png");
+  pics[10] = loadImage("greyBoy.png");
+  pics[11] = loadImage("jabami.png");
+  pics[12] = loadImage("Keshawn.png");
+  pics[13] = loadImage("Mexicano.png");
+  pics[14] = loadImage("momNerd.png");
+  pics[15] = loadImage("mushroom.png");
+  pics[16] = loadImage("perryboi.png");
+  pics[17] = loadImage("Rob.png");
+  pics[18] = loadImage("taffyBoy.png");
+*/
 
   String[] musicNames = {"Feelin' Good.mp3", "aspen-starlight.mp3", "breeze.mp3", "colors.mp3", 
     "colors.mp3", "dawn-light.mp3", "farewell.mp3", "here.mp3", "looking-up.mp3", 
@@ -117,7 +130,6 @@ void draw() {
     allLinesRead = false;
     lineCounter = 0; 
     convBGDisplayed = false;
-
     gamePlayScreen();
 
     //Totals up the points from the survey
@@ -147,6 +159,7 @@ void draw() {
     convBGDisplayed = true;
   } else if (convBGDisplayed == true) {
     textScreen();
+    firstGameScreen = false;
   }
 }
 
@@ -155,20 +168,22 @@ void mouseClicked() {
     clickCounter++;
   }
 
-  if (screen == Screen.CONVO_SCREEN && isButton) {
+  if (screen == Screen.CONVO_SCREEN) {
 
-    if ((mouseX > displayWidth/2 - ("oneoneone".length()*16)/2 && 
-      mouseX < displayWidth/2 + ("oneoneone".length()*16)/2) && 
+    if ((mouseX > displayWidth/2 - ("one".length()*16)/2 && 
+      mouseX < displayWidth/2 + ("one".length()*16)/2) && 
       (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 50 -  32/2 
       && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 50 + 32/2)) {
       buttonHit = 1;
       background(175, 71, 71);
       lineCounter = 0;
       verticalSpaceMultiplier = 0;
-      fileCounter = 5;
-      allFilesRead = true;
-    } else if ((mouseX > displayWidth/2 - ("twotwotwo".length()*16)/2 && 
-      mouseX < displayWidth/2 + ("twotwotwo".length()*16)/2) && 
+      if (fileCounter < findStopFile())
+        fileCounter++;
+      else
+        allFilesRead = true;
+    } else if ((mouseX > displayWidth/2 - ("two".length()*16)/2 && 
+      mouseX < displayWidth/2 + ("two".length()*16)/2) && 
       (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 80 -  32/2 
       && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 80 + 32/2)) {
       buttonHit = 2;
@@ -182,7 +197,6 @@ void mouseClicked() {
         allFilesRead = true;
     }
   }
-
 
   if (clickCounter == 0)
     screen = Screen.START_SCREEN;
@@ -351,6 +365,9 @@ void gamePlayScreen() {
   mainBub.set(mouseX, mouseY);
   mainBub.display();
 
+
+  
+
   for (int i = 0; i < allBubbles.length; i++) { 
     allBubbles[i].checkXEdges(displayWidth); 
     allBubbles[i].checkYEdges(displayHeight);
@@ -370,11 +387,9 @@ void gamePlayScreen() {
         pop.play();
 
         Bubble collideBubble = allBubbles[i];
-        if (mainBub.getRadius() <= 300 && mainBub.getRadius() >= 50) {
-          mainBub.setRadius(mainBub.getRadius() + random(20, 30));
-        }
-        
-        delay(1000);
+
+        delay(75);
+        //firstGameScreen = false;
         screen = Screen.CONVO_SCREEN;
         collideBubble.setRadius(0);
         bubbleBumped = false;
@@ -396,7 +411,7 @@ void initializeBubbles() {
     float randomYDir = int(random(1, 4)); 
     allBubbles[i] = new Bubble(randomRadius, color(randomRedValue, 
       randomGreenValue, randomBlueValue, 150), randomXStart, randomYStart, 
-      randomXDir, randomYDir, pics.length);
+      randomXDir, randomYDir);
   }
 }
 
@@ -404,7 +419,7 @@ void initializeBubbles() {
 //  checks if user clicks or hits ENTER. If yes, will return to gamePlayScreen
 void conversationScreen() { 
   background(255);
-  image(pics[activeBubble.randImg], displayWidth/20, startingHeight * 5, 230, 280);
+  //image(pics[randomImage], displayWidth/20, startingHeight * 5, 230, 280);
   if (keyPressed) {
     if (key == ENTER && allFilesRead) { 
       screen = Screen.GAMEPLAY_SCREEN;
@@ -415,13 +430,11 @@ void conversationScreen() {
 
 //Displays the text from the text file line by line
 void textScreen() {
-  firstGameScreen = true;
   textAlign(CENTER); 
   String fileN = listOfFileNames[randomFileName] + fileCounter + ".txt";
   String[] lines = loadStrings(fileN);
 
   if (lineCounter < lines.length-2) {
-    isButton = false;
     textSize(28);
     fill(0);
     if (startingHeight + (verticalSpaceMultiplier*40) + 80 > displayHeight) {
@@ -434,26 +447,26 @@ void textScreen() {
     verticalSpaceMultiplier++;
     lineCounter++;    
     buttonHit = 0;
-    //  delay(1000);
-  } else if (lineCounter >= lines.length-2 && lineCounter < lines.length && fileCounter != findStopFile() && fileCounter != 5) {
+    //delay(1000);
+  } else if (lineCounter >= lines.length-2 && lineCounter < lines.length && fileCounter != findStopFile()) {
 
     isButton = true;
     noBoxButtonCreator(lines[lineCounter], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 50, lines[lineCounter].length()*16, 32);
+    println(lines[lineCounter+1]);
     noBoxButtonCreator(lines[lineCounter+1], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 80, lines[lineCounter].length()*16, 32);
     lineCounter = lines.length;
-    //   delay(1000);
-  } else if (lineCounter >= lines.length-2 && lineCounter < lines.length && (fileCounter == findStopFile() || fileCounter == 5)) {
+    //delay(1000);
+  } else if (lineCounter >= lines.length-2 && lineCounter < lines.length && fileCounter == findStopFile()) {
     text(lines[lineCounter], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40)+40);
     lineCounter++;
     verticalSpaceMultiplier++;
-    delay(1000);
+    //delay(1000);
   }
-  if (lineCounter == lines.length || fileCounter == 5) {
-    println("i hope this is true");
+  if (lineCounter == lines.length) {
     allLinesRead = true;
-  }
+  } 
 
-  if ((fileCounter == findStopFile() || fileCounter == 5) && allLinesRead) {
+  if (fileCounter == findStopFile() && allLinesRead) {
     allFilesRead = true;
     println("aslkjdfasdf");
   } else
@@ -515,13 +528,11 @@ void mouseInBounds(int xPt, int yPt, int xDistance, int yDistance, int whichButt
 int findStopFile() { 
   switch (randomFileName) {
   case 0: 
-    stopFileNumber = 3; 
+    stopFileNumber = 4; 
     break;
   case 1: 
-    stopFileNumber = 3;  
+    stopFileNumber = 3; 
     break;
-  case 2: 
-    stopFileNumber = 3;
   default: 
     stopFileNumber = 1;
     break;
