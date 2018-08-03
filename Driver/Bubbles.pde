@@ -40,7 +40,7 @@ class Bubble extends PVector {
     ellipseMode(CENTER);
     ellipse(super.x, super.y, radius * 2, radius * 2);
     if (getRadius() != 0)
-    image(pics[randImg], super.x-radius/4, super.y-radius/4, 25, 35);
+    image(pics[randImg], super.x-radius/4, super.y-radius/4, 50, 65);
   }
 
   void checkXEdges(int xBoundary) { 

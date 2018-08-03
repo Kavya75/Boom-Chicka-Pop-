@@ -14,7 +14,11 @@ PImage bubpop2;
 SoundFile file;
 AudioPlayer pop;
 Minim minim;
+<<<<<<< HEAD
 PImage[] pics = new PImage[3];
+=======
+PImage[] pics = new PImage[19];
+>>>>>>> 017443a9bd985f00e9794a0c02b390527f0a611b
 int randomImage;
 
 
@@ -31,8 +35,8 @@ Bubble[] allBubbles = new Bubble[5];
 
 BufferedReader reader;
 
-//String[] listOfFileNames = {"divorce", "depression"};
-String[] listOfFileNames = {"parental"};
+String[] listOfFileNames = {"divorce", "depression", "parental", "college", "china"};
+//String[] listOfFileNames = {"parental"};
 int randomFileName = -1;
 String[][] stopLines = new String[listOfFileNames.length][5];
 
@@ -188,8 +192,8 @@ void mouseClicked() {
 
     if ((mouseX > displayWidth/2 - ("oneoneoneoneone".length()*16)/2 && 
       mouseX < displayWidth/2 + ("oneoneoneoneone".length()*16)/2) && 
-      (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 50 -  32/2 
-      && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 50 + 32/2)) {
+      (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 50 -  28/2 
+      && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 50 + 28/2)) {
       buttonHit = 1;
       background(convoImg);
       lineCounter = 0;
@@ -198,8 +202,8 @@ void mouseClicked() {
       allFilesRead = true;
     } else if ((mouseX > displayWidth/2 - ("twotwotwotwotwo".length()*16)/2 && 
       mouseX < displayWidth/2 + ("twotwotwotwotwo".length()*16)/2) && 
-      (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 100 -  32/2 
-      && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 100 + 32/2)) {
+      (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 100 -  28/2 
+      && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 100 + 28/2)) {
       buttonHit = 2;
       lineCounter = 0;
       verticalSpaceMultiplier = 0;
@@ -417,7 +421,7 @@ void gamePlayScreen() {
         screen = Screen.CONVO_SCREEN;
         collideBubble.setRadius(0);
         bubbleBumped = false;
-        randomFileName = int(random(0, listOfFileNames.length));
+        randomFileName++;
       }
     }
   }
@@ -460,7 +464,7 @@ void initializeBubbles() {
 //  checks if user clicks or hits ENTER. If yes, will return to gamePlayScreen
 void conversationScreen() { 
   background(convoImg);
-  image(pics[activeBubble.randImg], displayWidth/20, startingHeight * 5, 230, 280);
+  image(pics[activeBubble.randImg], displayWidth/20, startingHeight * 7, 230, 280);
   if (keyPressed) {
     if (key == ENTER && allFilesRead) { 
       screen = Screen.GAMEPLAY_SCREEN;
@@ -489,14 +493,14 @@ void textScreen() {
     verticalSpaceMultiplier++;
     lineCounter++;    
     buttonHit = 0;
-    //  delay(1000);
+    delay(1000);
   } else if (lineCounter >= lines.length-2 && lineCounter < lines.length && fileCounter != findStopFile() && fileCounter != 5) {
 
     isButton = true;
     noBoxButtonCreator(lines[lineCounter], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 50, lines[lineCounter].length()*16, 32);
     noBoxButtonCreator(lines[lineCounter+1], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 100, lines[lineCounter].length()*16, 32);
     lineCounter = lines.length;
-    //   delay(1000);
+    delay(1000);
   } else if (lineCounter >= lines.length-2 && lineCounter < lines.length && (fileCounter == findStopFile() || fileCounter == 5)) {
     text(lines[lineCounter], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40)+40);
     lineCounter++;
@@ -504,13 +508,11 @@ void textScreen() {
     delay(1000);
   }
   if (lineCounter == lines.length || fileCounter == 5) {
-    println("i hope this is true");
     allLinesRead = true;
   }
 
   if ((fileCounter == findStopFile() || fileCounter == 5) && allLinesRead) {
     allFilesRead = true;
-    println("aslkjdfasdf");
   } else
     allFilesRead = false;
 }
@@ -570,12 +572,18 @@ void mouseInBounds(int xPt, int yPt, int xDistance, int yDistance, int whichButt
 int findStopFile() { 
   switch (randomFileName) {
   case 0: 
-    stopFileNumber = 3; 
+    stopFileNumber = 4; 
     break;
   case 1: 
     stopFileNumber = 3;  
     break;
   case 2: 
+    stopFileNumber = 3;
+    break;
+  case 3: 
+    stopFileNumber = 4;
+    break;
+  case 4:
     stopFileNumber = 3;
     break;
   default: 
