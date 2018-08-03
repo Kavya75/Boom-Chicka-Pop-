@@ -1,7 +1,8 @@
+age: 17 gender: male 
 i think one of the hardest things for me 
 was telling my parents that i was depressed 
 they always thought i could handle myself
 and chalked down my lack of motivation and constant exhaustion
 to the woes of growing up and naivety
-one
-two
+well, growing up is a hard time.
+[prompt them to continue speaking]

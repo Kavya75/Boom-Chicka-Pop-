@@ -92,7 +92,7 @@ void setup() {
   smooth(8);
   noStroke();
   initializeBubbles();
-  img = loadImage("bear.png");
+ // img = loadImage("bear.png");
 
   backgroundImg = loadImage("SonderBackground.png");
   backgroundImg.resize(displayWidth, displayHeight);
@@ -174,25 +174,24 @@ void mouseClicked() {
 
   if (screen == Screen.CONVO_SCREEN && isButton) {
 
-    if ((mouseX > displayWidth/2 - ("oneoneone".length()*16)/2 && 
-      mouseX < displayWidth/2 + ("oneoneone".length()*16)/2) && 
+    if ((mouseX > displayWidth/2 - ("oneoneoneoneone".length()*16)/2 && 
+      mouseX < displayWidth/2 + ("oneoneoneoneone".length()*16)/2) && 
       (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 50 -  32/2 
       && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 50 + 32/2)) {
       buttonHit = 1;
-      background(175, 71, 71);
+      background(convoImg);
       lineCounter = 0;
       verticalSpaceMultiplier = 0;
       fileCounter = 5;
       allFilesRead = true;
-    } else if ((mouseX > displayWidth/2 - ("twotwotwo".length()*16)/2 && 
-      mouseX < displayWidth/2 + ("twotwotwo".length()*16)/2) && 
-      (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 80 -  32/2 
-      && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 80 + 32/2)) {
+    } else if ((mouseX > displayWidth/2 - ("twotwotwotwotwo".length()*16)/2 && 
+      mouseX < displayWidth/2 + ("twotwotwotwotwo".length()*16)/2) && 
+      (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 100 -  32/2 
+      && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 100 + 32/2)) {
       buttonHit = 2;
-
-      background(98, 104, 182);
       lineCounter = 0;
       verticalSpaceMultiplier = 0;
+      background(convoImg);
       if (fileCounter < findStopFile())
         fileCounter++;
       else
@@ -380,11 +379,11 @@ void gamePlayScreen() {
     noBubblesLeft = true;
     
     screen = Screen.GAMEPLAY_SCREEN;
-    
+    delay(2000);
     pop = minim.loadFile("Sonder Bubble Pop.mp3", 2048);
     pop.play();
     mainBub.setRadius(0);
-    
+   
     screen = Screen.FINAL_SCREEN;
   }
 
@@ -414,6 +413,7 @@ void gamePlayScreen() {
 
 void finalScreen() {
   background(0);
+  
   text("Thank you for playing", displayWidth / 2, (displayHeight / 2) - 120);
 }
 
@@ -457,7 +457,7 @@ void textScreen() {
     isButton = false;
     textSize(28);
     fill(0);
-    if (startingHeight + (verticalSpaceMultiplier*40) + 80 > displayHeight) {
+    if (startingHeight + (verticalSpaceMultiplier*40) + 100 > displayHeight) {
       verticalSpaceMultiplier = 0;
       background(255);
     }
@@ -472,7 +472,7 @@ void textScreen() {
 
     isButton = true;
     noBoxButtonCreator(lines[lineCounter], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 50, lines[lineCounter].length()*16, 32);
-    noBoxButtonCreator(lines[lineCounter+1], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 80, lines[lineCounter].length()*16, 32);
+    noBoxButtonCreator(lines[lineCounter+1], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 100, lines[lineCounter].length()*16, 32);
     lineCounter = lines.length;
     //   delay(1000);
   } else if (lineCounter >= lines.length-2 && lineCounter < lines.length && (fileCounter == findStopFile() || fileCounter == 5)) {
@@ -537,7 +537,7 @@ void mouseInBounds(int xPt, int yPt, int xDistance, int yDistance, int whichButt
     mouseIn = true;
     if (yPt == startingHeight + (verticalSpaceMultiplier*40) + 50)
       buttonHit = 1;
-    if (yPt == startingHeight + (verticalSpaceMultiplier*40) + 80) 
+    if (yPt == startingHeight + (verticalSpaceMultiplier*40) + 100) 
       buttonHit = 2;
   } else {
     mouseIn = false;
@@ -555,6 +555,7 @@ int findStopFile() {
     break;
   case 2: 
     stopFileNumber = 3;
+    break;
   default: 
     stopFileNumber = 1;
     break;
