@@ -148,6 +148,11 @@ void draw() {
   } else if (convBGDisplayed == true) {
     textScreen();
   }
+  
+  if (bubblesLeft(allBubbles) == true) {
+        finalScreen();
+      }
+
 }
 
 void mouseClicked() {
@@ -383,6 +388,24 @@ void gamePlayScreen() {
     }
   }
 }
+
+boolean bubblesLeft(Bubble[] allBubbles) {
+  for(int i = 0; i < allBubbles.length; i++) {
+    if(allBubbles[i].getRadius() == 0) {
+      return false;
+    }
+  }
+  
+  return true;
+}
+
+
+void finalScreen() {
+  //onFinalPage = true;
+  background(0);
+  text("Thank you for playing", displayWidth / 2, (displayHeight / 2) - 120);
+}
+
 
 void initializeBubbles() { 
   for (int i = 0; i < allBubbles.length; i++) {
