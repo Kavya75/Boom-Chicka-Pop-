@@ -127,8 +127,10 @@ class Bubble extends PVector {
 
     if (otherBub.getRadius() == 0)
       return false;
-    else if (dis <= (getRadius() + otherBub.getRadius()))
+    else if (dis <= (getRadius() + otherBub.getRadius())) {
+      activeBubble = this;
       return true;
+    }
     return false;
   }
 }
