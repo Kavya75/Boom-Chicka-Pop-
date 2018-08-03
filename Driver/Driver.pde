@@ -26,7 +26,8 @@ Bubble[] allBubbles = new Bubble[5];
 
 BufferedReader reader;
 
-String[] listOfFileNames = {"divorce", "depression"};
+//String[] listOfFileNames = {"divorce", "depression"};
+String[] listOfFileNames = {"parental"};
 int randomFileName = -1;
 String[][] stopLines = new String[listOfFileNames.length][5];
 
@@ -514,11 +515,13 @@ void mouseInBounds(int xPt, int yPt, int xDistance, int yDistance, int whichButt
 int findStopFile() { 
   switch (randomFileName) {
   case 0: 
-    stopFileNumber = 4; 
-    break;
-  case 1: 
     stopFileNumber = 3; 
     break;
+  case 1: 
+    stopFileNumber = 3;  
+    break;
+  case 2: 
+    stopFileNumber = 3;
   default: 
     stopFileNumber = 1;
     break;
