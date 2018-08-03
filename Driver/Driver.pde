@@ -362,12 +362,13 @@ void gamePlayScreen() {
     }
 
     if (mainBub.getRadius() <= 500 && mainBub.getRadius() >= 50) {
-      mainBub.setRadius(mainBub.getRadius() + (random(20, 40)));
+      mainBub.setRadius(mainBub.getRadius() + (random(10, 20)));
     }
 
     for (int i = 0; i < allBubbles.length; i++) {
       allBubbles[i].unPause(xDirValues[i], yDirValues[i]);
     }
+    firstGameScreen = true;
   } 
 
   for (int i = 0; i < allBubbles.length; i++) { 
@@ -390,7 +391,7 @@ void gamePlayScreen() {
 
         Bubble collideBubble = allBubbles[i];
 
-        delay(75);
+        delay(1000);
         screen = Screen.CONVO_SCREEN;
         collideBubble.setRadius(0);
         bubbleBumped = false;
@@ -431,6 +432,7 @@ void conversationScreen() {
 
 //Displays the text from the text file line by line
 void textScreen() {
+  firstGameScreen = true;
   textAlign(CENTER); 
   String fileN = listOfFileNames[randomFileName] + fileCounter + ".txt";
   String[] lines = loadStrings(fileN);
