@@ -8,11 +8,15 @@ PImage backgroundImg;
 PImage surveyImg;
 PImage instrImg;
 PImage convoImg;
+PImage bubpop1;
+PImage bubpop2;
+
 SoundFile file;
 AudioPlayer pop;
 Minim minim;
-PImage[] pics = new PImage[2];
+PImage[] pics = new PImage[3];
 int randomImage;
+
 
 int clickCounter = 0; //Keeps track of the number of clicks
 int enterCounterSurvey = 0; //Keeps track of how many times user hits ENTER for the survey page
@@ -105,6 +109,14 @@ void setup() {
 
   convoImg = loadImage("ConvoBackground.png");
   convoImg.resize(displayWidth, displayHeight);
+  
+ 
+  bubpop1 = loadImage("pop1.png");
+  bubpop1.resize(displayWidth, displayHeight);
+  
+  bubpop2 = loadImage("pop2.png");
+  bubpop2.resize(displayWidth, displayHeight);
+ 
 }
 
 void draw() {
@@ -401,7 +413,7 @@ void gamePlayScreen() {
           mainBub.setRadius(mainBub.getRadius() + random(20, 30));
         }
 
-        delay(100);
+        delay(150);
         screen = Screen.CONVO_SCREEN;
         collideBubble.setRadius(0);
         bubbleBumped = false;
@@ -412,7 +424,12 @@ void gamePlayScreen() {
 }
 
 void finalScreen() {
-  background(backgroundImg);
+  background(0);
+  frameRate(30);
+  image(bubpop1, displayWidth/5, displayHeight/5);
+  frameRate(20);
+  image(bubpop2, displayWidth/5, displayHeight/5);
+ 
   fill(255);
   textSize(28);
   text("thank you for playing", displayWidth / 2, (displayHeight / 2) - 120);
