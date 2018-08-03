@@ -27,8 +27,8 @@ Bubble[] allBubbles = new Bubble[5];
 
 BufferedReader reader;
 
-//String[] listOfFileNames = {"divorce", "depression"};
-String[] listOfFileNames = {"parental"};
+String[] listOfFileNames = {"divorce", "depression", "parental"};
+//String[] listOfFileNames = {"parental"};
 int randomFileName = -1;
 String[][] stopLines = new String[listOfFileNames.length][5];
 
@@ -176,8 +176,8 @@ void mouseClicked() {
 
     if ((mouseX > displayWidth/2 - ("oneoneoneoneone".length()*16)/2 && 
       mouseX < displayWidth/2 + ("oneoneoneoneone".length()*16)/2) && 
-      (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 50 -  32/2 
-      && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 50 + 32/2)) {
+      (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 50 -  28/2 
+      && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 50 + 28/2)) {
       buttonHit = 1;
       background(convoImg);
       lineCounter = 0;
@@ -186,8 +186,8 @@ void mouseClicked() {
       allFilesRead = true;
     } else if ((mouseX > displayWidth/2 - ("twotwotwotwotwo".length()*16)/2 && 
       mouseX < displayWidth/2 + ("twotwotwotwotwo".length()*16)/2) && 
-      (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 100 -  32/2 
-      && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 100 + 32/2)) {
+      (mouseY >  startingHeight + (verticalSpaceMultiplier*40) + 100 -  28/2 
+      && mouseY <  startingHeight + (verticalSpaceMultiplier*40) + 100 + 28/2)) {
       buttonHit = 2;
       lineCounter = 0;
       verticalSpaceMultiplier = 0;
@@ -472,14 +472,14 @@ void textScreen() {
     verticalSpaceMultiplier++;
     lineCounter++;    
     buttonHit = 0;
-    //  delay(1000);
+     delay(1000);
   } else if (lineCounter >= lines.length-2 && lineCounter < lines.length && fileCounter != findStopFile() && fileCounter != 5) {
 
     isButton = true;
     noBoxButtonCreator(lines[lineCounter], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 50, lines[lineCounter].length()*16, 32);
     noBoxButtonCreator(lines[lineCounter+1], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40) + 100, lines[lineCounter].length()*16, 32);
     lineCounter = lines.length;
-    //   delay(1000);
+    delay(1000);
   } else if (lineCounter >= lines.length-2 && lineCounter < lines.length && (fileCounter == findStopFile() || fileCounter == 5)) {
     text(lines[lineCounter], displayWidth/2, startingHeight + (verticalSpaceMultiplier*40)+40);
     lineCounter++;
@@ -553,7 +553,7 @@ void mouseInBounds(int xPt, int yPt, int xDistance, int yDistance, int whichButt
 int findStopFile() { 
   switch (randomFileName) {
   case 0: 
-    stopFileNumber = 3; 
+    stopFileNumber = 4; 
     break;
   case 1: 
     stopFileNumber = 3;  
