@@ -41,7 +41,7 @@ boolean onInstrucPage = false;
 boolean convBGDisplayed = false; //Used to check if the conversation page background is drawn - Ensures that background is drawn once
 boolean q1, q2, q3, q4 = false; //Used to display the survey questions one by one
 boolean allLinesRead = false; //Moves from page to page
-
+boolean noBubblesLeft = false;
 boolean screenSwitch = false;
 boolean option1 = false;
 boolean option2 = false;
@@ -61,7 +61,8 @@ public enum Screen {
     SURVEY_SCREEN, 
     INSTRUC_SCREEN, 
     GAMEPLAY_SCREEN, 
-    CONVO_SCREEN
+    CONVO_SCREEN,
+    FINAL_SCREEN
 }
 
 Screen screen = Screen.START_SCREEN;
@@ -132,7 +133,7 @@ void draw() {
     }
 
     //Draws the shrinking or expanding bubble
-    if (mainBub.getRadius() <= 250 && mainBub.getRadius() >= 50) {
+    if (mainBub.getRadius() <= 250 && mainBub.getRadius() >= 50 && noBubblesLeft == false) {
       if (totalPoints <= -5 && totalPoints >= -8) {
         mainBub.setRadius(mainBub.getRadius() + 0.1);
       } else if (totalPoints <= -1 && totalPoints >= -4) {
@@ -144,21 +145,21 @@ void draw() {
       }
     }
 
-    if (bubblesLeft(allBubbles) == true) {
-      finalScreen();
-    }
   } else if (screen == Screen.CONVO_SCREEN && convBGDisplayed == false) {
     delay(50);
     conversationScreen();
     convBGDisplayed = true;
   } else if (convBGDisplayed == true) {
-    textScreen();
+    textScreen(); 
+  } else if (screen == Screen.FINAL_SCREEN) {
+    delay(200);
+    finalScreen();
   }
 }
 
 boolean bubblesLeft(Bubble[] allBubbles) {
   for (int i = 0; i < allBubbles.length; i++) {
-    if (allBubbles[i].getRadius() == 0) {
+    if (allBubbles[i].getRadius() != 0) {
       return false;
     }
   }
@@ -375,12 +376,24 @@ void gamePlayScreen() {
     allBubbles[i].display();
   }
 
+  if (bubblesLeft(allBubbles) == true) {
+    noBubblesLeft = true;
+    
+    screen = Screen.GAMEPLAY_SCREEN;
+    
+    pop = minim.loadFile("Sonder Bubble Pop.mp3", 2048);
+    pop.play();
+    mainBub.setRadius(0);
+    
+    screen = Screen.FINAL_SCREEN;
+  }
+
   for (int i = 0; i < allBubbles.length; i++) {
     bubbleBumped = false;
     if (allBubbles[i].getRadius() != 0) {
       bubbleBumped = allBubbles[i].checkCollision(mainBub);
 
-      if (bubbleBumped) {
+      if (bubbleBumped && noBubblesLeft == false) {
         pop = minim.loadFile("Sonder Bubble Pop.mp3", 2048);
         pop.play();
 
@@ -389,7 +402,7 @@ void gamePlayScreen() {
           mainBub.setRadius(mainBub.getRadius() + random(20, 30));
         }
 
-        delay(1000);
+        delay(100);
         screen = Screen.CONVO_SCREEN;
         collideBubble.setRadius(0);
         bubbleBumped = false;
@@ -400,7 +413,6 @@ void gamePlayScreen() {
 }
 
 void finalScreen() {
-  //onFinalPage = true;
   background(0);
   text("Thank you for playing", displayWidth / 2, (displayHeight / 2) - 120);
 }
