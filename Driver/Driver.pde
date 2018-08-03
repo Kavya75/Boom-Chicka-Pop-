@@ -40,8 +40,6 @@ boolean onSurveyPage = false;
 boolean onInstrucPage = false;
 boolean convBGDisplayed = false; //Used to check if the conversation page background is drawn - Ensures that background is drawn once
 boolean q1, q2, q3, q4 = false; //Used to display the survey questions one by one
-boolean firstGameScreen = true; //True - If gamePlayScreen() has only been called one (before any collisions); False - If gamePlayScreen() has been called 1+ times (after a collision)
-
 boolean allLinesRead = false; //Moves from page to page
 
 boolean screenSwitch = false;
@@ -258,7 +256,6 @@ void keyPressed() {
     }
   }
   if ((key == ENTER || key == RETURN) && allFilesRead) { 
-    firstGameScreen = false;
     screen = Screen.GAMEPLAY_SCREEN;
     screenSwitch = true;
   }
@@ -441,7 +438,6 @@ void conversationScreen() {
 
 //Displays the text from the text file line by line
 void textScreen() {
-  firstGameScreen = true;
   textAlign(CENTER); 
   String fileN = listOfFileNames[randomFileName] + fileCounter + ".txt";
   String[] lines = loadStrings(fileN);
