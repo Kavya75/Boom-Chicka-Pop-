@@ -141,6 +141,10 @@ void draw() {
         mainBub.setRadius(mainBub.getRadius() - 0.1);
       }
     }
+    
+    if (bubblesLeft(allBubbles) == true) {
+        finalScreen();
+      }
   } else if (screen == Screen.CONVO_SCREEN && convBGDisplayed == false) {
     delay(50);
     conversationScreen();
@@ -148,11 +152,17 @@ void draw() {
   } else if (convBGDisplayed == true) {
     textScreen();
   }
-  
-  if (bubblesLeft(allBubbles) == true) {
-        finalScreen();
-      }
 
+}
+
+boolean bubblesLeft(Bubble[] allBubbles) {
+  for(int i = 0; i < allBubbles.length; i++) {
+    if(allBubbles[i].getRadius() == 0) {
+      return false;
+    }
+  }
+  
+  return true;
 }
 
 void mouseClicked() {
@@ -388,17 +398,6 @@ void gamePlayScreen() {
     }
   }
 }
-
-boolean bubblesLeft(Bubble[] allBubbles) {
-  for(int i = 0; i < allBubbles.length; i++) {
-    if(allBubbles[i].getRadius() == 0) {
-      return false;
-    }
-  }
-  
-  return true;
-}
-
 
 void finalScreen() {
   //onFinalPage = true;
