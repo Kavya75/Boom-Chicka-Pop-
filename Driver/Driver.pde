@@ -412,11 +412,16 @@ void gamePlayScreen() {
 }
 
 void finalScreen() {
-  background(0);
-  
-  text("Thank you for playing", displayWidth / 2, (displayHeight / 2) - 120);
+  background(backgroundImg);
+  fill(255);
+  textSize(28);
+  text("thank you for playing", displayWidth / 2, (displayHeight / 2) - 120);
+  textSize(100);
+  textAlign(CENTER);
+  text("S  O  N  D  E  R", (displayWidth / 2), (displayHeight / 2));
+  textSize(18);
+  text("Created by Cathie Lin, Kavya Verma, Brianna Zhang, Katherine Zhang", displayWidth / 2, (displayHeight / 2) + 50);
 }
-
 
 void initializeBubbles() { 
   for (int i = 0; i < allBubbles.length; i++) {
