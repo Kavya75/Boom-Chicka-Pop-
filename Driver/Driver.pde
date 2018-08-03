@@ -7,6 +7,7 @@ PImage img;
 PImage backgroundImg;
 PImage surveyImg;
 PImage instrImg;
+PImage convoImg;
 SoundFile file;
 AudioPlayer pop;
 Minim minim;
@@ -102,6 +103,9 @@ void setup() {
 
   instrImg = loadImage ("InstrBackground.png");
   instrImg.resize(displayWidth, displayHeight);
+
+  convoImg = loadImage("ConvoBackground.png");
+  convoImg.resize(displayWidth, displayHeight);
 }
 
 void draw() {
@@ -141,10 +145,10 @@ void draw() {
         mainBub.setRadius(mainBub.getRadius() - 0.1);
       }
     }
-    
+
     if (bubblesLeft(allBubbles) == true) {
-        finalScreen();
-      }
+      finalScreen();
+    }
   } else if (screen == Screen.CONVO_SCREEN && convBGDisplayed == false) {
     delay(50);
     conversationScreen();
@@ -152,18 +156,17 @@ void draw() {
   } else if (convBGDisplayed == true) {
     textScreen();
   }
-
 }
 
 boolean bubblesLeft(Bubble[] allBubbles) {
-  for(int i = 0; i < allBubbles.length; i++) {
-    if(allBubbles[i].getRadius() == 0) {
+  for (int i = 0; i < allBubbles.length; i++) {
+    if (allBubbles[i].getRadius() == 0) {
       return false;
     }
   }
-  
+
   return true;
-}
+} 
 
 void mouseClicked() {
   if (clickCounter != -1 && isButton == true && mouseX > (displayWidth / 2) - 100 && mouseX < (displayWidth / 2) + 100 && mouseY < (displayHeight / 2) + 145 && mouseY > (displayHeight / 2) + 85) {
@@ -388,7 +391,7 @@ void gamePlayScreen() {
         if (mainBub.getRadius() <= 300 && mainBub.getRadius() >= 50) {
           mainBub.setRadius(mainBub.getRadius() + random(20, 30));
         }
-        
+
         delay(1000);
         screen = Screen.CONVO_SCREEN;
         collideBubble.setRadius(0);
@@ -425,7 +428,7 @@ void initializeBubbles() {
 //Sets the conversation background to a solid color and
 //  checks if user clicks or hits ENTER. If yes, will return to gamePlayScreen
 void conversationScreen() { 
-  background(255);
+  background(convoImg);
   image(pics[activeBubble.randImg], displayWidth/20, startingHeight * 5, 230, 280);
   if (keyPressed) {
     if (key == ENTER && allFilesRead) { 
