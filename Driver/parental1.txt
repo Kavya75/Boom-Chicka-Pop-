@@ -1,4 +1,5 @@
 age: 17 gender: male 
+[he wanders around 
 i think one of the hardest things for me 
 was telling my parents that i was depressed 
 they always thought i could handle myself
